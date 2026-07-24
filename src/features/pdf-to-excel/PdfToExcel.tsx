@@ -1,21 +1,15 @@
-import React, { useState, useRef } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
-import { 
-  Table, 
-  Upload, 
-  Download, 
-  RefreshCw, 
-  CheckCircle2, 
+import React, { useState, useRef } from "react";
+import {
+  Table,
+  Upload,
+  Download,
+  RefreshCw,
+  CheckCircle2,
   AlertCircle,
   FileText,
   Settings,
-  Eye
-} from 'lucide-react';
-
-// Configure pdfjs worker locally
-(pdfjsLib as any).GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+  Eye,
+} from "lucide-react";
 
 export default function PdfToExcel() {
   const [file, setFile] = useState<File | null>(null);
@@ -24,45 +18,33 @@ export default function PdfToExcel() {
   const [error, setError] = useState<string | null>(null);
   const [extractedData, setExtractedData] = useState<string[][]>([]);
   const [success, setSuccess] = useState(false);
-  const [colGap, setColGap] = useState<number>(30); // X-gap threshold to split into new column
+  const [colGap, setColGap] = useState<number>(30);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      if (selectedFile.type !== 'application/pdf') {
-        setError('Please select a valid PDF file.');
-        return;
-      }
-      setFile(selectedFile);
-      setExtractedData([]);
-      setSuccess(false);
-      setError(null);
+  const pickFile = (f: File | undefined) => {
+    if (!f) return;
+    if (f.type !== "application/pdf" && !f.name.toLowerCase().endsWith(".pdf")) {
+      setError("Please select a valid PDF file.");
+      return;
     }
+    setFile(f);
+    setExtractedData([]);
+    setSuccess(false);
+    setError(null);
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    pickFile(e.target.files?.[0]);
   };
 
+  const handleDragOver = (e: React.DragEvent) => e.preventDefault();
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const selectedFile = e.dataTransfer.files[0];
-      if (selectedFile.type !== 'application/pdf') {
-        setError('Please select a valid PDF file.');
-        return;
-      }
-      setFile(selectedFile);
-      setExtractedData([]);
-      setSuccess(false);
-      setError(null);
-    }
+    pickFile(e.dataTransfer.files?.[0]);
   };
 
   const convertPdfToExcel = async () => {
     if (!file) return;
-
     setLoading(true);
     setProgress(0);
     setError(null);
@@ -70,175 +52,158 @@ export default function PdfToExcel() {
     setSuccess(false);
 
     try {
-      const fileReader = new FileReader();
-      fileReader.onload = async (e) => {
-        try {
-          const typedarray = new Uint8Array(e.target?.result as ArrayBuffer);
-          const loadingTask = pdfjsLib.getDocument({ data: typedarray });
-          const pdf = await loadingTask.promise;
-          const numPages = pdf.numPages;
+      const pdfjsLib: any = await import("pdfjs-dist");
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-          let allRows: string[][] = [];
+      const buf = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
+      const numPages = pdf.numPages;
+      const allRows: string[][] = [];
 
-          for (let i = 1; i <= numPages; i++) {
-            const page = await pdf.getPage(i);
-            const textContent = await page.getTextContent();
-            const items = textContent.items as any[];
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const items = textContent.items as any[];
 
-            if (items.length === 0) continue;
-
-            // Group items by Y coordinate (using a tolerance of 5 points for rows)
-            const linesMap: { [key: number]: any[] } = {};
-            const yTolerance = 6;
-
-            items.forEach((item) => {
-              const y = Math.round(item.transform[5]);
-              const matchingY = Object.keys(linesMap).find(
-                (existingY) => Math.abs(Number(existingY) - y) < yTolerance
-              );
-
-              if (matchingY) {
-                linesMap[Number(matchingY)].push(item);
-              } else {
-                linesMap[y] = [item];
-              }
-            });
-
-            // Sort lines by Y descending (top-to-bottom)
-            const sortedYKeys = Object.keys(linesMap)
-              .map(Number)
-              .sort((a, b) => b - a);
-
-            // For each line, sort items by X ascending (left-to-right)
-            // and group them into column cells based on distance
-            sortedYKeys.forEach((yKey) => {
-              const lineItems = linesMap[yKey].sort((a, b) => a.transform[4] - b.transform[4]);
-              
-              const rowCells: string[] = [];
-              let currentCellText = '';
-              let lastX = -1;
-              let lastWidth = 0;
-
-              lineItems.forEach((item) => {
-                const currentX = item.transform[4];
-                const itemText = item.str;
-
-                // If this is the first item in the row
-                if (lastX === -1) {
-                  currentCellText = itemText;
-                } else {
-                  // Determine space / gap width
-                  // transform[0] is roughly width/font scale
-                  const gap = currentX - (lastX + lastWidth);
-
-                  if (gap > colGap) {
-                    // Large gap, push current cell and start a new cell
-                    rowCells.push(currentCellText.trim());
-                    currentCellText = itemText;
-                  } else {
-                    // Small gap, append to current cell
-                    const needsSpace = gap > 2 && !currentCellText.endsWith(' ') && !itemText.startsWith(' ');
-                    currentCellText += (needsSpace ? ' ' : '') + itemText;
-                  }
-                }
-
-                lastX = currentX;
-                // Rough estimate of item width based on text length and horizontal scale
-                lastWidth = item.width || (itemText.length * (item.transform[0] * 0.5));
-              });
-
-              if (currentCellText.trim()) {
-                rowCells.push(currentCellText.trim());
-              }
-
-              if (rowCells.length > 0) {
-                allRows.push(rowCells);
-              }
-            });
-
-            // Add an empty row between pages
-            if (i < numPages) {
-              allRows.push([]);
-            }
-
-            setProgress(Math.round((i / numPages) * 100));
-          }
-
-          if (allRows.length === 0) {
-            throw new Error("No tables or text rows found in the PDF. Make sure it isn't an image-only scanned PDF.");
-          }
-
-          setExtractedData(allRows);
-          setSuccess(true);
-        } catch (err: any) {
-          console.error(err);
-          setError(err.message || 'Failed to parse PDF tables.');
-        } finally {
-          setLoading(false);
+        if (items.length === 0) {
+          setProgress(Math.round((i / numPages) * 100));
+          continue;
         }
-      };
 
-      fileReader.readAsArrayBuffer(file);
+        const linesMap: Record<number, any[]> = {};
+        const yTolerance = 6;
+        items.forEach((item) => {
+          const y = Math.round(item.transform[5]);
+          const matchingY = Object.keys(linesMap).find(
+            (existingY) => Math.abs(Number(existingY) - y) < yTolerance
+          );
+          if (matchingY) linesMap[Number(matchingY)].push(item);
+          else linesMap[y] = [item];
+        });
+
+        const sortedYKeys = Object.keys(linesMap)
+          .map(Number)
+          .sort((a, b) => b - a);
+
+        sortedYKeys.forEach((yKey) => {
+          const lineItems = linesMap[yKey].sort(
+            (a, b) => a.transform[4] - b.transform[4]
+          );
+          const rowCells: string[] = [];
+          let currentCellText = "";
+          let lastX = -1;
+          let lastWidth = 0;
+
+          lineItems.forEach((item) => {
+            const currentX = item.transform[4];
+            const itemText = item.str;
+            if (lastX === -1) {
+              currentCellText = itemText;
+            } else {
+              const gap = currentX - (lastX + lastWidth);
+              if (gap > colGap) {
+                rowCells.push(currentCellText.trim());
+                currentCellText = itemText;
+              } else {
+                const needsSpace =
+                  gap > 2 &&
+                  !currentCellText.endsWith(" ") &&
+                  !itemText.startsWith(" ");
+                currentCellText += (needsSpace ? " " : "") + itemText;
+              }
+            }
+            lastX = currentX;
+            lastWidth =
+              item.width || itemText.length * (item.transform[0] * 0.5);
+          });
+
+          if (currentCellText.trim()) rowCells.push(currentCellText.trim());
+          if (rowCells.length > 0) allRows.push(rowCells);
+        });
+
+        if (i < numPages) allRows.push([]);
+        setProgress(Math.round((i / numPages) * 100));
+      }
+
+      if (allRows.length === 0) {
+        throw new Error(
+          "No tables or text rows found in the PDF. Make sure it isn't an image-only scanned PDF."
+        );
+      }
+
+      setExtractedData(allRows);
+      setSuccess(true);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred during file parsing.');
+      setError(err?.message || "Failed to parse PDF.");
+    } finally {
       setLoading(false);
     }
   };
 
-  const downloadExcel = () => {
-    if (extractedData.length === 0) return;
-
+  const downloadExcel = async () => {
+    if (extractedData.length === 0 || !file) return;
     try {
+      const XLSX: any = await import("xlsx");
       const ws = XLSX.utils.aoa_to_sheet(extractedData);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "PDF Extracted Table");
-      
-      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-      const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      
-      saveAs(blob, `${file?.name.replace(/\.pdf$/i, '')}_extracted.xlsx`);
+
+      const wbout: ArrayBuffer = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      const blob = new Blob([wbout], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      const filename = `${file.name.replace(/\.pdf$/i, "")}_extracted.xlsx`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to create Excel file.');
+      setError(err?.message || "Failed to create Excel file.");
     }
   };
 
-  const triggerFileSelect = () => {
-    fileInputRef.current?.click();
-  };
+  const triggerFileSelect = () => fileInputRef.current?.click();
 
   return (
     <div className="mx-auto space-y-8">
-      {/* Header */}
       <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
         <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
           <Table className="w-8 h-8" />
         </div>
         <div>
           <h1 className="text-3xl font-bold text-white">PDF to Excel</h1>
-          <p className="text-slate-400 text-sm mt-1">Extract tables and structured coordinate grids from PDF to Excel spreadsheets (.xlsx).</p>
+          <p className="text-slate-400 text-sm mt-1">
+            Extract tables and structured coordinate grids from PDF to Excel spreadsheets (.xlsx).
+          </p>
         </div>
       </div>
 
-      {/* Main Panel */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        {/* Left Column: Options */}
         <div className="md:col-span-1 space-y-6">
           <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Settings className="w-5 h-5 text-violet-400" /> Options
             </h2>
 
-            {/* Column Gap threshold settings */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Column Gap Sensitivity</label>
-              <input 
-                type="range" 
-                min="10" 
-                max="80" 
-                value={colGap} 
+              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Column Gap Sensitivity
+              </label>
+              <input
+                type="range"
+                min="10"
+                max="80"
+                value={colGap}
                 onChange={(e) => setColGap(Number(e.target.value))}
                 className="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-violet-500"
               />
@@ -251,21 +216,20 @@ export default function PdfToExcel() {
               </p>
             </div>
 
-            {/* Action button */}
             <button
               onClick={convertPdfToExcel}
               disabled={!file || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
-                !file 
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                !file
+                  ? "bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed"
                   : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+                    ? "bg-violet-700 text-white border border-violet-600 cursor-not-allowed"
+                    : "bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20"
               }`}
             >
               {loading ? (
                 <>
-                  <RefreshCw className="w-5 h-5 animate-spin" /> Extricating...
+                  <RefreshCw className="w-5 h-5 animate-spin" /> Extracting...
                 </>
               ) : (
                 <>
@@ -276,20 +240,18 @@ export default function PdfToExcel() {
           </div>
         </div>
 
-        {/* Right Column: Upload & Output */}
         <div className="md:col-span-2 space-y-6">
           {!file ? (
-            /* Upload Zone */
-            <div 
+            <div
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
               className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
             >
-              <input 
-                type="file" 
-                accept=".pdf" 
-                className="hidden" 
+              <input
+                type="file"
+                accept="application/pdf,.pdf"
+                className="hidden"
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
@@ -302,7 +264,6 @@ export default function PdfToExcel() {
               </p>
             </div>
           ) : (
-            /* Conversion Progress & Table Preview */
             <div className="space-y-6">
               <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -327,7 +288,6 @@ export default function PdfToExcel() {
                 </button>
               </div>
 
-              {/* Progress */}
               {loading && (
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
                   <div className="flex justify-between text-sm">
@@ -335,7 +295,7 @@ export default function PdfToExcel() {
                     <span className="font-semibold text-violet-400">{progress}%</span>
                   </div>
                   <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
-                    <div 
+                    <div
                       className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-300"
                       style={{ width: `${progress}%` }}
                     ></div>
@@ -343,7 +303,6 @@ export default function PdfToExcel() {
                 </div>
               )}
 
-              {/* Error messages */}
               {error && (
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
@@ -354,12 +313,11 @@ export default function PdfToExcel() {
                 </div>
               )}
 
-              {/* Success output */}
               {success && extractedData.length > 0 && (
                 <div className="space-y-6">
                   <div className="flex justify-between items-center border-b border-slate-800 pb-4">
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Excel Sheet Formulated
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Excel Sheet Ready
                     </h3>
                     <button
                       onClick={downloadExcel}
@@ -369,7 +327,6 @@ export default function PdfToExcel() {
                     </button>
                   </div>
 
-                  {/* Spreadsheet Preview Grid */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1">
                       <Eye className="w-3.5 h-3.5" /> Extracted Grid Preview (First 15 Rows)
@@ -379,7 +336,9 @@ export default function PdfToExcel() {
                         <thead>
                           <tr className="bg-slate-900 border-b border-slate-800">
                             <th className="p-3 font-semibold text-slate-400 border-r border-slate-800 w-10 text-center">#</th>
-                            <th className="p-3 font-semibold text-slate-400 border-r border-slate-800" colSpan={100}>Extracted Columns</th>
+                            <th className="p-3 font-semibold text-slate-400 border-r border-slate-800" colSpan={100}>
+                              Extracted Columns
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -392,7 +351,11 @@ export default function PdfToExcel() {
                                 </td>
                               ) : (
                                 row.map((cell, cIdx) => (
-                                  <td key={cIdx} className="p-3 border-r border-slate-800/80 truncate max-w-[200px]" title={cell}>
+                                  <td
+                                    key={cIdx}
+                                    className="p-3 border-r border-slate-800/80 truncate max-w-[200px]"
+                                    title={cell}
+                                  >
                                     {cell}
                                   </td>
                                 ))
