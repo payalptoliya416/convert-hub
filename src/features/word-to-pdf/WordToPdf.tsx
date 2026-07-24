@@ -71,65 +71,140 @@ export default function WordToPdf() {
         try {
           const arrayBuffer = e.target?.result as ArrayBuffer;
           
-          // Use mammoth to extract HTML/Text content
+          // Use mammoth to extract HTML content with images
           const result = await mammoth.convertToHtml({ arrayBuffer });
           const html = result.value;
+          const docMessages = result.messages || [];
+          
+          // Log any warnings
+          if (docMessages.length > 0) {
+            console.warn('Mammoth conversion messages:', docMessages);
+          }
+          
           setHtmlPreview(html);
 
-          // Get raw text to write into jsPDF
-          const textResult = await mammoth.extractRawText({ arrayBuffer });
-          const rawText = textResult.value;
+          // Create a hidden container to render HTML
+          const container = document.createElement('div');
+          container.innerHTML = html;
+          container.style.position = 'absolute';
+          container.style.left = '-9999px';
+          container.style.top = '-9999px';
+          container.style.width = '210mm';
+          container.style.backgroundColor = 'white';
+          container.style.padding = '20px';
+          container.style.fontSize = '11pt';
+          container.style.fontFamily = 'Helvetica, Arial, sans-serif';
+          container.style.lineHeight = '1.6';
+          container.style.color = '#000';
+          
+          // Style images in container
+          const images = container.querySelectorAll('img');
+          images.forEach((img) => {
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            img.style.margin = '10px 0';
+          });
+          
+          document.body.appendChild(container);
 
-          // Split raw text into lines and build PDF
+          // Wait for all images to load
+          const imageLoadPromises: Promise<void>[] = [];
+          images.forEach((img: HTMLImageElement) => {
+            imageLoadPromises.push(
+              new Promise((resolve) => {
+                if (img.complete) {
+                  resolve();
+                } else {
+                  img.onload = () => resolve();
+                  img.onerror = () => {
+                    console.warn('Failed to load image:', img.src);
+                    resolve();
+                  };
+                }
+              })
+            );
+          });
+
+          await Promise.all(imageLoadPromises);
+
+          // Get dimensions
+          const containerHeight = container.scrollHeight;
+          const containerWidth = container.scrollWidth;
+          
+          // Create PDF with content height
           const doc = new jsPDF({
             orientation: 'portrait',
             unit: 'mm',
             format: 'a4'
           });
 
-          const margins = 20;
           const pageWidth = doc.internal.pageSize.getWidth();
           const pageHeight = doc.internal.pageSize.getHeight();
-          const maxLineWidth = pageWidth - (margins * 2);
 
-          doc.setFont('Helvetica', 'normal');
-          doc.setFontSize(11);
+          // Extract text and images from container
+          let yPosition = 15;
+          const margins = { left: 10, right: 10, top: 5, bottom: 10 };
+          const contentWidth = pageWidth - margins.left - margins.right;
 
-          // Write document Title
-          doc.setFont('Helvetica', 'bold');
-          doc.setFontSize(16);
-          doc.text(file.name.replace(/\.docx$/i, ''), margins, margins + 5);
-          doc.setFont('Helvetica', 'normal');
-          doc.setFontSize(11);
-
-          let currentY = margins + 20;
-          const textLines = rawText.split('\n');
-
-          textLines.forEach((line) => {
-            if (line.trim() === '') {
-              currentY += 6; // paragraph spacer
-              return;
+          // Process paragraphs and images
+          container.querySelectorAll('p, img, h1, h2, h3, h4, h5, h6').forEach((element) => {
+            if (yPosition > pageHeight - margins.bottom - 10) {
+              doc.addPage();
+              yPosition = margins.top;
             }
 
-            // Word wrap using jsPDF native split
-            const wrappedLines = doc.splitTextToSize(line, maxLineWidth);
-            
-            wrappedLines.forEach((wrappedLine: string) => {
-              if (currentY > pageHeight - margins) {
+            if (element.tagName === 'IMG') {
+              const img = element as HTMLImageElement;
+              const imgWidth = Math.min(img.naturalWidth, contentWidth);
+              const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
+
+              if (yPosition + imgHeight > pageHeight - margins.bottom) {
                 doc.addPage();
-                currentY = margins;
+                yPosition = margins.top;
               }
-              doc.text(wrappedLine, margins, currentY);
-              currentY += 6; // line spacing
-            });
+
+              try {
+                doc.addImage(img.src, 'PNG', margins.left, yPosition, imgWidth, imgHeight);
+                yPosition += imgHeight + 5;
+              } catch (imgErr) {
+                console.warn('Could not add image to PDF:', imgErr);
+              }
+            } else {
+              const text = element.textContent || '';
+              if (text.trim()) {
+                const fontSize = element.tagName.startsWith('H') 
+                  ? Math.max(12, 18 - (parseInt(element.tagName[1]) * 2))
+                  : 11;
+                const isBold = element.tagName.startsWith('H');
+
+                doc.setFont('Helvetica', isBold ? 'bold' : 'normal');
+                doc.setFontSize(fontSize);
+
+                const lines = doc.splitTextToSize(text, contentWidth);
+                const lineHeight = fontSize / 2.5;
+
+                lines.forEach((line: string) => {
+                  if (yPosition > pageHeight - margins.bottom - 5) {
+                    doc.addPage();
+                    yPosition = margins.top;
+                  }
+                  doc.text(line, margins.left, yPosition);
+                  yPosition += lineHeight;
+                });
+
+                yPosition += 2; // Paragraph spacing
+              }
+            }
           });
+
+          document.body.removeChild(container);
 
           const generatedBlob = doc.output('blob');
           setPdfBlob(generatedBlob);
           setSuccess(true);
         } catch (err: any) {
-          console.error(err);
-          setError(err.message || 'Failed to parse Word file structure.');
+          console.error('Conversion error:', err);
+          setError(err.message || 'Failed to convert Word file to PDF. Make sure the file is valid and contains supported content.');
         } finally {
           setLoading(false);
         }
@@ -137,7 +212,7 @@ export default function WordToPdf() {
 
       fileReader.readAsArrayBuffer(file);
     } catch (err: any) {
-      console.error(err);
+      console.error('File reading error:', err);
       setError(err.message || 'An error occurred during file reading.');
       setLoading(false);
     }
