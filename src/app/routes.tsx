@@ -1,0 +1,31 @@
+import { Routes, Route } from 'react-router-dom';
+import Dashboard from '../features/dashboard/Dashboard';
+import PdfToWord from '../features/pdf-to-word/PdfToWord';
+import PdfToPpt from '../features/pdf-to-ppt/PdfToPpt';
+import PdfToExcel from '../features/pdf-to-excel/PdfToExcel';
+import PdfToImage from '../features/pdf-to-image/PdfToImage';
+import ImageToPdf from '../features/image-to-pdf/ImageToPdf';
+import WordToPdf from '../features/word-to-pdf/WordToPdf';
+import PptToPdf from '../features/ppt-to-pdf/PptToPdf';
+import ExcelToPdf from '../features/excel-to-pdf/ExcelToPdf';
+import MergePdf from '../features/merge-pdf/MergePdf';
+import CompressPdf from '../features/compress-pdf/CompressPdf';
+
+export default function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/pdf-to-word" element={<PdfToWord />} />
+      <Route path="/pdf-to-ppt" element={<PdfToPpt />} />
+      <Route path="/pdf-to-excel" element={<PdfToExcel />} />
+      <Route path="/pdf-to-image" element={<PdfToImage />} />
+      <Route path="/image-to-pdf" element={<ImageToPdf />} />
+      <Route path="/word-to-pdf" element={<WordToPdf />} />
+      <Route path="/ppt-to-pdf" element={<PptToPdf />} />
+      <Route path="/excel-to-pdf" element={<ExcelToPdf />} />
+      <Route path="/merge-pdf" element={<MergePdf />} />
+      <Route path="/compress-pdf" element={<CompressPdf />} />
+      <Route path="*" element={<Dashboard />} />
+    </Routes>
+  );
+}

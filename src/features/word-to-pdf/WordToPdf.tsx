@@ -1,0 +1,316 @@
+import React, { useState, useRef } from 'react';
+import mammoth from 'mammoth';
+import { jsPDF } from 'jspdf';
+import { saveAs } from 'file-saver';
+import { 
+  FileText, 
+  Upload, 
+  Download, 
+  RefreshCw, 
+  CheckCircle2, 
+  AlertCircle,
+  Settings
+} from 'lucide-react';
+
+export default function WordToPdf() {
+  const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [htmlPreview, setHtmlPreview] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      const ext = selectedFile.name.split('.').pop()?.toLowerCase();
+      if (ext !== 'docx') {
+        setError('Please select a valid Word document (.docx).');
+        return;
+      }
+      setFile(selectedFile);
+      setSuccess(false);
+      setPdfBlob(null);
+      setHtmlPreview('');
+      setError(null);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const selectedFile = e.dataTransfer.files[0];
+      const ext = selectedFile.name.split('.').pop()?.toLowerCase();
+      if (ext !== 'docx') {
+        setError('Please select a valid Word document (.docx).');
+        return;
+      }
+      setFile(selectedFile);
+      setSuccess(false);
+      setPdfBlob(null);
+      setHtmlPreview('');
+      setError(null);
+    }
+  };
+
+  const convertWordToPdf = async () => {
+    if (!file) return;
+
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const fileReader = new FileReader();
+      fileReader.onload = async (e) => {
+        try {
+          const arrayBuffer = e.target?.result as ArrayBuffer;
+          
+          // Use mammoth to extract HTML/Text content
+          const result = await mammoth.convertToHtml({ arrayBuffer });
+          const html = result.value;
+          setHtmlPreview(html);
+
+          // Get raw text to write into jsPDF
+          const textResult = await mammoth.extractRawText({ arrayBuffer });
+          const rawText = textResult.value;
+
+          // Split raw text into lines and build PDF
+          const doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+          });
+
+          const margins = 20;
+          const pageWidth = doc.internal.pageSize.getWidth();
+          const pageHeight = doc.internal.pageSize.getHeight();
+          const maxLineWidth = pageWidth - (margins * 2);
+
+          doc.setFont('Helvetica', 'normal');
+          doc.setFontSize(11);
+
+          // Write document Title
+          doc.setFont('Helvetica', 'bold');
+          doc.setFontSize(16);
+          doc.text(file.name.replace(/\.docx$/i, ''), margins, margins + 5);
+          doc.setFont('Helvetica', 'normal');
+          doc.setFontSize(11);
+
+          let currentY = margins + 20;
+          const textLines = rawText.split('\n');
+
+          textLines.forEach((line) => {
+            if (line.trim() === '') {
+              currentY += 6; // paragraph spacer
+              return;
+            }
+
+            // Word wrap using jsPDF native split
+            const wrappedLines = doc.splitTextToSize(line, maxLineWidth);
+            
+            wrappedLines.forEach((wrappedLine: string) => {
+              if (currentY > pageHeight - margins) {
+                doc.addPage();
+                currentY = margins;
+              }
+              doc.text(wrappedLine, margins, currentY);
+              currentY += 6; // line spacing
+            });
+          });
+
+          const generatedBlob = doc.output('blob');
+          setPdfBlob(generatedBlob);
+          setSuccess(true);
+        } catch (err: any) {
+          console.error(err);
+          setError(err.message || 'Failed to parse Word file structure.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fileReader.readAsArrayBuffer(file);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'An error occurred during file reading.');
+      setLoading(false);
+    }
+  };
+
+  const downloadPdf = () => {
+    if (!pdfBlob) return;
+    saveAs(pdfBlob, `${file?.name.replace(/\.docx$/i, '')}.pdf`);
+  };
+
+  const triggerFileSelect = () => {
+    fileInputRef.current?.click();
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Header */}
+      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
+          <FileText className="w-8 h-8" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold text-white">Word to PDF</h1>
+          <p className="text-slate-400 text-sm mt-1">Convert Microsoft Word (.docx) documents to PDF files locally in your browser.</p>
+        </div>
+      </div>
+
+      {/* Main Panel */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        {/* Left Column: Options */}
+        <div className="md:col-span-1 space-y-6">
+          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
+            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <Settings className="w-5 h-5 text-violet-400" /> Actions
+            </h2>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Mammoth.js parses Word structures client-side. Best suited for text documents with headings, lists, and standard styling.
+            </p>
+
+            {/* Action button */}
+            <button
+              onClick={convertWordToPdf}
+              disabled={!file || loading}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
+                !file 
+                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                  : loading
+                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+              }`}
+            >
+              {loading ? (
+                <>
+                  <RefreshCw className="w-5 h-5 animate-spin" /> Converting...
+                </>
+              ) : (
+                <>
+                  <FileText className="w-5 h-5" /> Convert to PDF
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Right Column: Upload & Output */}
+        <div className="md:col-span-2 space-y-6">
+          {!file ? (
+            /* Upload Zone */
+            <div 
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={triggerFileSelect}
+              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+            >
+              <input 
+                type="file" 
+                accept=".docx" 
+                className="hidden" 
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
+              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+                <Upload className="w-10 h-10" />
+              </div>
+              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your DOCX file here</h3>
+              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+                Or click to browse. We will render document details and format them into a PDF file.
+              </p>
+            </div>
+          ) : (
+            /* Conversion Progress & Preview */
+            <div className="space-y-6">
+              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-blue-500/15 rounded-xl border border-blue-500/20 text-blue-400">
+                    <FileText className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">{file.name}</h4>
+                    <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setFile(null);
+                    setSuccess(false);
+                    setPdfBlob(null);
+                    setHtmlPreview('');
+                    setError(null);
+                  }}
+                  className="text-xs font-semibold text-red-400 hover:text-red-300 cursor-pointer"
+                >
+                  Remove
+                </button>
+              </div>
+
+              {/* Progress */}
+              {loading && (
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center text-sm text-slate-400 space-y-2">
+                  <RefreshCw className="w-6 h-6 animate-spin mx-auto text-violet-400" />
+                  <p>Parsing DOCX contents...</p>
+                </div>
+              )}
+
+              {/* Error messages */}
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
+                  <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-red-300">Conversion Failed</h4>
+                    <p className="text-sm mt-1 text-red-400/90">{error}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Success Result */}
+              {success && pdfBlob && (
+                <div className="space-y-6">
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
+                        <CheckCircle2 className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white">PDF Compiled Successfully!</h4>
+                        <p className="text-xs text-slate-400">{(pdfBlob.size / 1024).toFixed(1)} KB</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={downloadPdf}
+                      className="py-2.5 px-5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-blue-600/10"
+                    >
+                      <Download className="w-4 h-4" /> Download PDF Document
+                    </button>
+                  </div>
+
+                  {/* HTML Preview (Read-only representation) */}
+                  {htmlPreview && (
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Document HTML Preview</label>
+                      <div 
+                        className="rounded-xl border border-slate-800 bg-slate-950 p-6 max-h-96 overflow-y-auto text-sm text-slate-300 space-y-4 prose prose-invert"
+                        dangerouslySetInnerHTML={{ __html: htmlPreview }}
+                      ></div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

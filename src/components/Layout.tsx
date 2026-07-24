@@ -1,0 +1,211 @@
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { 
+  FileText, 
+  Presentation, 
+  Table, 
+  Image, 
+  FileImage, 
+  Merge, 
+  Minimize2, 
+  ChevronDown,
+  Menu,
+  X,
+  ShieldAlert,
+  Home
+} from 'lucide-react';
+
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+const dropdownTools = [
+  { name: 'PDF to Word', path: '/pdf-to-word', icon: FileText, color: 'text-blue-400' },
+  { name: 'PDF to PowerPoint', path: '/pdf-to-ppt', icon: Presentation, color: 'text-orange-400' },
+  { name: 'PDF to Excel', path: '/pdf-to-excel', icon: Table, color: 'text-emerald-400' },
+  { name: 'PDF to Image', path: '/pdf-to-image', icon: Image, color: 'text-purple-400' },
+  { name: 'Image to PDF', path: '/image-to-pdf', icon: FileImage, color: 'text-rose-400' },
+  { name: 'Word to PDF', path: '/word-to-pdf', icon: FileText, color: 'text-blue-500' },
+  { name: 'PowerPoint to PDF', path: '/ppt-to-pdf', icon: Presentation, color: 'text-orange-500' },
+  { name: 'Excel to PDF', path: '/excel-to-pdf', icon: Table, color: 'text-emerald-500' },
+  { name: 'Merge PDF', path: '/merge-pdf', icon: Merge, color: 'text-violet-400' },
+  { name: 'Compress PDF', path: '/compress-pdf', icon: Minimize2, color: 'text-cyan-400' },
+];
+
+export default function Layout({ children }: LayoutProps) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-violet-600/30 selection:text-white">
+
+      {/* Navbar */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/75 border-b border-slate-900">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+          
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-violet-600/20 group-hover:scale-105 transition duration-300">
+              <Merge className="w-5 h-5 rotate-45" />
+            </div>
+            <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-violet-400 transition">
+              Convert<span className="text-violet-500">Hub</span>
+            </span>
+          </Link>
+
+          {/* Desktop Nav links */}
+          <nav className="hidden md:flex items-center gap-6">
+            <Link 
+              to="/" 
+              className={`text-sm font-semibold flex items-center gap-1.5 transition ${location.pathname === '/' ? 'text-violet-400' : 'text-slate-400 hover:text-white'}`}
+            >
+              <Home className="w-4 h-4" /> Dashboard
+            </Link>
+
+            {/* Tools Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className={`text-sm font-semibold flex items-center gap-1 transition cursor-pointer ${
+                  location.pathname !== '/' ? 'text-violet-400' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                All Tools <ChevronDown className={`w-4 h-4 transition duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {dropdownOpen && (
+                <>
+                  {/* Backdrop overlay to close dropdown */}
+                  <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)}></div>
+                  
+                  <div className="absolute right-0 mt-3 w-80 rounded-2xl bg-slate-900 border border-slate-800 p-3 shadow-2xl z-20 grid grid-cols-1 gap-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-800 mb-1">
+                      Available Converters
+                    </div>
+                    {dropdownTools.map((tool) => {
+                      const Icon = tool.icon;
+                      return (
+                        <Link
+                          key={tool.path}
+                          to={tool.path}
+                          onClick={() => setDropdownOpen(false)}
+                          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition ${
+                            location.pathname === tool.path 
+                              ? 'bg-violet-600/10 text-violet-400 font-semibold' 
+                              : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                          }`}
+                        >
+                          <Icon className={`w-4 h-4 ${tool.color}`} />
+                          {tool.name}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          </nav>
+
+          {/* Mobile menu trigger */}
+          <div className="flex md:hidden">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white transition cursor-pointer"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-slate-900 bg-slate-950 px-4 py-4 space-y-4 shadow-2xl">
+            <Link 
+              to="/" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2.5 px-3 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-900"
+            >
+              Dashboard
+            </Link>
+            <div className="border-t border-slate-900 pt-2 space-y-1">
+              <div className="px-3 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                Tools
+              </div>
+              <div className="grid grid-cols-2 gap-1">
+                {dropdownTools.map((tool) => (
+                  <Link
+                    key={tool.path}
+                    to={tool.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 py-2 px-3 rounded-lg text-xs text-slate-300 hover:bg-slate-900"
+                  >
+                    <tool.icon className={`w-3.5 h-3.5 ${tool.color}`} />
+                    {tool.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Main Content Area */}
+      <main className="flex-grow max-w-6xl w-full mx-auto px-4 py-12">
+        {children}
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-900 bg-slate-950/80 py-12">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white">
+                <Merge className="w-4 h-4 rotate-45" />
+              </div>
+              <span className="font-extrabold text-lg tracking-tight text-white">
+                Convert<span className="text-violet-500">Hub</span>
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              High fidelity document conversions running fully inside your web browser. Privacy-oriented, completely free, and secure.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-sm text-white mb-4">From PDF</h4>
+            <ul className="space-y-2 text-xs text-slate-500">
+              <li><Link to="/pdf-to-word" className="hover:text-violet-400 transition">PDF to Word</Link></li>
+              <li><Link to="/pdf-to-ppt" className="hover:text-violet-400 transition">PDF to PowerPoint</Link></li>
+              <li><Link to="/pdf-to-excel" className="hover:text-violet-400 transition">PDF to Excel</Link></li>
+              <li><Link to="/pdf-to-image" className="hover:text-violet-400 transition">PDF to Image</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-sm text-white mb-4">To PDF</h4>
+            <ul className="space-y-2 text-xs text-slate-500">
+              <li><Link to="/image-to-pdf" className="hover:text-violet-400 transition">Image to PDF</Link></li>
+              <li><Link to="/word-to-pdf" className="hover:text-violet-400 transition">Word to PDF</Link></li>
+              <li><Link to="/ppt-to-pdf" className="hover:text-violet-400 transition">PowerPoint to PDF</Link></li>
+              <li><Link to="/excel-to-pdf" className="hover:text-violet-400 transition">Excel to PDF</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-sm text-white mb-4">Utilities</h4>
+            <ul className="space-y-2 text-xs text-slate-500">
+              <li><Link to="/merge-pdf" className="hover:text-violet-400 transition">Merge PDF</Link></li>
+              <li><Link to="/compress-pdf" className="hover:text-violet-400 transition">Compress PDF</Link></li>
+            </ul>
+          </div>
+
+        </div>
+        <div className="max-w-6xl mx-auto px-4 mt-8 pt-8 border-t border-slate-900 text-center text-xs text-slate-600">
+          © {new Date().getFullYear()} Convert Hub. Processed locally with WebAssembly. All rights reserved.
+        </div>
+      </footer>
+    </div>
+  );
+}
