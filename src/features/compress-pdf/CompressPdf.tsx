@@ -9,8 +9,7 @@ import {
   CheckCircle2, 
   AlertCircle,
   FileText,
-  Settings,
-  Scale
+  Settings
 } from 'lucide-react';
 
 export default function CompressPdf() {

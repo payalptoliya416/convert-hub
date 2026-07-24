@@ -127,10 +127,6 @@ export default function WordToPdf() {
 
           await Promise.all(imageLoadPromises);
 
-          // Get dimensions
-          const containerHeight = container.scrollHeight;
-          const containerWidth = container.scrollWidth;
-          
           // Create PDF with content height
           const doc = new jsPDF({
             orientation: 'portrait',
