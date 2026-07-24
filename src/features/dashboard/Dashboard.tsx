@@ -140,7 +140,7 @@ export default function Dashboard() {
       {/* Hero Section */}
       <section className="relative text-center py-16 px-4 rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div>
-        <div className="relative max-w-3xl mx-auto space-y-6">
+        <div className="relative max-w-4xl mx-auto space-y-6">
           <span className="px-3 py-1 text-xs font-semibold tracking-wider text-violet-400 bg-violet-400/10 rounded-full border border-violet-400/20 inline-block uppercase">
             100% Free & Browser-Based
           </span>
