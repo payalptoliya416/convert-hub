@@ -186,7 +186,7 @@ export default function PdfToPpt() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="mx-auto space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
         <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20 text-orange-400">

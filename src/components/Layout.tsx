@@ -153,58 +153,6 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-grow max-w-6xl w-full mx-auto px-4 py-12">
         {children}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950/80 py-12">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-          
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white">
-                <Merge className="w-4 h-4 rotate-45" />
-              </div>
-              <span className="font-extrabold text-lg tracking-tight text-white">
-                Convert<span className="text-violet-500">Hub</span>
-              </span>
-            </div>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              High fidelity document conversions running fully inside your web browser. Privacy-oriented, completely free, and secure.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-sm text-white mb-4">From PDF</h4>
-            <ul className="space-y-2 text-xs text-slate-500">
-              <li><Link to="/pdf-to-word" className="hover:text-violet-400 transition">PDF to Word</Link></li>
-              <li><Link to="/pdf-to-ppt" className="hover:text-violet-400 transition">PDF to PowerPoint</Link></li>
-              <li><Link to="/pdf-to-excel" className="hover:text-violet-400 transition">PDF to Excel</Link></li>
-              <li><Link to="/pdf-to-image" className="hover:text-violet-400 transition">PDF to Image</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-sm text-white mb-4">To PDF</h4>
-            <ul className="space-y-2 text-xs text-slate-500">
-              <li><Link to="/image-to-pdf" className="hover:text-violet-400 transition">Image to PDF</Link></li>
-              <li><Link to="/word-to-pdf" className="hover:text-violet-400 transition">Word to PDF</Link></li>
-              <li><Link to="/ppt-to-pdf" className="hover:text-violet-400 transition">PowerPoint to PDF</Link></li>
-              <li><Link to="/excel-to-pdf" className="hover:text-violet-400 transition">Excel to PDF</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-sm text-white mb-4">Utilities</h4>
-            <ul className="space-y-2 text-xs text-slate-500">
-              <li><Link to="/merge-pdf" className="hover:text-violet-400 transition">Merge PDF</Link></li>
-              <li><Link to="/compress-pdf" className="hover:text-violet-400 transition">Compress PDF</Link></li>
-            </ul>
-          </div>
-
-        </div>
-        <div className="max-w-6xl mx-auto px-4 mt-8 pt-8 border-t border-slate-900 text-center text-xs text-slate-600">
-          © {new Date().getFullYear()} Convert Hub. Processed locally with WebAssembly. All rights reserved.
-        </div>
-      </footer>
     </div>
   );
 }
