@@ -11,7 +11,6 @@ import {
   ChevronDown,
   Menu,
   X,
-  ShieldAlert,
   Home
 } from 'lucide-react';
 
