@@ -22,7 +22,6 @@ export default function CompressPdf() {
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null);
   const [originalSize, setOriginalSize] = useState<number>(0);
   const [compressedSize, setCompressedSize] = useState<number>(0);
-  const [compressionLevel, setCompressionLevel] = useState<'low' | 'medium' | 'high'>('medium');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,21 +99,12 @@ export default function CompressPdf() {
         useObjectStreams: true
       });
 
-      // Simple simulated compression differential for UI representation based on levels
-      // Since pure JS compression is stream-based, we calculate the byte difference.
-      let sizeFactor = 0.95; // Default low clean size
-      if (compressionLevel === 'medium') sizeFactor = 0.82;
-      if (compressionLevel === 'high') sizeFactor = 0.68;
-
-      let finalLength = compressedPdfBytes.length;
-      if (finalLength >= file.size) {
-        // If file is already optimized, we simulate compression size mapping to level
-        finalLength = Math.round(file.size * sizeFactor);
-      }
-
-      const dummyCompressedBytes = compressedPdfBytes.slice(0, finalLength);
-      const generatedBlob = new Blob([dummyCompressedBytes], { type: 'application/pdf' });
-      
+      const generatedBlob = new Blob(
+        [compressedPdfBytes.slice()],
+        {
+          type: "application/pdf",
+        }
+      );
       setCompressedBlob(generatedBlob);
       setCompressedSize(generatedBlob.size);
       setProgress(100);
@@ -160,50 +150,6 @@ export default function CompressPdf() {
               <Settings className="w-5 h-5 text-violet-400" /> Options
             </h2>
 
-            {/* Compression level setting */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                <Scale className="w-3.5 h-3.5" /> Compression Level
-              </label>
-              <div className="grid grid-cols-1 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setCompressionLevel('low')}
-                  className={`py-2 px-4 rounded-lg text-sm font-semibold transition border text-left cursor-pointer flex justify-between items-center ${
-                    compressionLevel === 'low'
-                      ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <span>Low Compression</span>
-                  <span className="text-xs opacity-80">(High quality)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCompressionLevel('medium')}
-                  className={`py-2 px-4 rounded-lg text-sm font-semibold transition border text-left cursor-pointer flex justify-between items-center ${
-                    compressionLevel === 'medium'
-                      ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <span>Medium Compression</span>
-                  <span className="text-xs opacity-80">(Balanced)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCompressionLevel('high')}
-                  className={`py-2 px-4 rounded-lg text-sm font-semibold transition border text-left cursor-pointer flex justify-between items-center ${
-                    compressionLevel === 'high'
-                      ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <span>High Compression</span>
-                  <span className="text-xs opacity-80">(Smallest size)</span>
-                </button>
-              </div>
-            </div>
 
             {/* Action button */}
             <button
