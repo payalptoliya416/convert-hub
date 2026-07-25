@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
-import { Upload, Download, RefreshCw, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
+import { Upload, RefreshCw, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 
 export default function RemovePages() {
   const [file, setFile] = useState<File | null>(null);
@@ -95,8 +95,18 @@ export default function RemovePages() {
       const copied = await newPdf.copyPages(src, keepIndices);
       copied.forEach(p => newPdf.addPage(p));
 
-      const bytes = await newPdf.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+     const bytes = await newPdf.save();
+
+            // Create a new Uint8Array copy (TypeScript compatible)
+            const copy = new Uint8Array(bytes.length);
+            copy.set(bytes);
+
+            const blob = new Blob([copy.buffer], {
+            type: "application/pdf",
+            });
+
+            setOutBlob(blob);
+            setSuccess(true);
       setOutBlob(blob);
       setSuccess(true);
     } catch (err: any) {
