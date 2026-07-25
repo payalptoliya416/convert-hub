@@ -22,8 +22,8 @@ export default function RotatePdf() {
   const [rotateAngle, setRotateAngle] = useState(90);
   const [rotatedBlob, setRotatedBlob] = useState<Blob | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [previewImage, setPreviewImage] = useState("");
-  const [pageCount, setPageCount] = useState(0);
+  // const [previewImage, setPreviewImage] = useState("");
+  // const [pageCount, setPageCount] = useState(0);
 
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -66,7 +66,7 @@ const generatePreview = async (pdfFile: File | Blob) => {
 
     const pdf = await loadingTask.promise;
 
-    setPageCount(pdf.numPages);
+    // setPageCount(pdf.numPages);
 
     const page = await pdf.getPage(1);
 
@@ -91,7 +91,7 @@ const generatePreview = async (pdfFile: File | Blob) => {
       } as any)
       .promise;
 
-    setPreviewImage(canvas.toDataURL("image/png"));
+    // setPreviewImage(canvas.toDataURL("image/png"));
   } catch (err) {
     console.error("Preview Error:", err);
     setError("Failed to generate preview.");
