@@ -81,6 +81,24 @@ const tools: Tool[] = [
     category: 'to-pdf'
   },
   {
+    id: 'jpg-to-pdf',
+    name: 'JPG to PDF',
+    description: 'Quickly convert a single JPG or PNG image to a PDF page sized to the image.',
+    path: '/jpg-to-pdf',
+    icon: FileImage,
+    color: 'from-rose-400 to-pink-500 shadow-rose-400/20',
+    category: 'to-pdf'
+  },
+  {
+    id: 'html-to-pdf',
+    name: 'HTML to PDF',
+    description: 'Convert HTML content or rich text into a downloadable PDF.',
+    path: '/html-to-pdf',
+    icon: FileText,
+    color: 'from-indigo-500 to-violet-600 shadow-indigo-500/20',
+    category: 'to-pdf'
+  },
+  {
     id: 'word-to-pdf',
     name: 'Word to PDF',
     description: 'Convert Microsoft Word DOCX files into PDF documents easily.',
@@ -154,23 +172,41 @@ const tools: Tool[] = [
     category: 'utils'
   },
   {
-    id: 'pdf-watermark',
-    name: 'PDF Watermark',
-    description: 'Add text watermark to all pages of your PDF document.',
-    path: '/pdf-watermark',
-    icon: Droplets,
-    color: 'from-blue-500 to-cyan-600 shadow-blue-500/20',
+    id: 'remove-pages',
+    name: 'Remove pages',
+    description: 'Remove specific pages from a PDF and download the result.',
+    path: '/remove-pages',
+    icon: FileText,
+    color: 'from-red-500 to-rose-600 shadow-red-500/20',
     category: 'utils'
   },
   {
-    id: 'protect-pdf',
-    name: 'Protect PDF',
-    description: 'Add password protection to encrypt your PDF documents.',
-    path: '/protect-pdf',
-    icon: Lock,
-    color: 'from-red-500 to-pink-600 shadow-red-500/20',
+    id: 'extract-pages',
+    name: 'Extract pages',
+    description: 'Extract specific pages from a PDF into a new document.',
+    path: '/extract-pages',
+    icon: FileText,
+    color: 'from-emerald-500 to-teal-600 shadow-emerald-500/20',
     category: 'utils'
-  }
+  },
+  // {
+  //   id: 'pdf-watermark',
+  //   name: 'PDF Watermark',
+  //   description: 'Add text watermark to all pages of your PDF document.',
+  //   path: '/pdf-watermark',
+  //   icon: Droplets,
+  //   color: 'from-blue-500 to-cyan-600 shadow-blue-500/20',
+  //   category: 'utils'
+  // },
+  // {
+  //   id: 'protect-pdf',
+  //   name: 'Protect PDF',
+  //   description: 'Add password protection to encrypt your PDF documents.',
+  //   path: '/protect-pdf',
+  //   icon: Lock,
+  //   color: 'from-red-500 to-pink-600 shadow-red-500/20',
+  //   category: 'utils'
+  // }
 ];
 
 export default function Dashboard() {

@@ -68,19 +68,48 @@
 //       const arrayBuffer = await file.arrayBuffer();
 //       const pdfDoc = await PDFDocument.load(arrayBuffer);
 
-//       await pdfDoc.encrypt({
-//         userPassword: password,
-//         ownerPassword: password,
-//         permissions: {
-//           printing: 'highResolution',
-//           modifyingContents: false,
-//           copying: false,
-//           modifyingAnnotations: false,
-//           fillingForms: false,
-//           contentAccessibility: true,
-//           documentAssembly: false
+//       // pdf-lib may not provide client-side PDF encryption in this build.
+//       if (typeof (pdfDoc as any).encrypt === 'function') {
+//         await (pdfDoc as any).encrypt({
+//           userPassword: password,
+//           ownerPassword: password,
+//           permissions: {
+//             printing: 'highResolution',
+//             modifyingContents: false,
+//             copying: false,
+//             modifyingAnnotations: false,
+//             fillingForms: false,
+//             contentAccessibility: true,
+//             documentAssembly: false
+//           }
+//         });
+
+//         const pdfBytes = await pdfDoc.save();
+//         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+//         setProtectedBlob(blob);
+//         setSuccess(true);
+//       } else {
+//         // Fallback: call local server endpoint that runs qpdf to encrypt the PDF.
+//         // Make sure the server is running (see README below).
+//         const form = new FormData();
+//         form.append('file', file);
+//         form.append('password', password);
+
+//         const resp = await fetch('/api/protect', {
+//           method: 'POST',
+//           body: form,
+//         });
+
+//         if (!resp.ok) {
+//           const text = await resp.text();
+//           throw new Error(text || 'Server failed to protect PDF');
 //         }
-//       });
+
+//         const arrayBuffer = await resp.arrayBuffer();
+//         const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+//         setProtectedBlob(blob);
+//         setSuccess(true);
+//       }
 
 //       const pdfBytes = await pdfDoc.save();
 //       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
