@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
-import { FileImage, Upload, Download, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { FileImage, Upload, Download, RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function JpgToPdf() {
   const [file, setFile] = useState<File | null>(null);

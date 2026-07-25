@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import  { useRef, useState } from 'react';
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
-import { FileText, Download, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { FileText, Download, RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function HtmlToPdf() {
   const [html, setHtml] = useState<string>('<h1>Your Title</h1><p>Write HTML here or edit the content block.</p>');

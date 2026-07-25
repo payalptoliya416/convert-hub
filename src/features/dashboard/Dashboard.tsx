@@ -11,7 +11,7 @@ import {
   Copy,
   RotateCw,
   Crop,
-  Droplets,
+  // Droplets,
   Lock,
   ArrowRight,
   Shield,
