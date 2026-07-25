@@ -22,7 +22,6 @@ export default function SplitPdf() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
-  const [splitPages, setSplitPages] = useState('1,2,3');
   const [ranges, setRanges] = useState<Array<{from: number; to: number}>>([{ from: 1, to: 1 }]);
   const [mode, setMode] = useState<'custom' | 'fixed' | 'smart'>('custom');
   const [fixedSize, setFixedSize] = useState<number>(1);
