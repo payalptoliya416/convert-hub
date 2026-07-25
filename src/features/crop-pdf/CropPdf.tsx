@@ -291,8 +291,20 @@ export default function CropPdf() {
         page.setCropBox(cropX, cropY, cropW, cropH);
       });
 
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+     const pdfBytes = await pdfDoc.save();
+
+      const bytes = new Uint8Array(pdfBytes);
+
+      const blob = new Blob(
+        [bytes.buffer.slice(
+          bytes.byteOffset,
+          bytes.byteOffset + bytes.byteLength
+        )],
+        {
+          type: "application/pdf",
+        }
+      );
+;
       setCroppedBlob(blob);
       setSuccess(true);
     } catch (err: any) {
