@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
-import { Upload, Download, RefreshCw, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
+import { Upload,     RefreshCw, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 
 export default function ExtractPages() {
   const [file, setFile] = useState<File | null>(null);
@@ -88,9 +88,19 @@ export default function ExtractPages() {
       copied.forEach(p => newPdf.addPage(p));
 
       const bytes = await newPdf.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
-      setOutBlob(blob);
-      setSuccess(true);
+
+// Convert Uint8Array -> ArrayBuffer (TypeScript compatible)
+                const arrayBuffer = bytes.buffer.slice(
+                bytes.byteOffset,
+                bytes.byteOffset + bytes.byteLength
+                ) as ArrayBuffer;
+
+                const blob = new Blob([arrayBuffer], {
+                type: 'application/pdf',
+                });
+
+                setOutBlob(blob);
+                setSuccess(true);
     } catch (err: any) {
       console.error(err);
       setError(err?.message || 'Failed to extract pages');
