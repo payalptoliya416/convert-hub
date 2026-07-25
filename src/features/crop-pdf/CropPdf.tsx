@@ -110,8 +110,9 @@ export default function CropPdf() {
       canvas.height = viewport.height;
 
       await page.render({
+        canvas: canvas,
         canvasContext: context,
-        viewport: viewport,
+        viewport,
       }).promise;
 
       // Default crop area (10% padding from edge)
