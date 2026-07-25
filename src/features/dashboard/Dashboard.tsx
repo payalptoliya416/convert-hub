@@ -7,11 +7,15 @@ import {
   Image, 
   FileImage, 
   Merge, 
-  Minimize2, 
+  Minimize2,
+  Copy,
+  RotateCw,
+  Crop,
+  Droplets,
+  Lock,
   ArrowRight,
   Shield,
   Zap,
-  Lock,
   Search
 } from 'lucide-react';
 
@@ -120,6 +124,51 @@ const tools: Tool[] = [
     path: '/compress-pdf',
     icon: Minimize2,
     color: 'from-cyan-500 to-blue-600 shadow-cyan-500/20',
+    category: 'utils'
+  },
+  {
+    id: 'split-pdf',
+    name: 'Split PDF',
+    description: 'Extract specific pages from PDF into a new document.',
+    path: '/split-pdf',
+    icon: Copy,
+    color: 'from-purple-500 to-indigo-600 shadow-purple-500/20',
+    category: 'utils'
+  },
+  {
+    id: 'rotate-pdf',
+    name: 'Rotate PDF',
+    description: 'Rotate all pages of your PDF document by 90°, 180°, or 270°.',
+    path: '/rotate-pdf',
+    icon: RotateCw,
+    color: 'from-cyan-500 to-teal-600 shadow-cyan-500/20',
+    category: 'utils'
+  },
+  {
+    id: 'crop-pdf',
+    name: 'Crop PDF',
+    description: 'Remove margins from PDF pages by cropping from all sides.',
+    path: '/crop-pdf',
+    icon: Crop,
+    color: 'from-amber-500 to-orange-600 shadow-amber-500/20',
+    category: 'utils'
+  },
+  {
+    id: 'pdf-watermark',
+    name: 'PDF Watermark',
+    description: 'Add text watermark to all pages of your PDF document.',
+    path: '/pdf-watermark',
+    icon: Droplets,
+    color: 'from-blue-500 to-cyan-600 shadow-blue-500/20',
+    category: 'utils'
+  },
+  {
+    id: 'protect-pdf',
+    name: 'Protect PDF',
+    description: 'Add password protection to encrypt your PDF documents.',
+    path: '/protect-pdf',
+    icon: Lock,
+    color: 'from-red-500 to-pink-600 shadow-red-500/20',
     category: 'utils'
   }
 ];

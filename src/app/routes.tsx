@@ -10,6 +10,11 @@ import PptToPdf from '../features/ppt-to-pdf/PptToPdf';
 import ExcelToPdf from '../features/excel-to-pdf/ExcelToPdf';
 import MergePdf from '../features/merge-pdf/MergePdf';
 import CompressPdf from '../features/compress-pdf/CompressPdf';
+import SplitPdf from '../features/split-pdf/SplitPdf';
+import RotatePdf from '../features/rotate-pdf/RotatePdf';
+import CropPdf from '../features/crop-pdf/CropPdf';
+import PdfWatermark from '../features/pdf-watermark/PdfWatermark';
+import ProtectPdf from '../features/protect-pdf/ProtectPdf';
 
 export default function AppRoutes() {
   return (
@@ -25,6 +30,11 @@ export default function AppRoutes() {
       <Route path="/excel-to-pdf" element={<ExcelToPdf />} />
       <Route path="/merge-pdf" element={<MergePdf />} />
       <Route path="/compress-pdf" element={<CompressPdf />} />
+      <Route path="/split-pdf" element={<SplitPdf />} />
+      <Route path="/rotate-pdf" element={<RotatePdf />} />
+      <Route path="/crop-pdf" element={<CropPdf />} />
+      <Route path="/pdf-watermark" element={<PdfWatermark />} />
+      <Route path="/protect-pdf" element={<ProtectPdf />} />
       <Route path="*" element={<Dashboard />} />
     </Routes>
   );
