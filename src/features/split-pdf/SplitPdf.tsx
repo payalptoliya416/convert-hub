@@ -52,18 +52,18 @@ export default function SplitPdf() {
   const handleFile = async (selectedFile: File | null) => {
     if (!selectedFile) return;
     setRanges([{ from: 1, to: 1 }]);
-setMergeRanges(false);
-setFixedSize(1);
+    setMergeRanges(false);
+    setFixedSize(1);
 
-setExtractMode("select");
-setPagesInput("");
-setMergeExtractedPages(false);
+    setExtractMode("select");
+    setPagesInput("");
+    setMergeExtractedPages(false);
 
-setMaxSize(1);
-setSizeUnit("MB");
-setAllowCompression(true);
+    setMaxSize(1);
+    setSizeUnit("MB");
+    setAllowCompression(true);
 
-setActiveTab("range");
+    setActiveTab("range");
     if (selectedFile.type !== "application/pdf") {
       setError("Please select a valid PDF file.");
       return;
@@ -179,47 +179,47 @@ setActiveTab("range");
     return zip.generateAsync({ type: "blob" });
   };
 
-   const resetAll = () => {
-  setFile(null);
-  setTotalPages(0);
+  const resetAll = () => {
+    setFile(null);
+    setTotalPages(0);
 
-  setError(null);
-  setLoading(false);
+    setError(null);
+    setLoading(false);
 
-  setResultBlob(null);
-  setResultName("");
-  setResultMessage(null);
+    setResultBlob(null);
+    setResultName("");
+    setResultMessage(null);
 
-  // Range
-  setRangeMode("custom");
-  setRanges([{ from: 1, to: 1 }]);
-  setMergeRanges(false);
-  setFixedSize(1);
+    // Range
+    setRangeMode("custom");
+    setRanges([{ from: 1, to: 1 }]);
+    setMergeRanges(false);
+    setFixedSize(1);
 
-  // Pages
-  setExtractMode("select");
-  setPagesInput("");
-  setMergeExtractedPages(false);
+    // Pages
+    setExtractMode("select");
+    setPagesInput("");
+    setMergeExtractedPages(false);
 
-  // Size
-  setMaxSize(1);
-  setSizeUnit("MB");
-  setAllowCompression(true);
+    // Size
+    setMaxSize(1);
+    setSizeUnit("MB");
+    setAllowCompression(true);
 
-  if (fileInputRef.current) {
-    fileInputRef.current.value = "";
-  }
-   };
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const downloadResult = () => {
-  if (!resultBlob || !resultName || !file) return;
+    if (!resultBlob || !resultName || !file) return;
 
-  saveAs(resultBlob, resultName);
+    saveAs(resultBlob, resultName);
 
-  setTimeout(() => {
-    resetAll();
-  }, 500);
-};
+    setTimeout(() => {
+      resetAll();
+    }, 500);
+  };
 
   const handleSplit = async () => {
     if (!file) {
@@ -415,9 +415,9 @@ setActiveTab("range");
         setResultName(`${baseName}_split_files.zip`);
       }
       window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+        top: 0,
+        behavior: "smooth",
+      });
     } catch (err: any) {
       console.error(err);
       setError(err?.message || "Failed to split PDF.");
@@ -938,12 +938,12 @@ setActiveTab("range");
                 type="button"
                 onClick={handleSplit}
                 disabled={
-                !file ||
-                loading ||
-                (activeTab === "pages" &&
-                  extractMode === "select" &&
-                  !pagesInput.trim())
-              }
+                  !file ||
+                  loading ||
+                  (activeTab === "pages" &&
+                    extractMode === "select" &&
+                    !pagesInput.trim())
+                }
                 className={`w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition cursor-pointer shadow-xl ${
                   !file
                     ? "bg-red-600/50 text-white/70 border border-red-500/30 cursor-not-allowed opacity-80"
