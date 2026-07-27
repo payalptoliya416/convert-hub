@@ -108,6 +108,7 @@ export default function HtmlToPdf() {
   // '' = nothing loaded yet, shows upload zone
   const [htmlCode, setHtmlCode] = useState('');
   const [mode, setMode] = useState<'code' | 'file'>('code');
+  console.log("mode",mode)
   const [loading, setLoading] = useState(false);
   const [urlLoading, setUrlLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
