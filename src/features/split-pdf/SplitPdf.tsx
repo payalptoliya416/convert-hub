@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
@@ -19,55 +19,72 @@ import {
 
 (pdfjsLib as any).GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-// ─── Page Thumbnail Component ────────────────────────────────────────────────
+// ─── Single page canvas thumbnail ────────────────────────────────────────────
 function PageThumb({
   pdfRef,
   pageNum,
-  isSelected,
-  onClick,
 }: {
   pdfRef: pdfjsLib.PDFDocumentProxy;
   pageNum: number;
-  isSelected: boolean;
-  onClick: (n: number) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const page = await pdfRef.getPage(pageNum);
-      const viewport = page.getViewport({ scale: 0.5 });
-      const canvas = canvasRef.current;
-      if (!canvas || cancelled) return;
-      const ctx = canvas.getContext("2d")!;
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      await page.render({ canvasContext: ctx, viewport, canvas: canvas }).promise;
+      try {
+        const page = await pdfRef.getPage(pageNum);
+        // Fixed width: render to 80px wide
+        const baseVp = page.getViewport({ scale: 1 });
+        const scale = 80 / baseVp.width;
+        const viewport = page.getViewport({ scale });
+        const canvas = canvasRef.current;
+        if (!canvas || cancelled) return;
+        const ctx = canvas.getContext("2d")!;
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+      } catch (_) {}
     })();
     return () => { cancelled = true; };
   }, [pdfRef, pageNum]);
 
   return (
-    <div
-      onClick={() => onClick(pageNum)}
-      className={`relative flex flex-col items-center gap-1.5 cursor-pointer group`}
-    >
-      <div
-        className={`rounded-lg overflow-hidden border-2 transition-all duration-150 shadow-md ${
-          isSelected
-            ? "border-red-500 ring-2 ring-red-500/40"
-            : "border-slate-700 hover:border-slate-500"
-        }`}
-      >
-        <canvas ref={canvasRef} className="block max-w-full" style={{ display: "block" }} />
+    <div className="flex flex-col items-center gap-1 shrink-0">
+      <div className="bg-white rounded-sm shadow overflow-hidden border border-slate-200" style={{ width: 80 }}>
+        <canvas ref={canvasRef} style={{ display: "block", width: 80 }} />
       </div>
-      {isSelected && (
-        <div className="absolute top-1.5 right-1.5 bg-red-500 rounded-full p-0.5 shadow-lg">
-          <Check className="w-3 h-3 text-white stroke-[3]" />
-        </div>
-      )}
-      <span className="text-[10px] text-slate-400 font-medium">{pageNum}</span>
+      <span className="text-[10px] text-slate-500">{pageNum}</span>
+    </div>
+  );
+}
+
+// ─── Range preview box (iLovePDF style) ──────────────────────────────────────
+function RangeBox({
+  pdfRef,
+  label,
+  pageNums,
+}: {
+  pdfRef: pdfjsLib.PDFDocumentProxy;
+  label: string;
+  pageNums: number[];
+}) {
+  const showPages = pageNums.slice(0, 2);
+  const hasMore = pageNums.length > 2;
+
+  return (
+    <div className="flex flex-col items-center gap-1.5">
+      <p className="text-xs text-slate-400 font-medium">{label}</p>
+      <div className="border border-dashed border-slate-600 rounded-lg p-2.5 bg-slate-900/80 flex items-end justify-center gap-2 w-full">
+        {showPages.map((n) => (
+          <PageThumb key={n} pdfRef={pdfRef} pageNum={n} />
+        ))}
+      </div>
+        {hasMore && (
+          <div className="flex flex-col items-center justify-center self-center pb-4 gap-0.5">
+            <span className="text-[9px] text-slate-500 whitespace-nowrap">{pageNums.length} pages</span>
+          </div>
+        )}
     </div>
   );
 }
@@ -84,8 +101,7 @@ export default function SplitPdf() {
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [resultName, setResultName] = useState<string>("");
   const [resultMessage, setResultMessage] = useState<string | null>(null);
-  const [selectedPages, setSelectedPages] = useState<Set<number>>(new Set());
-
+  const [_selectedPages, _setSelectedPages] = useState<Set<number>>(new Set());
   // --- Range Tab State ---
   const [rangeMode, setRangeMode] = useState<"custom" | "fixed">("custom");
   const [ranges, setRanges] = useState<Array<{ from: number; to: number }>>([
@@ -122,9 +138,8 @@ export default function SplitPdf() {
     setAllowCompression(true);
 
     setActiveTab("range");
-    setSelectedPages(new Set());
-    if (selectedFile.type !== "application/pdf") {
-      setError("Please select a valid PDF file.");
+    _setSelectedPages(new Set());
+    if (selectedFile.type !== "application/pdf") {      setError("Please select a valid PDF file.");
       return;
     }
 
@@ -250,7 +265,7 @@ export default function SplitPdf() {
     setFile(null);
     setTotalPages(0);
     setPdfDoc(null);
-    setSelectedPages(new Set());
+    _setSelectedPages(new Set());
 
     setError(null);
     setLoading(false);
@@ -499,21 +514,6 @@ export default function SplitPdf() {
     fileInputRef.current?.click();
   };
 
-  const togglePage = useCallback((n: number) => {
-    setSelectedPages((prev) => {
-      const next = new Set(prev);
-      if (next.has(n)) next.delete(n);
-      else next.add(n);
-      return next;
-    });
-  }, []);
-
-  const selectAll = () => {
-    setSelectedPages(new Set(Array.from({ length: totalPages }, (_, i) => i + 1)));
-  };
-
-  const clearSelection = () => setSelectedPages(new Set());
-
   // Range Helpers
   const addRange = () => {
     const lastRange = ranges[ranges.length - 1];
@@ -601,44 +601,61 @@ export default function SplitPdf() {
                 </button>
               </div>
 
-              {/* Selection controls */}
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">
-                  {selectedPages.size > 0
-                    ? `${selectedPages.size} page${selectedPages.size > 1 ? "s" : ""} selected`
-                    : "Click pages to select"}
-                </span>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={selectAll}
-                    className="text-xs text-violet-400 hover:text-violet-300 cursor-pointer"
-                  >
-                    Select All
-                  </button>
-                  <span className="text-slate-700">·</span>
-                  <button
-                    onClick={clearSelection}
-                    className="text-xs text-slate-400 hover:text-slate-300 cursor-pointer"
-                  >
-                    Clear
-                  </button>
-                </div>
-              </div>
-
-              {/* Thumbnail grid */}
+              {/* iLovePDF-style range preview grid */}
               <div className="flex-1 overflow-y-auto rounded-2xl bg-slate-950/60 border border-slate-800 p-4">
                 {pdfDoc ? (
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-                      <PageThumb
-                        key={n}
-                        pdfRef={pdfDoc}
-                        pageNum={n}
-                        isSelected={selectedPages.has(n)}
-                        onClick={togglePage}
-                      />
-                    ))}
-                  </div>
+                  (() => {
+                    // Build preview groups based on active tab
+                    let groups: { label: string; pages: number[] }[] = [];
+
+                    if (activeTab === "range" && rangeMode === "custom") {
+                      const normalized = normalizeRanges(ranges, totalPages);
+                      if (normalized.length === 0) {
+                        groups = [{ label: "Range 1", pages: [1] }];
+                      } else {
+                        groups = normalized.map((r, i) => ({
+                          label: `Range ${i + 1}`,
+                          pages: Array.from({ length: r.to - r.from + 1 }, (_, idx) => r.from + idx),
+                        }));
+                      }
+                    } else if (activeTab === "range" && rangeMode === "fixed") {
+                      const size = Math.max(1, fixedSize);
+                      const chunks = Math.ceil(totalPages / size);
+                      groups = Array.from({ length: Math.min(chunks, 8) }, (_, ci) => {
+                        const from = ci * size + 1;
+                        const to = Math.min(totalPages, from + size - 1);
+                        return {
+                          label: `Part ${ci + 1}`,
+                          pages: Array.from({ length: to - from + 1 }, (_, idx) => from + idx),
+                        };
+                      });
+                    } else if (activeTab === "pages") {
+                      const nums = extractMode === "all"
+                        ? Array.from({ length: totalPages }, (_, i) => i + 1)
+                        : parseRanges(pagesInput, totalPages);
+                      if (mergeExtractedPages) {
+                        groups = [{ label: "Extracted", pages: nums.length ? nums : [1] }];
+                      } else {
+                        groups = nums.slice(0, 8).map((n) => ({ label: `Page ${n}`, pages: [n] }));
+                      }
+                    } else if (activeTab === "size") {
+                      // Show all pages as one group
+                      groups = [{ label: "Document", pages: Array.from({ length: Math.min(totalPages, 4) }, (_, i) => i + 1) }];
+                    }
+
+                    return (
+                      <div className="grid grid-cols-2 gap-3">
+                        {groups.map((g, i) => (
+                          <RangeBox
+                            key={i}
+                            pdfRef={pdfDoc}
+                            label={g.label}
+                            pageNums={g.pages}
+                          />
+                        ))}
+                      </div>
+                    );
+                  })()
                 ) : (
                   <div className="flex items-center justify-center h-32 text-slate-500 text-sm">
                     Loading preview...
@@ -1084,7 +1101,7 @@ export default function SplitPdf() {
                 <button
                   type="button"
                   onClick={downloadResult}
-                  className="w-full py-3 rounded-2xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-emerald-600/20 cursor-pointer"
+                  className="w-full p-3 rounded-2xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-emerald-600/20 cursor-pointer"
                 >
                   Download {resultName}
                 </button>
