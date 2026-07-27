@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
+import * as pdfjsLib from "pdfjs-dist";
 import {
   Upload,
   FileText,
@@ -16,9 +17,65 @@ import {
   AlertCircle,
 } from "lucide-react";
 
+(pdfjsLib as any).GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
+// ─── Page Thumbnail Component ────────────────────────────────────────────────
+function PageThumb({
+  pdfRef,
+  pageNum,
+  isSelected,
+  onClick,
+}: {
+  pdfRef: pdfjsLib.PDFDocumentProxy;
+  pageNum: number;
+  isSelected: boolean;
+  onClick: (n: number) => void;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const page = await pdfRef.getPage(pageNum);
+      const viewport = page.getViewport({ scale: 0.5 });
+      const canvas = canvasRef.current;
+      if (!canvas || cancelled) return;
+      const ctx = canvas.getContext("2d")!;
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: ctx, viewport, canvas: canvas }).promise;
+    })();
+    return () => { cancelled = true; };
+  }, [pdfRef, pageNum]);
+
+  return (
+    <div
+      onClick={() => onClick(pageNum)}
+      className={`relative flex flex-col items-center gap-1.5 cursor-pointer group`}
+    >
+      <div
+        className={`rounded-lg overflow-hidden border-2 transition-all duration-150 shadow-md ${
+          isSelected
+            ? "border-red-500 ring-2 ring-red-500/40"
+            : "border-slate-700 hover:border-slate-500"
+        }`}
+      >
+        <canvas ref={canvasRef} className="block max-w-full" style={{ display: "block" }} />
+      </div>
+      {isSelected && (
+        <div className="absolute top-1.5 right-1.5 bg-red-500 rounded-full p-0.5 shadow-lg">
+          <Check className="w-3 h-3 text-white stroke-[3]" />
+        </div>
+      )}
+      <span className="text-[10px] text-slate-400 font-medium">{pageNum}</span>
+    </div>
+  );
+}
+
 export default function SplitPdf() {
   const [file, setFile] = useState<File | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [activeTab, setActiveTab] = useState<"range" | "pages" | "size">(
     "range",
   );
@@ -27,6 +84,7 @@ export default function SplitPdf() {
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [resultName, setResultName] = useState<string>("");
   const [resultMessage, setResultMessage] = useState<string | null>(null);
+  const [selectedPages, setSelectedPages] = useState<Set<number>>(new Set());
 
   // --- Range Tab State ---
   const [rangeMode, setRangeMode] = useState<"custom" | "fixed">("custom");
@@ -64,6 +122,7 @@ export default function SplitPdf() {
     setAllowCompression(true);
 
     setActiveTab("range");
+    setSelectedPages(new Set());
     if (selectedFile.type !== "application/pdf") {
       setError("Please select a valid PDF file.");
       return;
@@ -74,17 +133,25 @@ export default function SplitPdf() {
     setResultBlob(null);
     setResultName("");
     setResultMessage(null);
+    setPdfDoc(null);
 
     try {
       const arrayBuffer = await selectedFile.arrayBuffer();
+      // pdf-lib for page count
       const pdf = await PDFDocument.load(new Uint8Array(arrayBuffer));
+      const count = pdf.getPageCount();
       setFile(selectedFile);
-      setTotalPages(pdf.getPageCount());
+      setTotalPages(count);
+
+      // pdfjs for thumbnails
+      const pdfjs = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
+      setPdfDoc(pdfjs);
     } catch (err) {
       console.error(err);
       setError("Failed to read PDF file.");
       setFile(null);
       setTotalPages(0);
+      setPdfDoc(null);
     }
   };
 
@@ -182,6 +249,8 @@ export default function SplitPdf() {
   const resetAll = () => {
     setFile(null);
     setTotalPages(0);
+    setPdfDoc(null);
+    setSelectedPages(new Set());
 
     setError(null);
     setLoading(false);
@@ -430,6 +499,21 @@ export default function SplitPdf() {
     fileInputRef.current?.click();
   };
 
+  const togglePage = useCallback((n: number) => {
+    setSelectedPages((prev) => {
+      const next = new Set(prev);
+      if (next.has(n)) next.delete(n);
+      else next.add(n);
+      return next;
+    });
+  }, []);
+
+  const selectAll = () => {
+    setSelectedPages(new Set(Array.from({ length: totalPages }, (_, i) => i + 1)));
+  };
+
+  const clearSelection = () => setSelectedPages(new Set());
+
   // Range Helpers
   const addRange = () => {
     const lastRange = ranges[ranges.length - 1];
@@ -493,39 +577,73 @@ export default function SplitPdf() {
               </p>
             </div>
           ) : (
-            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 space-y-6 min-h-[440px] flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-800 gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400">
-                      <FileText className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-white truncate max-w-xs sm:max-w-md">
-                        {file.name}
-                      </h4>
-                      <p className="text-xs text-slate-400 mt-0.5">
-                        {originalSize} MB
-                      </p>
-                    </div>
+            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-5 space-y-4 min-h-[440px] flex flex-col">
+              {/* File header */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800 gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="p-2.5 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400 shrink-0">
+                    <FileText className="w-5 h-5" />
                   </div>
+                  <div className="min-w-0">
+                    <h4 className="font-semibold text-white truncate max-w-[180px] sm:max-w-xs text-sm">
+                      {file.name}
+                    </h4>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {originalSize} MB · {totalPages} pages
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={resetAll}
+                  className="text-xs font-semibold text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/20 transition cursor-pointer shrink-0"
+                >
+                  Change
+                </button>
+              </div>
+
+              {/* Selection controls */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-slate-400">
+                  {selectedPages.size > 0
+                    ? `${selectedPages.size} page${selectedPages.size > 1 ? "s" : ""} selected`
+                    : "Click pages to select"}
+                </span>
+                <div className="flex items-center gap-2">
                   <button
-                    onClick={resetAll}
-                    className="text-xs font-semibold text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/20 transition cursor-pointer"
+                    onClick={selectAll}
+                    className="text-xs text-violet-400 hover:text-violet-300 cursor-pointer"
                   >
-                    Change File
+                    Select All
+                  </button>
+                  <span className="text-slate-700">·</span>
+                  <button
+                    onClick={clearSelection}
+                    className="text-xs text-slate-400 hover:text-slate-300 cursor-pointer"
+                  >
+                    Clear
                   </button>
                 </div>
+              </div>
 
-                <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-8 flex flex-col items-center justify-center min-h-[280px]">
-                  <div className="w-24 h-32 bg-slate-900 border border-slate-700 rounded-lg shadow-2xl flex flex-col items-center justify-center gap-2 relative">
-                    <FileText className="w-8 h-8 text-violet-400" />
-                    <span className="text-[10px] text-slate-400 font-mono">
-                      Page 1
-                    </span>
+              {/* Thumbnail grid */}
+              <div className="flex-1 overflow-y-auto rounded-2xl bg-slate-950/60 border border-slate-800 p-4">
+                {pdfDoc ? (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                      <PageThumb
+                        key={n}
+                        pdfRef={pdfDoc}
+                        pageNum={n}
+                        isSelected={selectedPages.has(n)}
+                        onClick={togglePage}
+                      />
+                    ))}
                   </div>
-                  <p className="text-xs text-slate-500 mt-4">Document Ready</p>
-                </div>
+                ) : (
+                  <div className="flex items-center justify-center h-32 text-slate-500 text-sm">
+                    Loading preview...
+                  </div>
+                )}
               </div>
 
               {error && (
