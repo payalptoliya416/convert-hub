@@ -17,7 +17,7 @@ import RemovePages from '../features/remove-pages/RemovePages';
 import ExtractPages from '../features/extract-pages/ExtractPages';
 import HTMLtoPDF from '../features/html-to-pdf/HtmlToPdf';
 // import PdfWatermark from '../features/pdf-watermark/PdfWatermark';
-// import ProtectPdf from '../features/protect-pdf/ProtectPdf';
+import ProtectPdf from '../features/protect-pdf/ProtectPdf';
 
 export default function AppRoutes() {
   return (
@@ -39,7 +39,7 @@ export default function AppRoutes() {
       <Route path="/extract-pages" element={<ExtractPages />} />
       <Route path="/crop-pdf" element={<CropPdf />} />
       {/* <Route path="/pdf-watermark" element={<PdfWatermark />} /> */}
-      {/* <Route path="/protect-pdf" element={<ProtectPdf />} /> */}
+      <Route path="/protect-pdf" element={<ProtectPdf />} />
       <Route path="/html-to-pdf" element={<HTMLtoPDF />} />
       <Route path="*" element={<Dashboard />} />
     </Routes>

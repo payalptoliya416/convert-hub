@@ -198,15 +198,15 @@ const tools: Tool[] = [
   //   color: 'from-blue-500 to-cyan-600 shadow-blue-500/20',
   //   category: 'utils'
   // },
-  // {
-  //   id: 'protect-pdf',
-  //   name: 'Protect PDF',
-  //   description: 'Add password protection to encrypt your PDF documents.',
-  //   path: '/protect-pdf',
-  //   icon: Lock,
-  //   color: 'from-red-500 to-pink-600 shadow-red-500/20',
-  //   category: 'utils'
-  // }
+  {
+    id: 'protect-pdf',
+    name: 'Protect PDF',
+    description: 'Add password protection to encrypt your PDF documents.',
+    path: '/protect-pdf',
+    icon: Lock,
+    color: 'from-red-500 to-pink-600 shadow-red-500/20',
+    category: 'utils'
+  }
 ];
 
 export default function Dashboard() {
