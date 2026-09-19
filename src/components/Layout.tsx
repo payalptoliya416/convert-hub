@@ -27,39 +27,22 @@ interface LayoutProps {
 
 const dropdownTools = [
   { name: 'PDF to Word', path: '/pdf-to-word', icon: FileText, color: 'text-blue-400' },
-
   { name: 'PDF to PowerPoint', path: '/pdf-to-ppt', icon: Presentation, color: 'text-orange-400' },
-
   { name: 'PDF to Excel', path: '/pdf-to-excel', icon: Table, color: 'text-emerald-400' },
-
   { name: 'PDF to Image', path: '/pdf-to-image', icon: Image, color: 'text-purple-400' },
-
   { name: 'Image to PDF', path: '/image-to-pdf', icon: FileImage, color: 'text-rose-400' },
-
   { name: 'JPG to PDF', path: '/jpg-to-pdf', icon: FileImage, color: 'text-pink-400' },
-
   { name: 'HTML to PDF', path: '/html-to-pdf', icon: Code2, color: 'text-violet-400' },
-
   { name: 'Word to PDF', path: '/word-to-pdf', icon: FileText, color: 'text-blue-500' },
-
   { name: 'PowerPoint to PDF', path: '/ppt-to-pdf', icon: Presentation, color: 'text-orange-500' },
-
   { name: 'Excel to PDF', path: '/excel-to-pdf', icon: Table, color: 'text-emerald-500' },
-
   { name: 'Merge PDF', path: '/merge-pdf', icon: Merge, color: 'text-violet-400' },
-
   { name: 'Compress PDF', path: '/compress-pdf', icon: Minimize2, color: 'text-cyan-400' },
-
   { name: 'Split PDF', path: '/split-pdf', icon: Scissors, color: 'text-purple-400' },
-
   { name: 'Rotate PDF', path: '/rotate-pdf', icon: RotateCw, color: 'text-cyan-400' },
-
   { name: 'Crop PDF', path: '/crop-pdf', icon: Crop, color: 'text-orange-400' },
-
   { name: 'Remove Pages', path: '/remove-pages', icon: FileX, color: 'text-rose-500' },
-
   { name: 'Extract Pages', path: '/extract-pages', icon: FileOutput, color: 'text-emerald-400' },
-
   { name: 'Protect PDF', path: '/protect-pdf', icon: Lock, color: 'text-pink-500' },
 ];
 
@@ -91,7 +74,7 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/75 border-b border-slate-900">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
@@ -200,7 +183,7 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-grow max-w-6xl w-full mx-auto px-4 py-12">
+      <main className="flex-grow container w-full mx-auto px-4 pt-12">
         {children}
       </main>
     </div>
