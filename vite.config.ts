@@ -7,13 +7,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react(),
-    babel({ presets: [reactCompilerPreset()] }),
+    babel({
+      presets: [reactCompilerPreset()],
+    }),
     tailwindcss(),
   ],
-  server: {
-    historyApiFallback: true,
-  },
-  preview: {
-    historyApiFallback: true,
-  },
-})
+
+  appType: "spa"
+});
