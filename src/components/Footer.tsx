@@ -16,7 +16,6 @@ import {
   Files,
   LockKeyhole,
   ShieldCheck,
-  ArrowUpRight,
   Mail,
 } from "lucide-react";
 
