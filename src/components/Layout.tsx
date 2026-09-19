@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  FileText, 
-  Presentation, 
-  Table, 
-  Image, 
-  FileImage, 
-  Merge, 
-  Minimize2, 
+import {
+  FileText,
+  Presentation,
+  Table,
+  Image,
+  FileImage,
+  Merge,
+  Minimize2,
+  Code2,
+  Scissors,
+  RotateCw,
+  Crop,
+  FileX,
+  FileOutput,
+  Lock,
+  Home,
   ChevronDown,
   Menu,
   X,
-  Home
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -20,21 +27,64 @@ interface LayoutProps {
 
 const dropdownTools = [
   { name: 'PDF to Word', path: '/pdf-to-word', icon: FileText, color: 'text-blue-400' },
+
   { name: 'PDF to PowerPoint', path: '/pdf-to-ppt', icon: Presentation, color: 'text-orange-400' },
+
   { name: 'PDF to Excel', path: '/pdf-to-excel', icon: Table, color: 'text-emerald-400' },
+
   { name: 'PDF to Image', path: '/pdf-to-image', icon: Image, color: 'text-purple-400' },
+
   { name: 'Image to PDF', path: '/image-to-pdf', icon: FileImage, color: 'text-rose-400' },
+
+  { name: 'JPG to PDF', path: '/jpg-to-pdf', icon: FileImage, color: 'text-pink-400' },
+
+  { name: 'HTML to PDF', path: '/html-to-pdf', icon: Code2, color: 'text-violet-400' },
+
   { name: 'Word to PDF', path: '/word-to-pdf', icon: FileText, color: 'text-blue-500' },
+
   { name: 'PowerPoint to PDF', path: '/ppt-to-pdf', icon: Presentation, color: 'text-orange-500' },
+
   { name: 'Excel to PDF', path: '/excel-to-pdf', icon: Table, color: 'text-emerald-500' },
+
   { name: 'Merge PDF', path: '/merge-pdf', icon: Merge, color: 'text-violet-400' },
+
   { name: 'Compress PDF', path: '/compress-pdf', icon: Minimize2, color: 'text-cyan-400' },
+
+  { name: 'Split PDF', path: '/split-pdf', icon: Scissors, color: 'text-purple-400' },
+
+  { name: 'Rotate PDF', path: '/rotate-pdf', icon: RotateCw, color: 'text-cyan-400' },
+
+  { name: 'Crop PDF', path: '/crop-pdf', icon: Crop, color: 'text-orange-400' },
+
+  { name: 'Remove Pages', path: '/remove-pages', icon: FileX, color: 'text-rose-500' },
+
+  { name: 'Extract Pages', path: '/extract-pages', icon: FileOutput, color: 'text-emerald-400' },
+
+  { name: 'Protect PDF', path: '/protect-pdf', icon: Lock, color: 'text-pink-500' },
 ];
 
 export default function Layout({ children }: LayoutProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setDropdownOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-violet-600/30 selection:text-white">
@@ -63,7 +113,7 @@ export default function Layout({ children }: LayoutProps) {
             </Link>
 
             {/* Tools Dropdown */}
-            <div className="relative">
+            <div ref={dropdownRef} className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className={`text-sm font-semibold flex items-center gap-1 transition cursor-pointer ${
@@ -78,7 +128,7 @@ export default function Layout({ children }: LayoutProps) {
                   {/* Backdrop overlay to close dropdown */}
                   <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)}></div>
                   
-                  <div className="absolute right-0 mt-3 w-80 rounded-2xl bg-slate-900 border border-slate-800 p-3 shadow-2xl z-20 grid grid-cols-1 gap-1">
+                  <div className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] overflow-y-auto rounded-2xl bg-slate-900 border border-slate-800 p-3 shadow-2xl z-20 grid grid-cols-1 gap-1">
                     <div className="px-3 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-800 mb-1">
                       Available Converters
                     </div>
