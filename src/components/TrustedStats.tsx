@@ -82,7 +82,7 @@ const TrustedStats: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 rounded-3xl border border-slate-800 bg-slate-900/60 py-12 sm:py-14 lg:py-16">
         {/* Heading */}
         <div className="mx-auto max-w-4xl text-center space-y-6">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
            Trusted by <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Millions</span> {""}of Users <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Worldwide</span>
           </h1>
 
@@ -101,7 +101,7 @@ const TrustedStats: React.FC = () => {
               className="flex flex-col items-center text-center"
             >
               <div
-                className={`text-4xl font-bold tracking-tight sm:text-5xl ${stat.color}`}
+                className={`text-2xl font-semibold tracking-tight sm:text-5xl ${stat.color}`}
               >
                 {counts[index]}
                 {stat.suffix}

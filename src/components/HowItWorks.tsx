@@ -34,11 +34,11 @@ const HowItWorks: React.FC = () => {
       <div className="mx-auto max-w-7xl rounded-3xl border border-slate-800 bg-slate-900/60 px-4 py-10 sm:py-12 lg:py-14">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center space-y-6">
-         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+         <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
            How <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Converthub?</span> {""}Works
           </h1>
 
-      <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+      <p className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Simple, fast, and secure. Get your work done in just three easy
             steps.
           </p>
@@ -70,7 +70,7 @@ const HowItWorks: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="mt-6 text-xl font-semibold text-white sm:text-2xl">
+                <h3 className="mt-6 text-lg font-semibold text-white sm:text-xl">
                   {step.title}
                 </h3>
 

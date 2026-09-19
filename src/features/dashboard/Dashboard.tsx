@@ -229,10 +229,10 @@ export default function Dashboard() {
       <section className="relative text-center px-4 rounded-3xl overflow-hidden shadow-2xl">
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div> */}
         <div className="relative max-w-4xl mx-auto space-y-6">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
              Explore Our  <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Tool Categories</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             From PDF manipulation to code formatting, finance calculators to
             image editing - find the perfect tool for your needs.
           </p>

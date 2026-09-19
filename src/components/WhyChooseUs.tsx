@@ -42,10 +42,10 @@ const WhyChooseUs: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 rounded-3xl border border-slate-800 bg-slate-900/60 py-10 sm:py-12 lg:py-14">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center space-y-6">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
            Why Choose <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Converthub?</span>
           </h1>
-           <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+           <p className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Your all-in-one platform for productivity tools. Fast, secure, and completely free.
           </p>
         </div>

@@ -212,13 +212,13 @@ const FooterFile: React.FC = () => {
 
         {/* Bottom */}
         <div className="border-t border-slate-800/80">
-          <div className="flex flex-col items-center justify-between gap-3 py-6 text-center sm:flex-row sm:text-left">
+          <div className="flex flex-col items-center justify-center gap-3 py-6 text-center sm:flex-row sm:text-left">
 
             <p className="text-xs text-slate-500 sm:text-sm">
               © {new Date().getFullYear()} ConvertHub. All rights reserved.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end">
+            {/* <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end">
               <Link
                 to="/"
                 className="text-xs text-slate-500 transition hover:text-violet-400 sm:text-sm"
@@ -246,7 +246,7 @@ const FooterFile: React.FC = () => {
               >
                 Terms
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
 
