@@ -228,21 +228,19 @@ export default function Dashboard() {
     <>
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="relative text-center py-16 px-4 rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div>
+      <section className="relative text-center px-4 rounded-3xl overflow-hidden shadow-2xl">
+        {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div> */}
         <div className="relative max-w-4xl mx-auto space-y-6">
-          <span className="px-3 py-1 text-xs font-semibold tracking-wider text-violet-400 bg-violet-400/10 rounded-full border border-violet-400/20 inline-block uppercase">
-            100% Free & Browser-Based
-          </span>
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
-            Convert Files Locally with <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Convert Hub</span>
+             Explore Our  <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Tool Categories</span>
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Fast, secure, and private conversion. Your files never touch our servers — all processing happens directly in your browser.
+            From PDF manipulation to code formatting, finance calculators to
+            image editing - find the perfect tool for your needs.
           </p>
 
           {/* Search bar */}
-          <div className="relative max-w-lg mx-auto mt-8">
+          {/* <div className="relative max-w-lg mx-auto mt-8">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type="text"
@@ -251,39 +249,9 @@ export default function Dashboard() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-          </div>
+          </div> */}
         </div>
 
-        {/* Feature Highlights */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12 pt-10 border-t border-slate-800/80 text-left">
-          <div className="flex gap-4 items-start">
-            <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
-              <Shield className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-white">Absolute Privacy</h4>
-              <p className="text-xs text-slate-400 mt-1">Files never leave your machine. Zero uploads.</p>
-            </div>
-          </div>
-          <div className="flex gap-4 items-start">
-            <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20 text-amber-400">
-              <Zap className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-white">Instant Speed</h4>
-              <p className="text-xs text-slate-400 mt-1">Conversions occur instantly using web assembly.</p>
-            </div>
-          </div>
-          <div className="flex gap-4 items-start">
-            <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
-              <Lock className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-white">Unlimited & Free</h4>
-              <p className="text-xs text-slate-400 mt-1">No file size limits, subscription costs, or signups.</p>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Category Tabs */}

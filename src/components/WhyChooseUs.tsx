@@ -38,20 +38,18 @@ const features = [
 
 const WhyChooseUs: React.FC = () => {
   return (
-    <section className="w-full py-10 sm:py-14 lg:py-16">
+    <section className="w-full py-10 sm:py-14 lg:py-16 px-4">
       <div className="mx-auto max-w-7xl px-4 rounded-3xl border border-slate-800 bg-slate-900/60 py-10 sm:py-12 lg:py-14">
         {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Explore Our Tool Categories
-          </h2>
-
-          <p className="mt-4 text-sm leading-6 text-slate-400 sm:text-base lg:text-lg">
-            From PDF manipulation to code formatting, finance calculators to
-            image editing - find the perfect tool for your needs.
+        <div className="mx-auto max-w-3xl text-center space-y-6">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+           Why Choose <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Converthub?</span>
+          </h1>
+           <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Your all-in-one platform for productivity tools. Fast, secure, and completely free.
           </p>
         </div>
-
+ 
         {/* Cards */}
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
           {features.map((feature) => {
@@ -60,7 +58,7 @@ const WhyChooseUs: React.FC = () => {
             return (
               <div
                 key={feature.title}
-                className="group min-h-[300px] rounded-2xl border border-slate-800 bg-slate-950/50 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:bg-slate-950 sm:min-h-[310px] lg:p-8"
+                className="group min-h-[270px] rounded-2xl border border-slate-800 bg-slate-950/50 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:bg-slate-950 sm:min-h-[270px] p-4"
               >
                 {/* Icon */}
                 <div

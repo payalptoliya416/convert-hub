@@ -33,12 +33,12 @@ const HowItWorks: React.FC = () => {
     <section className="w-full px-4 pb-10 sm:pb-14 lg:pb-16">
       <div className="mx-auto max-w-7xl rounded-3xl border border-slate-800 bg-slate-900/60 px-4 py-10 sm:py-12 lg:py-14">
         {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            How ConvertHub Works
-          </h2>
+        <div className="mx-auto max-w-3xl text-center space-y-6">
+         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+           How <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Converthub?</span> {""}Works
+          </h1>
 
-          <p className="mt-4 text-sm leading-6 text-slate-400 sm:text-base lg:text-lg">
+      <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Simple, fast, and secure. Get your work done in just three easy
             steps.
           </p>

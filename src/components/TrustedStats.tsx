@@ -5,25 +5,25 @@ const stats = [
     value: 100,
     suffix: "+",
     label: "Free Tools",
-    color: "text-rose-500",
+    color: "text-rose-300",
   },
   {
     value: 1,
     suffix: "M+",
     label: "Happy Users",
-    color: "text-blue-500",
+    color: "text-blue-300",
   },
   {
     value: 10,
     suffix: "M+",
     label: "Files Processed",
-    color: "text-emerald-500",
+    color: "text-emerald-300",
   },
   {
     value: 24,
     suffix: "/7",
     label: "Available",
-    color: "text-violet-500",
+    color: "text-violet-300",
   },
 ];
 
@@ -81,12 +81,12 @@ const TrustedStats: React.FC = () => {
     <section ref={sectionRef} className="w-full pb-10 sm:pb-14 lg:pb-16 px-4">
       <div className="mx-auto max-w-7xl px-4 rounded-3xl border border-slate-800 bg-slate-900/60 py-12 sm:py-14 lg:py-16">
         {/* Heading */}
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Trusted by Millions of Users Worldwide
-          </h2>
+        <div className="mx-auto max-w-4xl text-center space-y-6">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+           Trusted by <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Millions</span> {""}of Users <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Worldwide</span>
+          </h1>
 
-          <p className="mx-auto mt-5 max-w-4xl text-sm leading-7 text-slate-400 sm:text-base lg:text-lg">
+         <p className="text-lg text-slate-400 max-w-4xl mx-auto leading-relaxed">
             ConvertHub offers a complete suite of free online tools for PDF,
             video, image, and file management. Download, convert, edit, and
             create — all from one powerful platform.
