@@ -59,11 +59,11 @@ const HowItWorks: React.FC = () => {
               >
                 {/* Step Circle */}
                 <div
-                  className={`flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${step.color} shadow-lg`}
+                  className={`flex h-18 w-18 items-center justify-center rounded-full bg-gradient-to-br ${step.color} shadow-lg`}
                 >
                   <div className="flex h-full w-full flex-col items-center justify-center">
                     <Icon className="mb-0.5 h-5 w-5 text-white/90" />
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-xl font-bold text-white">
                       {step.number}
                     </span>
                   </div>

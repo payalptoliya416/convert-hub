@@ -65,7 +65,7 @@ const WhyChooseUs: React.FC = () => {
                   className={`flex h-16 w-16 items-center justify-center rounded-xl ${feature.iconWrapper}`}
                 >
                   <Icon
-                    className={`h-8 w-8 ${feature.iconColor}`}
+                    className={`h-6 w-6 ${feature.iconColor}`}
                     strokeWidth={2}
                   />
                 </div>
