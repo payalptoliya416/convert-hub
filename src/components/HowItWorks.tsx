@@ -38,7 +38,7 @@ const HowItWorks: React.FC = () => {
            How <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Converthub?</span> {""}Works
           </h1>
 
-      <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Simple, fast, and secure. Get your work done in just three easy
             steps.
           </p>

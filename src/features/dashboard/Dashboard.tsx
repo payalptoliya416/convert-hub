@@ -17,10 +17,7 @@ import {
   Crop,
   // Droplets,
   Lock,
-  ArrowRight,
-  Shield,
-  Zap,
-  Search
+  ArrowRight
 } from 'lucide-react';
 
 interface Tool {
@@ -214,7 +211,8 @@ const tools: Tool[] = [
 ];
 
 export default function Dashboard() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<'all' | 'from-pdf' | 'to-pdf' | 'utils'>('all');
 
   const filteredTools = tools.filter(tool => {
@@ -226,7 +224,7 @@ export default function Dashboard() {
 
   return (
     <>
-    <div className="space-y-12">
+    <div className="space-y-8">
       {/* Hero Section */}
       <section className="relative text-center px-4 rounded-3xl overflow-hidden shadow-2xl">
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div> */}
@@ -234,7 +232,7 @@ export default function Dashboard() {
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">
              Explore Our  <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Tool Categories</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             From PDF manipulation to code formatting, finance calculators to
             image editing - find the perfect tool for your needs.
           </p>
@@ -255,12 +253,12 @@ export default function Dashboard() {
       </section>
 
       {/* Category Tabs */}
-      <div className="flex flex-wrap gap-2 justify-center border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap gap-2 justify-center pb-2">
         {(['all', 'from-pdf', 'to-pdf', 'utils'] as const).map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition cursor-pointer ${
+            className={`px-5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer ${
               activeCategory === cat
                 ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/30'
                 : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
@@ -275,7 +273,7 @@ export default function Dashboard() {
       </div>
 
       {/* Tool Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {filteredTools.map((tool) => {
           const Icon = tool.icon;
           return (
@@ -289,7 +287,7 @@ export default function Dashboard() {
               
               <div>
                 <div className="flex justify-between items-start mb-4">
-                  <div className={`p-4 rounded-xl bg-gradient-to-br ${tool.color} text-white shadow-lg`}>
+                  <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} text-white shadow-lg`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   {tool.badge && (
