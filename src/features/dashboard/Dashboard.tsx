@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import WhyChooseUs from '../../components/WhyChooseUs';
+import HowItWorks from '../../components/HowItWorks';
+import TrustedStats from '../../components/TrustedStats';
+import FooterFile from '../../components/FooterFile';
 import { 
   FileText, 
   Presentation, 
@@ -221,6 +225,7 @@ export default function Dashboard() {
   });
 
   return (
+    <>
     <div className="space-y-12">
       {/* Hero Section */}
       <section className="relative text-center py-16 px-4 rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl">
@@ -353,5 +358,12 @@ export default function Dashboard() {
         </div>
       )}
     </div>
+    <div className="-mx-4">
+      <WhyChooseUs />
+      <HowItWorks />
+      <TrustedStats />
+      <FooterFile />
+    </div>
+    </>
   );
 }

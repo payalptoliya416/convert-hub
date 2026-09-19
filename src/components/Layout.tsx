@@ -74,7 +74,7 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/75 border-b border-slate-900">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto h-16 flex items-center justify-between">
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">

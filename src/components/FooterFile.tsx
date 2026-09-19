@@ -15,7 +15,6 @@ import {
   Trash2,
   Files,
   LockKeyhole,
-  ShieldCheck,
 } from "lucide-react";
 
 interface Tool {
