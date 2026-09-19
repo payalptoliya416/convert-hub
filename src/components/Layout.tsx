@@ -74,7 +74,7 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/75 border-b border-slate-900">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
@@ -183,7 +183,7 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-grow container w-full mx-auto px-4 pt-12">
+      <main className="flex-grow max-w-7xl w-full mx-auto px-4 pt-12">
         {children}
       </main>
     </div>

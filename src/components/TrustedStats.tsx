@@ -79,7 +79,7 @@ const TrustedStats: React.FC = () => {
 
   return (
     <section ref={sectionRef} className="w-full pb-10 sm:pb-14 lg:pb-16 px-4">
-      <div className="mx-auto container px-4 rounded-3xl border border-slate-800 bg-slate-900/60 py-12 sm:py-14 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 rounded-3xl border border-slate-800 bg-slate-900/60 py-12 sm:py-14 lg:py-16">
         {/* Heading */}
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
