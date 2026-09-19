@@ -160,11 +160,11 @@ const FooterFile: React.FC = () => {
   ];
 
   return (
-    <footer className="relative border-t border-slate-800 bg-slate-950">
+    <footer className="relative border-t border-slate-800 bg-slate-950 mx-4">
       {/* Top Glow */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
 
-      <div className="mx-auto container">
+      <div className="mx-auto container px-4">
 
         {/* Footer Main */}
         <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1fr] lg:gap-12 lg:py-14">
