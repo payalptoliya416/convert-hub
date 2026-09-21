@@ -24,6 +24,7 @@ import TextToImage from '../features/text-to-image/TextToImage';
 import ImageBackgroundRemover from '../features/image-bg-remover/ImageBackgroundRemover';
 import QRCodeGenerator from '../features/QRCode-generator/QRCodeGenerator';
 import PasswordGenerator from '../features/password-generator/PasswordGenerator';
+import JsonFormatter from '../features/JSON-formatter/JSONFormatter';
 
 export default function AppRoutes() {
   return (
@@ -54,6 +55,7 @@ export default function AppRoutes() {
       <Route path="/image-background-remover" element={<ImageBackgroundRemover />} />
       <Route path="/qr-code-generator" element={<QRCodeGenerator />} />
       <Route path="/password-generator" element={<PasswordGenerator />} />
+      <Route path="/json-formatter" element={<JsonFormatter />} />
 
       <Route path="*" element={<Dashboard />} />
     </Routes>
