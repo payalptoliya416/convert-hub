@@ -19,6 +19,7 @@ import HTMLtoPDF from '../features/html-to-pdf/HtmlToPdf';
 // import PdfWatermark from '../features/pdf-watermark/PdfWatermark';
 import ProtectPdf from '../features/protect-pdf/ProtectPdf';
 import JpgToPdf from '../features/jpg-to-pdf/JpgToPdf';
+import HtmlViewer from '../features/html-viewer/HTMLViewer';
 
 export default function AppRoutes() {
   return (
@@ -43,6 +44,8 @@ export default function AppRoutes() {
       <Route path="/protect-pdf" element={<ProtectPdf />} />
       <Route path="/html-to-pdf" element={<HTMLtoPDF />} />
       <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
+
+      <Route path="/html-viewer" element={<HtmlViewer />} />
       <Route path="*" element={<Dashboard />} />
     </Routes>
   );
