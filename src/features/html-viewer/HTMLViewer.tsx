@@ -175,12 +175,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
     anchor.remove();
     URL.revokeObjectURL(url);
   };
-
-  const handleResetContent = () => {
-    setHtml(originalHtml);
-    setPreviewHtml(originalHtml);
-  };
-
+  
   const handleRefreshPreview = () => {
     setPreviewHtml("");
     requestAnimationFrame(() => setPreviewHtml(html));

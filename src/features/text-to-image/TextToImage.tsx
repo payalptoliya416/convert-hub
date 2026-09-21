@@ -245,7 +245,7 @@ const TextToImage: React.FC = () => {
                 <><Sparkles className="h-5 w-5" />Generate Image</>
               )}
             </button>
-          </div>\
+          </div>
         </div>
 
         {/* ── Right Panel (Preview) ── */}
