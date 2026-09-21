@@ -33,7 +33,7 @@ interface Tool {
   path: string;
   icon: React.ComponentType<any>;
   color: string;
-  category: 'from-pdf' | 'to-pdf' | 'utils';
+  category: 'from-pdf' | 'to-pdf' | 'utils' | 'web-tools';
   badge?: string;
   popular?: boolean;
 }
@@ -223,7 +223,7 @@ const tools: Tool[] = [
     path: '/html-viewer',
     icon: Code2,
     color: 'from-violet-500 to-indigo-600 shadow-violet-500/20',
-    category: 'utils',
+    category: 'web-tools',
   },
 
   // Text to Image
@@ -231,11 +231,12 @@ const tools: Tool[] = [
   //   id: 'text-to-image',
   //   name: 'Text to Image',
   //   description:
-  //     'Turn your text description into a beautiful image directly in your browser.',
+  //     'Turn your text description into a beautiful AI-generated image directly in your browser.',
   //   path: '/text-to-image',
   //   icon: Sparkles,
   //   color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
-  //   category: 'utils',
+  //   category: 'web-tools',
+  //   badge: 'New',
   // },
 
   // Image Background Remover
@@ -247,7 +248,7 @@ const tools: Tool[] = [
     path: '/remove-background',
     icon: ImageIcon,
     color: 'from-pink-500 to-rose-600 shadow-pink-500/20',
-    category: 'utils',
+    category: 'web-tools',
   },
 
   // QR Code Generator
@@ -259,7 +260,7 @@ const tools: Tool[] = [
     path: '/qr-code-generator',
     icon: QrCode,
     color: 'from-cyan-500 to-blue-600 shadow-cyan-500/20',
-    category: 'utils',
+    category: 'web-tools',
   },
 
   // Password Generator
@@ -271,7 +272,7 @@ const tools: Tool[] = [
     path: '/password-generator',
     icon: LockKeyhole,
     color: 'from-amber-500 to-orange-600 shadow-amber-500/20',
-    category: 'utils',
+    category: 'web-tools',
   },
 
   // JSON Formatter
@@ -283,14 +284,14 @@ const tools: Tool[] = [
     path: '/json-formatter',
     icon: Braces,
     color: 'from-cyan-500 to-teal-600 shadow-cyan-500/20',
-    category: 'utils',
+    category: 'web-tools',
   },
 ];
 
 export default function Dashboard() {
   const [searchTerm] = useState('');
   // const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState<'all' | 'from-pdf' | 'to-pdf' | 'utils'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'from-pdf' | 'to-pdf' | 'utils' | 'web-tools'>('all');
 
   const filteredTools = tools.filter(tool => {
     const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -331,7 +332,7 @@ export default function Dashboard() {
 
       {/* Category Tabs */}
       <div className="flex flex-wrap gap-2 justify-center pb-2">
-        {(['all', 'from-pdf', 'to-pdf', 'utils'] as const).map((cat) => (
+        {(['all', 'from-pdf', 'to-pdf', 'utils', 'web-tools'] as const).map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
@@ -345,6 +346,7 @@ export default function Dashboard() {
             {cat === 'from-pdf' && 'Convert from PDF'}
             {cat === 'to-pdf' && 'Convert to PDF'}
             {cat === 'utils' && 'PDF Utilities'}
+            {cat === 'web-tools' && 'Web Tools'}
           </button>
         ))}
       </div>
