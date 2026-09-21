@@ -20,6 +20,7 @@ import HTMLtoPDF from '../features/html-to-pdf/HtmlToPdf';
 import ProtectPdf from '../features/protect-pdf/ProtectPdf';
 import JpgToPdf from '../features/jpg-to-pdf/JpgToPdf';
 import HtmlViewer from '../features/html-viewer/HTMLViewer';
+import TextToImage from '../features/text-to-image/TextToImage';
 
 export default function AppRoutes() {
   return (
@@ -46,6 +47,8 @@ export default function AppRoutes() {
       <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
 
       <Route path="/html-viewer" element={<HtmlViewer />} />
+      <Route path="/text-to-image" element={<TextToImage />} />
+
       <Route path="*" element={<Dashboard />} />
     </Routes>
   );
