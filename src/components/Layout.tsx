@@ -52,6 +52,11 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to top on every route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
   useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
     if (
