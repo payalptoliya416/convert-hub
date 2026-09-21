@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Sparkles,
   Download,
@@ -7,385 +7,335 @@ import {
   Loader2,
   Wand2,
   X,
+  Settings2,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
+type AspectRatio = "1:1" | "16:9" | "9:16" | "4:3" | "3:4";
+type Style = "none" | "photorealistic" | "anime" | "digital-art" | "oil-painting" | "watercolor" | "sketch" | "3d-render";
+
+interface Dimensions {
+  width: number;
+  height: number;
+}
+
+const ASPECT_RATIOS: Record<AspectRatio, Dimensions> = {
+  "1:1":  { width: 1024, height: 1024 },
+  "16:9": { width: 1280, height: 720  },
+  "9:16": { width: 720,  height: 1280 },
+  "4:3":  { width: 1024, height: 768  },
+  "3:4":  { width: 768,  height: 1024 },
+};  
+
+const STYLE_SUFFIXES: Record<Style, string> = {
+  "none":           "",
+  "photorealistic": ", photorealistic, DSLR quality, 8k, sharp focus",
+  "anime":          ", anime style, vibrant colors, Studio Ghibli",
+  "digital-art":    ", digital art, concept art, highly detailed",
+  "oil-painting":   ", oil painting, classical art, canvas texture",
+  "watercolor":     ", watercolor painting, soft edges, pastel tones",
+  "sketch":         ", pencil sketch, detailed linework, monochrome",
+  "3d-render":      ", 3D render, octane render, studio lighting",
+};
+
 const TextToImage: React.FC = () => {
-  const [prompt, setPrompt] = useState("");
-  const [image, setImage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [prompt, setPrompt]           = useState("");
+  const [negPrompt, setNegPrompt]     = useState("");
+  const [image, setImage]             = useState<string | null>(null);
+  const [loading, setLoading]         = useState(false);
+  const [error, setError]             = useState("");
+  const [seed, setSeed]               = useState<number | null>(null);
+  const [aspectRatio, setAspectRatio] = useState<AspectRatio>("1:1");
+  const [style, setStyle]             = useState<Style>("none");
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
 
-  const examples = [
-    "A futuristic city at night with neon lights",
-    "A beautiful mountain landscape at sunset",
-    "A cute golden retriever in a flower garden",
-    "A luxury modern house surrounded by nature",
-  ];
+  const buildUrl = useCallback(
+    () => {
+      const { width, height } = ASPECT_RATIOS[aspectRatio];
+      const fullPrompt = prompt.trim() + STYLE_SUFFIXES[style];
+      const finalSeed  = Math.floor(Math.random() * 999999);
+      setSeed(finalSeed);
 
-  /*
-   * Browser-only demo generator.
-   *
-   * This creates an image from the entered text using SVG,
-   * so there is NO backend, NO Express and NO API key.
-   *
-   * If later you want real AI-generated images, only this
-   * generateImage() function needs to be replaced with a
-   * browser-compatible AI provider.
-   */
-  const generateImage = async () => {
-    if (!prompt.trim()) {
-      setError("Please enter a description.");
-      return;
-    }
-
-    setError("");
-    setLoading(true);
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
-      const safePrompt = prompt
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-
-      const svg = `
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1024"
-          height="1024"
-          viewBox="0 0 1024 1024"
-        >
-          <defs>
-            <linearGradient
-              id="background"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-            >
-              <stop offset="0%" stop-color="#312e81"/>
-              <stop offset="50%" stop-color="#7c3aed"/>
-              <stop offset="100%" stop-color="#4c1d95"/>
-            </linearGradient>
-
-            <filter id="blur">
-              <feGaussianBlur stdDeviation="70"/>
-            </filter>
-          </defs>
-
-          <rect
-            width="1024"
-            height="1024"
-            fill="url(#background)"
-          />
-
-          <circle
-            cx="180"
-            cy="180"
-            r="180"
-            fill="#a78bfa"
-            opacity="0.25"
-            filter="url(#blur)"
-          />
-
-          <circle
-            cx="850"
-            cy="760"
-            r="220"
-            fill="#c084fc"
-            opacity="0.2"
-            filter="url(#blur)"
-          />
-
-          <rect
-            x="80"
-            y="80"
-            width="864"
-            height="864"
-            rx="40"
-            fill="#0f172a"
-            opacity="0.28"
-          />
-
-          <text
-            x="512"
-            y="440"
-            text-anchor="middle"
-            fill="white"
-            font-size="38"
-            font-family="Arial, sans-serif"
-            font-weight="700"
-          >
-            Generated Image
-          </text>
-
-          <foreignObject
-            x="130"
-            y="490"
-            width="764"
-            height="220"
-          >
-            <div
-              xmlns="http://www.w3.org/1999/xhtml"
-              style="
-                color:white;
-                font-family:Arial,sans-serif;
-                font-size:24px;
-                line-height:1.5;
-                text-align:center;
-                padding:20px;
-              "
-            >
-              ${safePrompt}
-            </div>
-          </foreignObject>
-
-          <text
-            x="512"
-            y="850"
-            text-anchor="middle"
-            fill="#ddd6fe"
-            font-size="20"
-            font-family="Arial, sans-serif"
-          >
-            ConvertHub • Text to Image
-          </text>
-        </svg>
-      `;
-
-      const blob = new Blob([svg], {
-        type: "image/svg+xml",
+      const params = new URLSearchParams({
+        width:   String(width),
+        height:  String(height),
+        seed:    String(finalSeed),
+        nologo:  "true",
+        enhance: "false",
+        cache:   "false",
       });
 
-      const url = URL.createObjectURL(blob);
+      if (negPrompt.trim()) {
+        params.set("negative_prompt", negPrompt.trim());
+      }
 
+      return {
+        url: `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}?${params}`,
+        fullPrompt,
+      };
+    },
+    [prompt, negPrompt, aspectRatio, style]
+  );
+
+  const generateImage = useCallback(
+    async () => {
+      if (!prompt.trim()) {
+        setError("Please enter a description.");
+        return;
+      }
+      setError("");
+      setLoading(true);
+      setImage(null);
+
+      const { url, fullPrompt } = buildUrl();
+      setGeneratedPrompt(fullPrompt);
+      // Set URL directly — browser <img> tag handles loading natively (no CORS issue)
       setImage(url);
-    } catch {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [buildUrl, prompt]
+  );
 
   const downloadImage = () => {
     if (!image) return;
-
-    const link = document.createElement("a");
-
-    link.href = image;
-    link.download = "converthub-text-to-image.svg";
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    window.open(image, "_blank");
   };
 
-  const clearImage = () => {
-    if (image) {
-      URL.revokeObjectURL(image);
-    }
-
+  const clearAll = () => {
     setImage(null);
+    setPrompt("");
+    setNegPrompt("");
+    setError("");
+    setSeed(null);
+    setGeneratedPrompt("");
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+    <div className="mx-auto max-w-7xl space-y-6 p-4">
 
-        {/* Header */}
-       <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
-  <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
-    <Sparkles className="w-8 h-8" />
-  </div>
+      {/* ── Header ── */}
+      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+          <Sparkles className="w-8 h-8" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold text-white">Text to Image</h1>
+          <p className="text-slate-400 text-sm mt-1">
+            Turn your words into stunning AI-generated images — free.
+          </p>
+        </div>
+      </div>
 
-  <div>
-    <h1 className="text-3xl font-bold text-white">
-      Text to Image
-    </h1>
+      {/* ── Main Grid ── */}
+      <div className="grid gap-6 lg:grid-cols-[420px_minmax(0,1fr)]">
 
-    <p className="text-slate-400 text-sm mt-1">
-      Turn your text description into a beautiful image.
-    </p>
-  </div>
-</div>
-
-        {/* Main */}
-        <div className="grid gap-6 lg:grid-cols-[400px_minmax(0,1fr)] mt-8">
-
-          {/* Left */}
+        {/* ── Left Panel ── */}
+        <div className="space-y-4">
           <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-xl">
 
-            <div className="mb-5 flex items-center gap-2">
+            <div className="mb-4 flex items-center gap-2">
               <Wand2 className="h-5 w-5 text-violet-400" />
-
-              <h2 className="font-semibold text-white">
-                Create Image
-              </h2>
+              <h2 className="font-semibold text-white">Describe your image</h2>
             </div>
 
-            <label className="mb-2 block text-sm font-medium text-slate-300">
-              Describe your image
-            </label>
-
+            {/* Prompt */}
             <textarea
               value={prompt}
-              onChange={(e) => {
-                setPrompt(e.target.value);
-                setError("");
-              }}
-              placeholder="Example: A beautiful sunset over the mountains..."
-              rows={9}
-              maxLength={1000}
+              onChange={(e) => { setPrompt(e.target.value); setError(""); }}
+              placeholder="e.g. A beautiful sunset over glowing mountains with purple sky..."
+              rows={5}
+              maxLength={500}
               className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none placeholder:text-slate-600 focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
             />
+            <div className="mt-1 text-right text-xs text-slate-600">{prompt.length}/500</div>
 
-            <div className="mt-2 text-right text-xs text-slate-600">
-              {prompt.length}/1000
-            </div>
-
-            {/* Examples */}
-            <div className="mt-5">
-              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500">
-                Try an example
-              </p>
-
-              <div className="space-y-2">
-                {examples.map((example) => (
+            {/* Style selector */}
+            <div className="mt-4">
+              <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">
+                Art Style
+              </label>
+              <div className="grid grid-cols-4 gap-1.5">
+                {(Object.keys(STYLE_SUFFIXES) as Style[]).map((s) => (
                   <button
-                    key={example}
-                    type="button"
-                    onClick={() => {
-                      setPrompt(example);
-                      setError("");
-                    }}
-                    className="w-full rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2.5 text-left text-xs leading-5 text-slate-400 transition hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-violet-300"
+                    key={s}
+                    onClick={() => setStyle(s)}
+                    className={`rounded-lg px-2 py-1.5 text-xs font-medium transition capitalize ${
+                      style === s
+                        ? "bg-violet-600 text-white border border-violet-500"
+                        : "bg-slate-950 text-slate-400 border border-slate-700 hover:border-violet-500/50 hover:text-white"
+                    }`}
                   >
-                    {example}
+                    {s === "none" ? "Default" : s.replace("-", " ")}
                   </button>
                 ))}
               </div>
             </div>
 
+            {/* Aspect Ratio */}
+            <div className="mt-4">
+              <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">
+                Aspect Ratio
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {(Object.keys(ASPECT_RATIOS) as AspectRatio[]).map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => setAspectRatio(r)}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                      aspectRatio === r
+                        ? "bg-violet-600 text-white border border-violet-500"
+                        : "bg-slate-950 text-slate-400 border border-slate-700 hover:border-violet-500/50 hover:text-white"
+                    }`}
+                  >
+                    {r}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Advanced toggle */}
+            <button
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="mt-4 flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition cursor-pointer"
+            >
+              <Settings2 className="h-3.5 w-3.5" />
+              Advanced Options
+              {showAdvanced ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+            </button>
+
+            {showAdvanced && (
+              <div className="mt-3 space-y-3 rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                    Negative Prompt
+                    <span className="ml-1 text-slate-600">(what to avoid)</span>
+                  </label>
+                  <textarea
+                    value={negPrompt}
+                    onChange={(e) => setNegPrompt(e.target.value)}
+                    placeholder="blurry, low quality, distorted, ugly..."
+                    rows={2}
+                    className="w-full resize-none rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs text-white outline-none placeholder:text-slate-600 focus:border-violet-500"
+                  />
+                </div>
+                {seed !== null && (
+                  <div className="text-xs text-slate-600">
+                    Seed: <span className="text-slate-400 font-mono">{seed}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {error && (
-              <div className="mt-5 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+              <div className="mt-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
                 {error}
               </div>
             )}
 
+            {/* Generate button */}
             <button
-              type="button"
-              onClick={generateImage}
+              onClick={() => generateImage()}
               disabled={loading || !prompt.trim()}
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Generating...
-                </>
+                <><Loader2 className="h-5 w-5 animate-spin" />Generating…</>
               ) : (
-                <>
-                  <Sparkles className="h-5 w-5" />
-                  Generate Image
-                </>
+                <><Sparkles className="h-5 w-5" />Generate Image</>
               )}
             </button>
-          </div>
-
-          {/* Right */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-xl">
-
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <ImageIcon className="h-5 w-5 text-violet-400" />
-
-                <h2 className="font-semibold text-white">
-                  Preview
-                </h2>
-              </div>
-
-              {image && (
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={generateImage}
-                    className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-violet-500/50 hover:text-white"
-                  >
-                    <RefreshCw className="h-4 w-4" />
-                    Regenerate
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={downloadImage}
-                    className="flex items-center gap-2 rounded-lg bg-violet-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-violet-500"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={clearImage}
-                    className="rounded-lg border border-slate-700 bg-slate-800 p-2 text-slate-400 transition hover:text-white"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Preview */}
-            <div className="flex min-h-[520px] items-center justify-center overflow-hidden rounded-xl border border-slate-800 bg-slate-950 p-4 sm:min-h-[600px]">
-
-              {loading ? (
-                <div className="flex flex-col items-center text-center">
-                  <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/10">
-                    <Sparkles className="h-8 w-8 animate-pulse text-violet-400" />
-                  </div>
-
-                  <h3 className="font-semibold text-white">
-                    Creating image...
-                  </h3>
-
-                  <p className="mt-2 text-sm text-slate-500">
-                    Please wait a moment.
-                  </p>
-                </div>
-              ) : image ? (
-                <img
-                  src={image}
-                  alt={prompt}
-                  className="h-auto max-h-[650px] w-full max-w-[650px] rounded-xl object-contain shadow-2xl"
-                />
-              ) : (
-                <div className="max-w-sm text-center">
-                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-900">
-                    <ImageIcon className="h-8 w-8 text-slate-700" />
-                  </div>
-
-                  <h3 className="font-semibold text-slate-300">
-                    Your image will appear here
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    Enter your description and click Generate Image.
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+          </div>\
         </div>
 
-        {/* Info */}
-        <div className="mt-6 rounded-xl border border-slate-800 bg-slate-900/40 px-5 py-4">
-          <p className="text-xs leading-5 text-slate-500">
-            This version runs completely in the browser and does not require
-            a backend or API key.
-          </p>
+        {/* ── Right Panel (Preview) ── */}
+        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-xl">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <ImageIcon className="h-5 w-5 text-violet-400" />
+              <h2 className="font-semibold text-white">Preview</h2>
+            </div>
+
+            {image && !loading && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => generateImage()}
+                  className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-violet-500/50 hover:text-white cursor-pointer"
+                >
+                  <RefreshCw className="h-3.5 w-3.5" />
+                  Regenerate
+                </button>
+                <button
+                  onClick={downloadImage}
+                  className="flex items-center gap-1.5 rounded-lg bg-violet-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-violet-500 cursor-pointer"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Download
+                </button>
+                <button
+                  onClick={clearAll}
+                  className="rounded-lg border border-slate-700 bg-slate-800 p-2 text-slate-400 transition hover:text-white cursor-pointer"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Image display area */}
+          <div className="flex min-h-[540px] items-center justify-center overflow-hidden rounded-xl border border-slate-800 bg-slate-950 relative">
+
+            {/* Loading overlay */}
+            {loading && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-8 bg-slate-950 z-10 rounded-xl">
+                <div className="relative">
+                  <div className="h-20 w-20 rounded-full border-4 border-slate-800" />
+                  <div className="absolute inset-0 h-20 w-20 animate-spin rounded-full border-4 border-transparent border-t-violet-500" />
+                  <Sparkles className="absolute inset-0 m-auto h-8 w-8 animate-pulse text-violet-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-white">Creating your image…</p>
+                  <p className="mt-1 text-sm text-slate-500">This takes 5–20 seconds</p>
+                </div>
+              </div>
+            )}
+
+            {/* Image — onLoad/onError handles loading state */}
+            {image && (
+              <img
+                key={image}
+                src={image}
+                alt={generatedPrompt}
+                onLoad={() => setLoading(false)}
+                onError={() => {
+                  setLoading(false);
+                  setError("Image generation failed. Please try again with a different prompt.");
+                  setImage(null);
+                }}
+                className={`h-auto max-h-[700px] w-full rounded-xl object-contain transition-opacity duration-500 ${loading ? "opacity-0" : "opacity-100"}`}
+              />
+            )}
+
+            {/* Empty state */}
+            {!image && !loading && (
+              <div className="max-w-sm text-center px-8">
+                <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-2xl bg-slate-900 border border-slate-800">
+                  <ImageIcon className="h-10 w-10 text-slate-700" />
+                </div>
+                <h3 className="font-semibold text-slate-300">Your image will appear here</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  Enter a description, choose a style and click Generate Image.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Prompt used */}
+          {generatedPrompt && !loading && (
+            <p className="mt-3 text-xs text-slate-600 leading-5">
+              <span className="text-slate-500">Used prompt:</span> {generatedPrompt}
+            </p>
+          )}
         </div>
       </div>
     </div>
