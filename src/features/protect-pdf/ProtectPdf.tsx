@@ -155,7 +155,7 @@ export default function ProtectPdf() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 p-4">
+    <div className="mx-auto space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
         <div className="p-3 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400">

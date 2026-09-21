@@ -189,7 +189,7 @@ export default function PdfToWord() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10 space-y-8">
+    <div className="mx-auto space-y-8">
       <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
         <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
           <FileText className="w-8 h-8" />
