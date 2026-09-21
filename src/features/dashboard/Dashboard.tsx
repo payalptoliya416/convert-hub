@@ -19,7 +19,7 @@ import {
   Lock,
   ArrowRight,
   Code2,
-  Sparkles,
+  // Sparkles,
   ImageIcon,
   QrCode,
   LockKeyhole,
