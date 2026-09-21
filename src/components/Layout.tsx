@@ -200,7 +200,7 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 pt-7">
+      <main className="flex-grow max-w-7xl w-full mx-auto px-4 py-7">
         {children}
       </main>
     </div>
