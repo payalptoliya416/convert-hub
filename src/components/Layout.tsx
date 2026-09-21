@@ -52,7 +52,7 @@ const dropdownTools = [
   { name: 'Protect PDF', path: '/protect-pdf', icon: Lock, color: 'text-pink-500' },
   { name: 'HTML Viewer', path: '/html-viewer', icon: FileCode2, color: 'text-violet-400' },
   { name: 'Text to Image', path: '/text-to-image', icon: Sparkles, color: 'text-fuchsia-400' },
-  { name: 'Image Background Remover', path: '/remove-background', icon: ImageIcon, color: 'text-pink-400' },
+  { name: 'Remove Background', path: '/remove-background', icon: ImageIcon, color: 'text-pink-400' },
   { name: 'QR Code Generator', path: '/qr-code-generator', icon: QrCode, color: 'text-cyan-400' },
   { name: 'Password Generator', path: '/password-generator', icon: LockKeyhole, color: 'text-amber-400' },
   { name: 'JSON Formatter', path: '/json-formatter', icon: Braces, color: 'text-cyan-400' },
