@@ -73,6 +73,16 @@ export default function Layout({ children }: LayoutProps) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [location.pathname]);
 
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
+
   useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -230,31 +240,72 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-900 bg-slate-950 px-4 py-4 space-y-4 shadow-2xl">
-            <Link 
-              to="/" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block py-2.5 px-3 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-900"
-            >
-              Dashboard
-            </Link>
-            <div className="border-t border-slate-900 pt-2 space-y-1">
-              <div className="px-3 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                Tools
-              </div>
-              <div className="grid grid-cols-2 gap-1">
-                {dropdownTools.map((tool) => (
-                  <Link
-                    key={tool.path}
-                    to={tool.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 py-2 px-3 rounded-lg text-xs text-slate-300 hover:bg-slate-900"
+          <div className="md:hidden border-t border-slate-900 bg-slate-950 shadow-2xl flex flex-col" style={{ maxHeight: 'calc(100dvh - 64px)' }}>
+            
+            {/* Dashboard link — sticky top */}
+            <div className="px-4 pt-3 pb-2 shrink-0">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2.5 px-3 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-900"
+              >
+                Dashboard
+              </Link>
+            </div>
+
+            {/* Search bar — sticky */}
+            <div className="px-4 pb-3 shrink-0 border-b border-slate-900">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search tools..."
+                  className="w-full pl-9 pr-8 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white placeholder:text-slate-500 outline-none focus:border-violet-500 transition"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition"
                   >
-                    <tool.icon className={`w-3.5 h-3.5 ${tool.color}`} />
-                    {tool.name}
-                  </Link>
-                ))}
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
+            </div>
+
+            {/* Scrollable tool list */}
+            <div className="overflow-y-auto flex-1 px-4 py-3">
+              {(() => {
+                const filtered = dropdownTools.filter(t =>
+                  t.name.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+                if (filtered.length === 0) {
+                  return (
+                    <div className="py-8 text-center text-sm text-slate-500">No tools found</div>
+                  );
+                }
+                return (
+                  <div className="flex flex-col gap-1">
+                    {filtered.map((tool) => (
+                      <Link
+                        key={tool.path}
+                        to={tool.path}
+                        onClick={() => { setMobileMenuOpen(false); setSearchQuery(''); }}
+                        className={`flex items-center gap-3 py-2.5 px-3 rounded-xl text-sm transition ${
+                          location.pathname === tool.path
+                            ? 'bg-violet-600/10 text-violet-400 font-semibold'
+                            : 'text-slate-300 hover:bg-slate-900'
+                        }`}
+                      >
+                        <tool.icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
+                        <span className="truncate">{tool.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
           </div>
         )}
