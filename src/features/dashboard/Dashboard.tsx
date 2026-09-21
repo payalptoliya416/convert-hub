@@ -17,7 +17,13 @@ import {
   Crop,
   // Droplets,
   Lock,
-  ArrowRight
+  ArrowRight,
+  Code2,
+  Sparkles,
+  ImageIcon,
+  QrCode,
+  LockKeyhole,
+  Braces,
 } from 'lucide-react';
 
 interface Tool {
@@ -207,7 +213,78 @@ const tools: Tool[] = [
     icon: Lock,
     color: 'from-red-500 to-pink-600 shadow-red-500/20',
     category: 'utils'
-  }
+  },
+    // HTML Viewer
+  {
+    id: 'html-viewer',
+    name: 'HTML Viewer',
+    description:
+      'View and preview HTML files directly in your browser with live rendering.',
+    path: '/html-viewer',
+    icon: Code2,
+    color: 'from-violet-500 to-indigo-600 shadow-violet-500/20',
+    category: 'utils',
+  },
+
+  // Text to Image
+  {
+    id: 'text-to-image',
+    name: 'Text to Image',
+    description:
+      'Turn your text description into a beautiful image directly in your browser.',
+    path: '/text-to-image',
+    icon: Sparkles,
+    color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
+    category: 'utils',
+  },
+
+  // Image Background Remover
+  {
+    id: 'image-background-remover',
+    name: 'Image Background Remover',
+    description:
+      'Remove backgrounds from your images and download transparent PNG images.',
+    path: '/image-background-remover',
+    icon: ImageIcon,
+    color: 'from-pink-500 to-rose-600 shadow-pink-500/20',
+    category: 'utils',
+  },
+
+  // QR Code Generator
+  {
+    id: 'qr-code-generator',
+    name: 'QR Code Generator',
+    description:
+      'Create QR codes for URLs, text, phone numbers, emails, and more.',
+    path: '/qr-code-generator',
+    icon: QrCode,
+    color: 'from-cyan-500 to-blue-600 shadow-cyan-500/20',
+    category: 'utils',
+  },
+
+  // Password Generator
+  {
+    id: 'password-generator',
+    name: 'Password Generator',
+    description:
+      'Generate strong and secure passwords with customizable options.',
+    path: '/password-generator',
+    icon: LockKeyhole,
+    color: 'from-amber-500 to-orange-600 shadow-amber-500/20',
+    category: 'utils',
+  },
+
+  // JSON Formatter
+  {
+    id: 'json-formatter',
+    name: 'JSON Formatter',
+    description:
+      'Format, beautify, minify, and validate your JSON directly in your browser.',
+    path: '/json-formatter',
+    icon: Braces,
+    color: 'from-cyan-500 to-teal-600 shadow-cyan-500/20',
+    category: 'utils',
+  },
 ];
 
 export default function Dashboard() {

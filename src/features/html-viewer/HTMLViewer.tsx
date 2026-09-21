@@ -323,6 +323,24 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
     device === "responsive" ? null : DEVICE_WIDTHS[device];
 
   return (
+    <>
+    <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+  {/* Icon */}
+  <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+    <Code2 className="w-8 h-8" />
+  </div>
+
+  {/* Title & Description */}
+  <div>
+    <h1 className="text-3xl font-bold text-white">
+      HTML Viewer
+    </h1>
+
+    <p className="text-slate-400 text-sm mt-1">
+      View and preview HTML files directly in your browser with live rendering.
+    </p>
+  </div>
+</div>
     <div
       className={`flex flex-col overflow-hidden rounded-xl border border-slate-700/60 bg-slate-900 shadow-xl shadow-black/20 ${
         isFullscreen
@@ -515,7 +533,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
                 e.stopPropagation();
                 handleSample();
               }}
-              className="mt-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:border-violet-500/50 hover:text-violet-400"
+              className="mt-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:border-violet-500/50 hover:text-violet-400 cursor-pointer"
             >
               Load Sample
             </button>
@@ -691,6 +709,8 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
         </div>
       )}
     </div>
+    
+    </>
   );
 }
 
@@ -740,7 +760,7 @@ function ModeButton({
     <button
       type="button"
       onClick={onClick}
-      className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition ${
+      className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition cursor-pointer ${
         active
           ? "bg-violet-600 text-white shadow-sm"
           : "text-slate-400 hover:text-slate-200"
@@ -768,7 +788,7 @@ function DeviceButton({
       type="button"
       onClick={onClick}
       title={title}
-      className={`rounded-md px-2 py-1 text-xs transition ${
+      className={`rounded-md px-2 py-1 text-xs transition  cursor-pointer ${
         active
           ? "bg-violet-600 text-white"
           : "text-slate-400 hover:bg-slate-700 hover:text-slate-200"
@@ -798,7 +818,7 @@ function IconButton({
       onClick={onClick}
       title={title}
       disabled={disabled}
-      className={`rounded-lg p-1.5 transition disabled:cursor-not-allowed disabled:opacity-30 ${
+      className={`rounded-lg p-1.5 transition disabled:cursor-not-allowed disabled:opacity-30 cursor-pointer ${
         accent
           ? "text-violet-400 hover:bg-violet-500/15 hover:text-violet-300"
           : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"

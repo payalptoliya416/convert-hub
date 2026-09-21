@@ -82,23 +82,25 @@ const QRCodeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+    <div className="min-h-screen bg-slate-950 py-7 text-white">
+      <div className="mx-auto">
         {/* Header */}
-        <div className="mb-10 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-600/20">
-            <QrCode className="h-7 w-7" />
+        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+          <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+            <QrCode className="w-8 h-8" />
           </div>
 
-          <h1 className="text-3xl font-bold sm:text-4xl">QR Code Generator</h1>
+          <div>
+            <h1 className="text-3xl font-bold text-white">QR Code Generator</h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-400 sm:text-base">
-            Create QR codes for URLs, text, phone numbers, emails, and more.
-          </p>
+            <p className="text-slate-400 text-sm mt-1">
+              Create QR codes for URLs, text, phone numbers, emails, and more.
+            </p>
+          </div>
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_420px]">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_420px] mt-8">
           {/* Left - Settings */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-7">
             {/* Input */}
@@ -196,7 +198,7 @@ const QRCodeGenerator: React.FC = () => {
                 type="button"
                 onClick={generateQRCode}
                 disabled={!text.trim()}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
               >
                 <QrCode className="h-5 w-5" />
                 Generate QR Code
@@ -205,7 +207,7 @@ const QRCodeGenerator: React.FC = () => {
               <button
                 type="button"
                 onClick={clearAll}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-5 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-5 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white cursor-pointer"
               >
                 <RefreshCcw className="h-4 w-4" />
                 Clear
@@ -236,7 +238,7 @@ const QRCodeGenerator: React.FC = () => {
             {/* Preview */}
             <div className="flex min-h-[380px] items-center justify-center rounded-xl border border-slate-800 bg-slate-950 p-5">
               {qrCode ? (
-                <div className="rounded-xl bg-white p-4 shadow-xl">
+                <div className="rounded-xl bg-white p-1 shadow-xl">
                   <img
                     src={qrCode}
                     alt="Generated QR Code"
@@ -292,14 +294,6 @@ const QRCodeGenerator: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Bottom Info */}
-        <div className="mt-8 rounded-xl border border-slate-800 bg-slate-900/50 px-5 py-4 text-center">
-          <p className="text-xs leading-5 text-slate-500">
-            QR codes are generated directly in your browser. Your data is not
-            uploaded to any server.
-          </p>
         </div>
       </div>
     </div>

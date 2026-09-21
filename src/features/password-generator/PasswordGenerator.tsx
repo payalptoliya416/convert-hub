@@ -39,7 +39,7 @@ const PasswordGenerator: React.FC = () => {
     newUppercase = uppercase,
     newLowercase = lowercase,
     newNumbers = numbers,
-    newSymbols = symbols
+    newSymbols = symbols,
   ) => {
     let availableChars = "";
     let requiredChars = "";
@@ -179,28 +179,28 @@ const PasswordGenerator: React.FC = () => {
   const strength = getStrength();
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
-
+    <div className="min-h-screen bg-slate-950 py-10 text-white">
+      <div className="">
         {/* Header */}
-        <div className="mb-10 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-600/20">
-            <LockKeyhole className="h-7 w-7" />
+        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+          <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+            <LockKeyhole className="w-8 h-8" />
           </div>
 
-          <h1 className="text-3xl font-bold sm:text-4xl">
-            Password Generator
-          </h1>
+          <div>
+            <h1 className="text-3xl font-bold text-white">
+              Password Generator
+            </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-400 sm:text-base">
-            Generate strong and secure passwords instantly with customizable
-            options.
-          </p>
+            <p className="text-slate-400 text-sm mt-1">
+              Generate strong and secure passwords instantly with customizable
+              options.
+            </p>
+          </div>
         </div>
 
         {/* Main Card */}
-        <div className="mx-auto max-w-4xl rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-7">
-
+        <div className="mx-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-7 mt-8">
           {/* Generated Password */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-white">
@@ -208,7 +208,6 @@ const PasswordGenerator: React.FC = () => {
             </label>
 
             <div className="flex min-h-[58px] items-center gap-2 rounded-xl border border-slate-700 bg-slate-950 p-2">
-
               <div className="min-w-0 flex-1 overflow-x-auto px-3 py-2">
                 <span className="whitespace-nowrap font-mono text-sm text-slate-200 sm:text-base">
                   {password
@@ -304,7 +303,7 @@ const PasswordGenerator: React.FC = () => {
                     uppercase,
                     lowercase,
                     numbers,
-                    symbols
+                    symbols,
                   );
                 }
               }}
@@ -318,175 +317,156 @@ const PasswordGenerator: React.FC = () => {
           </div>
 
           {/* Password Options */}
-          <div className="mt-8">
-            <h2 className="mb-4 text-sm font-semibold text-white">
-              Password Options
-            </h2>
+         <div className="mt-8">
+  <h2 className="mb-4 text-sm font-semibold text-white">
+    Password Options
+  </h2>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {/* Uppercase */}
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+      <div className="min-w-0">
+        <p className="truncate text-sm font-medium text-slate-200">
+          Uppercase Letters
+        </p>
+        <p className="mt-1 text-xs text-slate-600">A-Z</p>
+      </div>
 
-              {/* Uppercase */}
-              <label className="flex cursor-pointer items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    Uppercase Letters
-                  </p>
+      <input
+        type="checkbox"
+        checked={uppercase}
+        onChange={(e) => {
+          const value = e.target.checked;
 
-                  <p className="mt-1 text-xs text-slate-600">
-                    A-Z
-                  </p>
-                </div>
+          if (!value && !lowercase && !numbers && !symbols) {
+            return;
+          }
 
-                <input
-                  type="checkbox"
-                  checked={uppercase}
-                  onChange={(e) => {
-                    const value = e.target.checked;
+          setUppercase(value);
 
-                    // Prevent all options from being disabled
-                    if (!value && !lowercase && !numbers && !symbols) {
-                      return;
-                    }
+          if (password) {
+            generatePassword(
+              length,
+              value,
+              lowercase,
+              numbers,
+              symbols
+            );
+          }
+        }}
+        className="h-5 w-5 shrink-0 cursor-pointer accent-violet-600"
+      />
+    </label>
 
-                    setUppercase(value);
+    {/* Lowercase */}
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+      <div className="min-w-0">
+        <p className="truncate text-sm font-medium text-slate-200">
+          Lowercase Letters
+        </p>
+        <p className="mt-1 text-xs text-slate-600">a-z</p>
+      </div>
 
-                    // Regenerate with updated option
-                    if (password) {
-                      generatePassword(
-                        length,
-                        value,
-                        lowercase,
-                        numbers,
-                        symbols
-                      );
-                    }
-                  }}
-                  className="h-5 w-5 cursor-pointer accent-violet-600"
-                />
-              </label>
+      <input
+        type="checkbox"
+        checked={lowercase}
+        onChange={(e) => {
+          const value = e.target.checked;
 
-              {/* Lowercase */}
-              <label className="flex cursor-pointer items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    Lowercase Letters
-                  </p>
+          if (!value && !uppercase && !numbers && !symbols) {
+            return;
+          }
 
-                  <p className="mt-1 text-xs text-slate-600">
-                    a-z
-                  </p>
-                </div>
+          setLowercase(value);
 
-                <input
-                  type="checkbox"
-                  checked={lowercase}
-                  onChange={(e) => {
-                    const value = e.target.checked;
+          if (password) {
+            generatePassword(
+              length,
+              uppercase,
+              value,
+              numbers,
+              symbols
+            );
+          }
+        }}
+        className="h-5 w-5 shrink-0 cursor-pointer accent-violet-600"
+      />
+    </label>
 
-                    if (!value && !uppercase && !numbers && !symbols) {
-                      return;
-                    }
+    {/* Numbers */}
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+      <div className="min-w-0">
+        <p className="truncate text-sm font-medium text-slate-200">
+          Numbers
+        </p>
+        <p className="mt-1 text-xs text-slate-600">0-9</p>
+      </div>
 
-                    setLowercase(value);
+      <input
+        type="checkbox"
+        checked={numbers}
+        onChange={(e) => {
+          const value = e.target.checked;
 
-                    if (password) {
-                      generatePassword(
-                        length,
-                        uppercase,
-                        value,
-                        numbers,
-                        symbols
-                      );
-                    }
-                  }}
-                  className="h-5 w-5 cursor-pointer accent-violet-600"
-                />
-              </label>
+          if (!value && !uppercase && !lowercase && !symbols) {
+            return;
+          }
 
-              {/* Numbers */}
-              <label className="flex cursor-pointer items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    Numbers
-                  </p>
+          setNumbers(value);
 
-                  <p className="mt-1 text-xs text-slate-600">
-                    0-9
-                  </p>
-                </div>
+          if (password) {
+            generatePassword(
+              length,
+              uppercase,
+              lowercase,
+              value,
+              symbols
+            );
+          }
+        }}
+        className="h-5 w-5 shrink-0 cursor-pointer accent-violet-600"
+      />
+    </label>
 
-                <input
-                  type="checkbox"
-                  checked={numbers}
-                  onChange={(e) => {
-                    const value = e.target.checked;
+    {/* Symbols */}
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+      <div className="min-w-0">
+        <p className="truncate text-sm font-medium text-slate-200">
+          Symbols
+        </p>
+        <p className="mt-1 text-xs text-slate-600">!@#$%^&*</p>
+      </div>
 
-                    if (!value && !uppercase && !lowercase && !symbols) {
-                      return;
-                    }
+      <input
+        type="checkbox"
+        checked={symbols}
+        onChange={(e) => {
+          const value = e.target.checked;
 
-                    // IMPORTANT:
-                    // This was previously setSymbols(value)
-                    setNumbers(value);
+          if (!value && !uppercase && !lowercase && !numbers) {
+            return;
+          }
 
-                    if (password) {
-                      generatePassword(
-                        length,
-                        uppercase,
-                        lowercase,
-                        value,
-                        symbols
-                      );
-                    }
-                  }}
-                  className="h-5 w-5 cursor-pointer accent-violet-600"
-                />
-              </label>
+          setSymbols(value);
 
-              {/* Symbols */}
-              <label className="flex cursor-pointer items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    Symbols
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-600">
-                    !@#$%^&*
-                  </p>
-                </div>
-
-                <input
-                  type="checkbox"
-                  checked={symbols}
-                  onChange={(e) => {
-                    const value = e.target.checked;
-
-                    if (!value && !uppercase && !lowercase && !numbers) {
-                      return;
-                    }
-
-                    setSymbols(value);
-
-                    if (password) {
-                      generatePassword(
-                        length,
-                        uppercase,
-                        lowercase,
-                        numbers,
-                        value
-                      );
-                    }
-                  }}
-                  className="h-5 w-5 cursor-pointer accent-violet-600"
-                />
-              </label>
-
-            </div>
-          </div>
+          if (password) {
+            generatePassword(
+              length,
+              uppercase,
+              lowercase,
+              numbers,
+              value
+            );
+          }
+        }}
+        className="h-5 w-5 shrink-0 cursor-pointer accent-violet-600"
+      />
+    </label>
+  </div>
+</div>
 
           {/* Buttons */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-
             <button
               type="button"
               onClick={() => generatePassword()}
@@ -504,18 +484,8 @@ const PasswordGenerator: React.FC = () => {
               <RefreshCcw className="h-4 w-4" />
               Reset
             </button>
-
           </div>
         </div>
-
-        {/* Privacy Note */}
-        <div className="mx-auto mt-6 max-w-4xl rounded-xl border border-slate-800 bg-slate-900/50 px-5 py-4 text-center">
-          <p className="text-xs leading-5 text-slate-500">
-            Passwords are generated securely in your browser and are never
-            uploaded or stored on a server.
-          </p>
-        </div>
-
       </div>
     </div>
   );

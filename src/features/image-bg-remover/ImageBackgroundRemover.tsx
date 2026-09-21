@@ -43,9 +43,7 @@ const ImageBackgroundRemover: React.FC = () => {
     setOriginalUrl(URL.createObjectURL(selectedFile));
   }, []);
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
@@ -80,7 +78,7 @@ const ImageBackgroundRemover: React.FC = () => {
     } catch (err) {
       console.error(err);
       setError(
-        "Something went wrong while removing the background. Please try again."
+        "Something went wrong while removing the background. Please try again.",
       );
     } finally {
       setIsProcessing(false);
@@ -110,21 +108,23 @@ const ImageBackgroundRemover: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 px-4 py-10 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto">
         {/* Header */}
-        <div className="mb-10 text-center">
-          <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-600/20">
-            <ImageIcon className="h-7 w-7" />
+        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+          <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+            <ImageIcon className="w-8 h-8" />
           </div>
 
-          <h1 className="text-3xl font-bold sm:text-4xl">
-            Image Background Remover
-          </h1>
+          <div>
+            <h1 className="text-3xl font-bold text-white">
+              Image Background Remover
+            </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-400 sm:text-base">
-            Remove backgrounds from your images instantly and download
-            transparent PNG images directly in your browser.
-          </p>
+            <p className="text-slate-400 text-sm mt-1">
+              Remove backgrounds from your images instantly and download
+              transparent PNG images directly in your browser.
+            </p>
+          </div>
         </div>
 
         {/* Upload */}
@@ -136,7 +136,7 @@ const ImageBackgroundRemover: React.FC = () => {
             }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            className={`relative mx-auto max-w-3xl rounded-2xl border-2 border-dashed p-10 text-center transition sm:p-16 ${
+            className={`relative mx-auto rounded-2xl border-2 border-dashed p-10 text-center transition sm:p-16 mt-8 ${
               isDragging
                 ? "border-violet-500 bg-violet-500/10"
                 : "border-slate-700 bg-slate-900/70 hover:border-violet-500/60"
@@ -190,13 +190,11 @@ const ImageBackgroundRemover: React.FC = () => {
 
         {/* Image Workspace */}
         {file && (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6">
+          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6 mt-8">
             {/* Top bar */}
             <div className="mb-6 flex flex-col gap-4 border-b border-slate-800 pb-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-semibold text-white">
-                  {file.name}
-                </p>
+                <p className="text-sm font-semibold text-white">{file.name}</p>
 
                 <p className="mt-1 text-xs text-slate-500">
                   {(file.size / 1024 / 1024).toFixed(2)} MB
@@ -205,7 +203,7 @@ const ImageBackgroundRemover: React.FC = () => {
 
               <button
                 onClick={reset}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm text-slate-300 transition hover:border-red-500/50 hover:text-red-400"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm text-slate-300 transition hover:border-red-500/50 hover:text-red-400 cursor-pointer"
               >
                 <RotateCcw className="h-4 w-4" />
                 Choose Another
@@ -256,8 +254,7 @@ const ImageBackgroundRemover: React.FC = () => {
                     backgroundImage:
                       "linear-gradient(45deg, #1e293b 25%, transparent 25%), linear-gradient(-45deg, #1e293b 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1e293b 75%), linear-gradient(-45deg, transparent 75%, #1e293b 75%)",
                     backgroundSize: "24px 24px",
-                    backgroundPosition:
-                      "0 0, 0 12px, 12px -12px, -12px 0px",
+                    backgroundPosition: "0 0, 0 12px, 12px -12px, -12px 0px",
                   }}
                 >
                   {resultUrl ? (
@@ -291,7 +288,7 @@ const ImageBackgroundRemover: React.FC = () => {
                 <button
                   onClick={removeBg}
                   disabled={isProcessing}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
                 >
                   {isProcessing ? (
                     <>
@@ -328,14 +325,6 @@ const ImageBackgroundRemover: React.FC = () => {
             </div>
           </div>
         )}
-
-        {/* Info */}
-        <div className="mx-auto mt-8 max-w-4xl rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center">
-          <p className="text-xs leading-5 text-slate-500">
-            Your image is processed directly in your browser. No image upload
-            to your own backend is required.
-          </p>
-        </div>
       </div>
     </div>
   );

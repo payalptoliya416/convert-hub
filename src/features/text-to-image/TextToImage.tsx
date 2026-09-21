@@ -196,25 +196,24 @@ const TextToImage: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
 
         {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 shadow-lg shadow-violet-600/20">
-            <Sparkles className="h-7 w-7 text-white" />
-          </div>
+       <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+  <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+    <Sparkles className="w-8 h-8" />
+  </div>
 
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Text to{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
-              Image
-            </span>
-          </h1>
+  <div>
+    <h1 className="text-3xl font-bold text-white">
+      Text to Image
+    </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-400 sm:text-base">
-            Turn your text description into a beautiful image.
-          </p>
-        </div>
+    <p className="text-slate-400 text-sm mt-1">
+      Turn your text description into a beautiful image.
+    </p>
+  </div>
+</div>
 
         {/* Main */}
-        <div className="grid gap-6 lg:grid-cols-[400px_minmax(0,1fr)]">
+        <div className="grid gap-6 lg:grid-cols-[400px_minmax(0,1fr)] mt-8">
 
           {/* Left */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-xl">

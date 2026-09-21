@@ -109,36 +109,40 @@ const JsonFormatter: React.FC = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] overflow-hidden bg-slate-950 text-white">
-      <div className="mx-auto flex h-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-64px)] bg-slate-950 text-white">
+      <div className="">
         {/* Header */}
-        <div className="mb-5 shrink-0 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-600/20">
-            <Braces className="h-6 w-6" />
+        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+          <div className="shrink-0 rounded-xl border border-cyan-500/20 bg-cyan-500/10 p-3 text-cyan-400">
+            <Braces className="h-8 w-8" />
           </div>
 
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            JSON Formatter
-          </h1>
+          <div className="min-w-0">
+            <h1 className="text-2xl font-bold text-white sm:text-3xl">
+              JSON Formatter
+            </h1>
 
-          <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-slate-400 sm:text-sm">
-            Format, beautify, minify, and validate your JSON directly in your
-            browser.
-          </p>
+            <p className="mt-1 text-xs leading-5 text-slate-400 sm:text-sm">
+              Format, beautify, minify, and validate your JSON directly in your
+              browser.
+            </p>
+          </div>
         </div>
 
         {/* Main Card */}
-        <div className="flex min-h-0 flex-1 flex-col rounded-2xl border border-slate-800 bg-slate-900/70 p-4 shadow-2xl sm:p-5">
+        <div className="mt-6 w-full rounded-2xl border border-slate-800 bg-slate-900/70 p-3 shadow-2xl sm:mt-8 sm:p-5">
           {/* Toolbar */}
-          <div className="mb-4 flex shrink-0 flex-col gap-3 border-b border-slate-800 pb-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mb-4 flex flex-col gap-4 border-b border-slate-800 pb-4 lg:flex-row lg:items-center lg:justify-between">
+            {/* Title */}
             <div className="flex items-center gap-2">
-              <FileJson className="h-5 w-5 text-violet-400" />
+              <FileJson className="h-5 w-5 shrink-0 text-violet-400" />
 
               <h2 className="text-sm font-semibold text-white">
                 JSON Formatter
               </h2>
             </div>
 
+            {/* Toolbar Actions */}
             <div className="flex flex-wrap items-center gap-2">
               {/* Indent */}
               <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2">
@@ -147,7 +151,7 @@ const JsonFormatter: React.FC = () => {
                 <select
                   value={indent}
                   onChange={(e) => setIndent(Number(e.target.value))}
-                  className="bg-transparent text-xs font-medium text-slate-300 outline-none"
+                  className="max-w-[90px] bg-transparent text-xs font-medium text-slate-300 outline-none"
                 >
                   <option value={2} className="bg-slate-900">
                     2 Spaces
@@ -185,11 +189,12 @@ const JsonFormatter: React.FC = () => {
           </div>
 
           {/* Editors */}
-          <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-2">
-            {/* Input */}
-            <div className="flex min-h-0 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-              <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-4 py-3">
-                <div>
+          <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+            {/* ================= INPUT ================= */}
+            <div className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+              {/* Input Header */}
+              <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-3 py-3 sm:px-4">
+                <div className="min-w-0">
                   <p className="text-sm font-semibold text-slate-200">
                     Input JSON
                   </p>
@@ -199,11 +204,12 @@ const JsonFormatter: React.FC = () => {
                   </p>
                 </div>
 
-                <span className="rounded-md bg-slate-900 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                <span className="ml-2 shrink-0 rounded-md bg-slate-900 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
                   JSON
                 </span>
               </div>
 
+              {/* Input Editor */}
               <textarea
                 value={input}
                 onChange={(e) => {
@@ -215,14 +221,30 @@ const JsonFormatter: React.FC = () => {
   "age": 25
 }`}
                 spellCheck={false}
-                className="min-h-0 flex-1 resize-none overflow-auto bg-transparent p-4 font-mono text-sm leading-6 text-slate-300 outline-none placeholder:text-slate-700"
+                className="
+                h-[300px]
+                w-full
+                resize-none
+                overflow-auto
+                bg-transparent
+                p-4
+                font-mono
+                text-sm
+                leading-6
+                text-slate-300
+                outline-none
+                placeholder:text-slate-700
+                sm:h-[360px]
+                lg:h-[420px]
+              "
               />
             </div>
 
-            {/* Output */}
-            <div className="flex min-h-0 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-              <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-4 py-3">
-                <div>
+            {/* ================= OUTPUT ================= */}
+            <div className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+              {/* Output Header */}
+              <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-3 py-3 sm:px-4">
+                <div className="min-w-0">
                   <p className="text-sm font-semibold text-slate-200">
                     Formatted JSON
                   </p>
@@ -232,30 +254,71 @@ const JsonFormatter: React.FC = () => {
                   </p>
                 </div>
 
+                {/* Copy */}
                 <button
                   type="button"
                   onClick={copyOutput}
                   disabled={!output}
-                  className="flex items-center gap-1.5 rounded-lg border border-slate-700 px-2.5 py-1.5 text-xs font-medium text-slate-400 transition hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-violet-400 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="
+                  ml-2
+                  flex
+                  shrink-0
+                  items-center
+                  gap-1.5
+                  rounded-lg
+                  border
+                  border-slate-700
+                  px-2.5
+                  py-1.5
+                  text-xs
+                  font-medium
+                  text-slate-400
+                  transition
+                  hover:border-violet-500/40
+                  hover:bg-violet-500/10
+                  hover:text-violet-400
+                  disabled:cursor-not-allowed
+                  disabled:opacity-40
+                "
                 >
                   {copied ? (
                     <>
                       <Check className="h-3.5 w-3.5" />
-                      Copied
+                      <span>Copied</span>
                     </>
                   ) : (
                     <>
                       <Copy className="h-3.5 w-3.5" />
-                      Copy
+                      <span>Copy</span>
                     </>
                   )}
                 </button>
               </div>
 
-              {/* Internal Output Scroll */}
-              <div className="min-h-0 flex-1 overflow-auto">
+              {/* Output Content */}
+              <div
+                className="
+                h-[300px]
+                w-full
+                overflow-auto
+                sm:h-[360px]
+                lg:h-[420px]
+              "
+              >
                 {output ? (
-                  <pre className="whitespace-pre-wrap break-words p-4 font-mono text-sm leading-6 text-slate-300">
+                  <pre
+                    className="
+                    min-h-full
+                    w-max
+                    min-w-full
+                    overflow-x-auto
+                    p-4
+                    font-mono
+                    text-sm
+                    leading-6
+                    text-slate-300
+                "
+                  >
                     {output}
                   </pre>
                 ) : (
@@ -275,7 +338,7 @@ const JsonFormatter: React.FC = () => {
 
           {/* Error */}
           {error && (
-            <div className="mt-3 flex shrink-0 items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3">
+            <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3">
               <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
 
               <div className="min-w-0">
@@ -289,20 +352,63 @@ const JsonFormatter: React.FC = () => {
           )}
 
           {/* Action Buttons */}
-          <div className="mt-4 flex shrink-0 flex-col gap-3 sm:flex-row">
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {/* Format */}
             <button
               type="button"
               onClick={formatJson}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
+              className="
+              flex
+              min-h-[46px]
+              w-full
+              items-center
+              justify-center
+              gap-2
+              rounded-xl
+              bg-gradient-to-r
+              from-violet-600
+              to-indigo-600
+              px-5
+              py-3
+              text-sm
+              font-semibold
+              text-white
+              shadow-lg
+              shadow-violet-600/20
+              transition
+              hover:from-violet-500
+              hover:to-indigo-500
+            "
             >
               <Maximize2 className="h-4 w-4" />
               Format JSON
             </button>
 
+            {/* Minify */}
             <button
               type="button"
               onClick={minifyJson}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-300 transition hover:border-violet-500/40 hover:bg-slate-800 hover:text-white"
+              className="
+              flex
+              min-h-[46px]
+              w-full
+              items-center
+              justify-center
+              gap-2
+              rounded-xl
+              border
+              border-slate-700
+              bg-slate-900
+              px-5
+              py-3
+              text-sm
+              font-semibold
+              text-slate-300
+              transition
+              hover:border-violet-500/40
+              hover:bg-slate-800
+              hover:text-white
+            "
             >
               <Minimize2 className="h-4 w-4" />
               Minify JSON
