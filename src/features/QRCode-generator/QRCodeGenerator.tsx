@@ -35,12 +35,6 @@ const QRCodeGenerator: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (text.trim()) {
-      generateQRCode();
-    }
-  }, [size, foreground, background]);
-
   // Download QR Code
   const downloadQRCode = () => {
     if (!qrCode) return;
@@ -113,7 +107,6 @@ const QRCodeGenerator: React.FC = () => {
                 value={text}
                 onChange={(e) => {
                   setText(e.target.value);
-                  setQrCode("");
                   setCopied(false);
                 }}
                 placeholder="Enter a URL, text, phone number, email..."
