@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   FileText,
   Presentation,
@@ -25,6 +25,7 @@ import {
   QrCode,
   LockKeyhole,
   Braces,
+  Search,
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -61,8 +62,11 @@ const dropdownTools = [
 export default function Layout({ children }: LayoutProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   // Scroll to top on every route change
   useEffect(() => {
@@ -128,28 +132,85 @@ export default function Layout({ children }: LayoutProps) {
                   {/* Backdrop overlay to close dropdown */}
                   <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)}></div>
                   
-                  <div className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] overflow-y-auto rounded-2xl bg-slate-900 border border-slate-800 p-3 shadow-2xl z-20 grid grid-cols-1 gap-1">
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-800 mb-1">
-                      Available Converters
-                    </div>
-                    {dropdownTools.map((tool) => {
-                      const Icon = tool.icon;
-                      return (
-                        <Link
-                          key={tool.path}
-                          to={tool.path}
-                          onClick={() => setDropdownOpen(false)}
-                          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition ${
-                            location.pathname === tool.path 
-                              ? 'bg-violet-600/10 text-violet-400 font-semibold' 
-                              : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                          }`}
+                  <div className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl z-20 flex flex-col overflow-hidden">
+                    {/* Search input — sticky */}
+                    <div className="relative p-3 border-b border-slate-800 shrink-0">
+                      <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500 pointer-events-none" />
+                      <input
+                        ref={searchRef}
+                        autoFocus
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            const filtered = dropdownTools.filter(t =>
+                              t.name.toLowerCase().includes(searchQuery.toLowerCase())
+                            );
+                            if (filtered.length === 1) {
+                              navigate(filtered[0].path);
+                              setDropdownOpen(false);
+                              setSearchQuery('');
+                            }
+                          }
+                          if (e.key === 'Escape') {
+                            setDropdownOpen(false);
+                            setSearchQuery('');
+                          }
+                        }}
+                        placeholder="Search tools..."
+                        className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white placeholder:text-slate-500 outline-none focus:border-violet-500 transition"
+                      />
+                      {searchQuery && (
+                        <button
+                          onClick={() => setSearchQuery('')}
+                          className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition"
                         >
-                          <Icon className={`w-4 h-4 ${tool.color}`} />
-                          {tool.name}
-                        </Link>
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Scrollable tool list */}
+                    <div className="overflow-y-auto custom-scrollbar flex-1 p-2">
+                    {(() => {
+                      const filtered = dropdownTools.filter(t =>
+                        t.name.toLowerCase().includes(searchQuery.toLowerCase())
                       );
-                    })}
+                      if (filtered.length === 0) {
+                        return (
+                          <div className="px-3 py-6 text-center text-sm text-slate-500">
+                            No tools found
+                          </div>
+                        );
+                      }
+                      return filtered.map((tool) => {
+                        const Icon = tool.icon;
+                        return (
+                          <Link
+                            key={tool.path}
+                            to={tool.path}
+                            onClick={() => { setDropdownOpen(false); setSearchQuery(''); }}
+                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition ${
+                              location.pathname === tool.path
+                                ? 'bg-violet-600/10 text-violet-400 font-semibold'
+                                : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                            }`}
+                          >
+                            <Icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
+                            {searchQuery ? (
+                              <span dangerouslySetInnerHTML={{
+                                __html: tool.name.replace(
+                                  new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
+                                  '<mark class="bg-violet-500/30 text-violet-300 rounded px-0.5">$1</mark>'
+                                )
+                              }} />
+                            ) : tool.name}
+                          </Link>
+                        );
+                      });
+                    })()}
+                    </div>
                   </div>
                 </>
               )}
