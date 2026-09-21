@@ -22,6 +22,7 @@ import JpgToPdf from '../features/jpg-to-pdf/JpgToPdf';
 import HtmlViewer from '../features/html-viewer/HTMLViewer';
 import TextToImage from '../features/text-to-image/TextToImage';
 import ImageBackgroundRemover from '../features/image-bg-remover/ImageBackgroundRemover';
+import QRCodeGenerator from '../features/QRCode-generator/QRCodeGenerator';
 
 export default function AppRoutes() {
   return (
@@ -50,6 +51,7 @@ export default function AppRoutes() {
       <Route path="/html-viewer" element={<HtmlViewer />} />
       <Route path="/text-to-image" element={<TextToImage />} />
       <Route path="/image-background-remover" element={<ImageBackgroundRemover />} />
+      <Route path="/qr-code-generator" element={<QRCodeGenerator />} />
 
       <Route path="*" element={<Dashboard />} />
     </Routes>
