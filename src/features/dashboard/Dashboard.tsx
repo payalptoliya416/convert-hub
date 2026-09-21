@@ -227,24 +227,24 @@ const tools: Tool[] = [
   },
 
   // Text to Image
-  {
-    id: 'text-to-image',
-    name: 'Text to Image',
-    description:
-      'Turn your text description into a beautiful image directly in your browser.',
-    path: '/text-to-image',
-    icon: Sparkles,
-    color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
-    category: 'utils',
-  },
+  // {
+  //   id: 'text-to-image',
+  //   name: 'Text to Image',
+  //   description:
+  //     'Turn your text description into a beautiful image directly in your browser.',
+  //   path: '/text-to-image',
+  //   icon: Sparkles,
+  //   color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
+  //   category: 'utils',
+  // },
 
   // Image Background Remover
   {
-    id: 'image-background-remover',
-    name: 'Image Background Remover',
+    id: 'remove-background',
+    name: 'Remove Background',
     description:
       'Remove backgrounds from your images and download transparent PNG images.',
-    path: '/image-background-remover',
+    path: '/remove-background',
     icon: ImageIcon,
     color: 'from-pink-500 to-rose-600 shadow-pink-500/20',
     category: 'utils',

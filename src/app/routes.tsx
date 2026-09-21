@@ -52,7 +52,7 @@ export default function AppRoutes() {
 
       <Route path="/html-viewer" element={<HtmlViewer />} />
       <Route path="/text-to-image" element={<TextToImage />} />
-      <Route path="/image-background-remover" element={<ImageBackgroundRemover />} />
+      <Route path="/remove-background" element={<ImageBackgroundRemover />} />
       <Route path="/qr-code-generator" element={<QRCodeGenerator />} />
       <Route path="/password-generator" element={<PasswordGenerator />} />
       <Route path="/json-formatter" element={<JsonFormatter />} />

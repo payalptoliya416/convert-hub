@@ -638,49 +638,49 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             )}
 
             {/* Preview Pane */}
-            {showPreviewPane && (
-              <div
-                className={`relative min-h-0 flex-1 overflow-auto bg-slate-900/60 p-4 ${
-                  mode === "split" && isMobile && mobileTab !== "preview"
-                    ? "hidden"
-                    : ""
-                }`}
-              >
-                {/* Dragging overlay to prevent iframe stealing pointer events */}
-                {isResizing && <div className="absolute inset-0 z-50" />}
+{showPreviewPane && (
+  <div
+    className={`relative min-h-0 flex-1 overflow-auto bg-slate-900/60 p-4 ${
+      mode === "split" && isMobile && mobileTab !== "preview"
+        ? "hidden"
+        : ""
+    }`}
+  >
+    {/* Dragging overlay */}
+    {isResizing && <div className="absolute inset-0 z-50" />}
 
-                <div className="flex min-h-full w-full items-start justify-center">
-                  <div
-                    className="transition-[width] duration-150 ease-out"
-                    style={{
-                      width:
-                        previewDeviceWidth === null
-                          ? "100%"
-                          : `${previewDeviceWidth}px`,
-                      maxWidth: "100%",
-                      transform: `scale(${zoom / 100})`,
-                      transformOrigin: "top center",
-                    }}
-                  >
-                    <div className="overflow-hidden rounded-lg border border-slate-700/80 bg-white shadow-2xl">
-                      <iframe
-                        key={previewHtml}
-                        srcDoc={previewHtml}
-                        title="HTML live preview"
-                        sandbox="allow-scripts allow-forms allow-popups allow-modals"
-                        className="block w-full border-0 bg-white"
-                        style={{
-                          height: isFullscreen
-                            ? "calc(100vh - 110px)"
-                            : "calc(100vh - 15rem)",
-                          minHeight: "480px",
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+    <div className="flex min-h-full w-full items-center justify-center">
+      <div
+        className="transition-[width] duration-150 ease-out"
+        style={{
+          width:
+            previewDeviceWidth === null
+              ? "100%"
+              : `${previewDeviceWidth}px`,
+          maxWidth: "100%",
+          transform: `scale(${zoom / 100})`,
+          transformOrigin: "center center",
+        }}
+      >
+        <div className="overflow-hidden rounded-lg border border-slate-700/80 bg-white shadow-2xl">
+          <iframe
+            key={previewHtml}
+            srcDoc={previewHtml}
+            title="HTML live preview"
+            sandbox="allow-scripts allow-forms allow-popups allow-modals"
+            className="block w-full border-0 bg-white"
+            style={{
+              height: isFullscreen
+                ? "calc(100vh - 110px)"
+                : "calc(100vh - 15rem)",
+              minHeight: "480px",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+)}
           </div>
         )}
       </div>
