@@ -44,7 +44,7 @@ interface HtmlViewerProps {
 }
 
 export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
-  const [originalHtml, setOriginalHtml] = useState("");
+
   const [html, setHtml] = useState("");
   const [previewHtml, setPreviewHtml] = useState("");
   const [fileName, setFileName] = useState("");
@@ -133,7 +133,6 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
       }
 
       setError(null);
-      setOriginalHtml(content);
       setHtml(content);
       setPreviewHtml(content);
       setFileName(file.name);
@@ -182,7 +181,6 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
   };
 
  const handleClearFile = () => {
-  setOriginalHtml("");
   setHtml("");
   setPreviewHtml("");
   setFileName("");
@@ -241,7 +239,6 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 </html>`;
 
     setError(null);
-    setOriginalHtml(sample);
     setHtml(sample);
     setPreviewHtml(sample);
     setFileName("sample.html");
