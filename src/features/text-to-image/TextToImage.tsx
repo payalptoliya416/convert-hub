@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { Check, Download, Sparkles } from "lucide-react";
 import React, { useRef, useState } from "react";
 
 const HORDE_BASE = "https://stablehorde.net/api/v2";
@@ -10,6 +10,7 @@ export default function TextToImage() {
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
   const [error, setError] = useState("");
+  const [downloadState, setDownloadState] = useState<"idle" | "downloading" | "downloaded">("idle");
 
   const cancelRef = useRef(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -138,13 +139,12 @@ export default function TextToImage() {
   };
 
   const downloadImage = () => {
-    if (!imageUrl) return;
+    if (!imageUrl || downloadState === "downloading") return;
 
     setError("");
+    setDownloadState("downloading");
 
     try {
-      // Use a canvas to draw the already-loaded image and export it as a blob.
-      // This avoids CORS issues because the image is already rendered in the browser.
       const imgEl = imgRef.current;
 
       if (imgEl && imgEl.complete && imgEl.naturalWidth > 0) {
@@ -160,8 +160,9 @@ export default function TextToImage() {
         canvas.toBlob(
           (blob) => {
             if (!blob) {
-              // Fallback: open in new tab so user can save manually
               window.open(imageUrl, "_blank");
+              setDownloadState("downloaded");
+              setTimeout(() => setDownloadState("idle"), 2500);
               return;
             }
 
@@ -177,17 +178,22 @@ export default function TextToImage() {
               document.body.removeChild(link);
               URL.revokeObjectURL(blobUrl);
             }, 1000);
+
+            setDownloadState("downloaded");
+            setTimeout(() => setDownloadState("idle"), 2500);
           },
           "image/png",
         );
       } else {
-        // Image element not found or not loaded — open in new tab as fallback
         window.open(imageUrl, "_blank");
+        setDownloadState("downloaded");
+        setTimeout(() => setDownloadState("idle"), 2500);
       }
     } catch (err) {
       console.error("Image download error:", err);
-      // Final fallback: open in new tab
       window.open(imageUrl, "_blank");
+      setDownloadState("downloaded");
+      setTimeout(() => setDownloadState("idle"), 2500);
     }
   };
 
@@ -310,9 +316,31 @@ export default function TextToImage() {
             <button
               type="button"
               onClick={downloadImage}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-300 transition hover:border-violet-500/40 hover:bg-slate-800 hover:text-white cursor-pointer"
+              disabled={downloadState === "downloading"}
+              className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer
+                ${downloadState === "downloaded"
+                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400 scale-[0.98]"
+                  : downloadState === "downloading"
+                  ? "border-violet-500/40 bg-violet-500/10 text-violet-300 cursor-not-allowed"
+                  : "border-slate-700 bg-slate-900 text-slate-300 hover:border-violet-500/40 hover:bg-slate-800 hover:text-white"
+                }`}
             >
-              Download Image
+              {downloadState === "downloading" ? (
+                <>
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-violet-300/30 border-t-violet-300" />
+                  Downloading...
+                </>
+              ) : downloadState === "downloaded" ? (
+                <>
+                  <Check className="h-4 w-4 animate-bounce" />
+                  Downloaded!
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" />
+                  Download Image
+                </>
+              )}
             </button>
           </div>
         )}
