@@ -1,4 +1,4 @@
-import { Check, Download, Sparkles } from "lucide-react";
+import { Check, Download, Sparkles, Trash2 } from "lucide-react";
 import React, { useRef, useState } from "react";
 
 const HORDE_BASE = "https://stablehorde.net/api/v2";
@@ -10,7 +10,9 @@ export default function TextToImage() {
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
   const [error, setError] = useState("");
-  const [downloadState, setDownloadState] = useState<"idle" | "downloading" | "downloaded">("idle");
+  const [downloadState, setDownloadState] = useState<
+    "idle" | "downloading" | "downloaded"
+  >("idle");
 
   const cancelRef = useRef(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -53,7 +55,9 @@ export default function TextToImage() {
 
       if (!submitRes.ok) {
         const data = await submitRes.json().catch(() => ({}));
-        throw new Error(data?.message || `Request failed (${submitRes.status})`);
+        throw new Error(
+          data?.message || `Request failed (${submitRes.status})`,
+        );
       }
 
       const submitData = await submitRes.json();
@@ -70,7 +74,9 @@ export default function TextToImage() {
 
         await sleep(3000);
 
-        const checkRes = await fetch(`${HORDE_BASE}/generate/check/${requestId}`);
+        const checkRes = await fetch(
+          `${HORDE_BASE}/generate/check/${requestId}`,
+        );
 
         if (!checkRes.ok) {
           throw new Error(`Status check failed (${checkRes.status})`);
@@ -79,16 +85,22 @@ export default function TextToImage() {
         const checkData = await checkRes.json();
 
         if (checkData.faulted) {
-          throw new Error("Image generation failed on the server. Please try again.");
+          throw new Error(
+            "Image generation failed on the server. Please try again.",
+          );
         }
 
         if (checkData.done) {
           setStatusMsg("Finalizing image...");
 
-          const statusRes = await fetch(`${HORDE_BASE}/generate/status/${requestId}`);
+          const statusRes = await fetch(
+            `${HORDE_BASE}/generate/status/${requestId}`,
+          );
 
           if (!statusRes.ok) {
-            throw new Error(`Fetching generated image failed (${statusRes.status})`);
+            throw new Error(
+              `Fetching generated image failed (${statusRes.status})`,
+            );
           }
 
           const statusData = await statusRes.json();
@@ -104,9 +116,11 @@ export default function TextToImage() {
           return;
         }
 
-        const queuePosition = checkData.queue_position ?? "?";
-        const waitTime = checkData.wait_time ?? "?";
-        setStatusMsg(`Generating... Queue: ${queuePosition} • About ${waitTime}s`);
+        // const queuePosition = checkData.queue_position ?? "?";
+        // const waitTime = checkData.wait_time ?? "?";
+        // setStatusMsg(
+        //   `Generating... Queue: ${queuePosition} • About ${waitTime}s`,
+        // );
       }
 
       throw new Error("Generation timed out. Please try again.");
@@ -140,33 +154,30 @@ export default function TextToImage() {
 
         ctx.drawImage(imgEl, 0, 0);
 
-        canvas.toBlob(
-          (blob) => {
-            if (!blob) {
-              window.open(imageUrl, "_blank");
-              setDownloadState("downloaded");
-              setTimeout(() => setDownloadState("idle"), 2500);
-              return;
-            }
-
-            const blobUrl = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = blobUrl;
-            link.download = "generated-image.png";
-            link.style.display = "none";
-            document.body.appendChild(link);
-            link.click();
-
-            setTimeout(() => {
-              document.body.removeChild(link);
-              URL.revokeObjectURL(blobUrl);
-            }, 1000);
-
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            window.open(imageUrl, "_blank");
             setDownloadState("downloaded");
             setTimeout(() => setDownloadState("idle"), 2500);
-          },
-          "image/png",
-        );
+            return;
+          }
+
+          const blobUrl = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = blobUrl;
+          link.download = "generated-image.png";
+          link.style.display = "none";
+          document.body.appendChild(link);
+          link.click();
+
+          setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+          }, 1000);
+
+          setDownloadState("downloaded");
+          setTimeout(() => setDownloadState("idle"), 2500);
+        }, "image/png");
       } else {
         window.open(imageUrl, "_blank");
         setDownloadState("downloaded");
@@ -197,10 +208,16 @@ export default function TextToImage() {
           <Sparkles className="h-8 w-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: "var(--text-heading)" }}>
+          <h1
+            className="text-3xl font-bold"
+            style={{ color: "var(--text-heading)" }}
+          >
             Text to Image
           </h1>
-          <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+          <p
+            className="mt-1 text-sm"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Turn your text description into a beautiful AI-generated image.
           </p>
         </div>
@@ -268,9 +285,7 @@ export default function TextToImage() {
 
         {/* Loading Status */}
         {loading && (
-          <div
-            className="mt-4 rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 text-center"
-          >
+          <div className="mt-4 rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 text-center">
             <p className="text-sm text-violet-500">
               {statusMsg || "Generating your image..."}
             </p>
@@ -284,7 +299,10 @@ export default function TextToImage() {
         {imageUrl && !loading && (
           <div className="mt-6">
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+              <h2
+                className="text-sm font-semibold"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Generated Image
               </h2>
               <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-500">
@@ -308,44 +326,64 @@ export default function TextToImage() {
               />
             </div>
 
-            <button
-              type="button"
-              onClick={downloadImage}
-              disabled={downloadState === "downloading"}
-              className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer
-                ${downloadState === "downloaded"
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
-                  : downloadState === "downloading"
-                  ? "border-violet-500/40 bg-violet-500/10 text-violet-500 cursor-not-allowed"
-                  : ""
-                }`}
-              style={
-                downloadState === "idle"
-                  ? {
-                      borderColor: "var(--border)",
-                      backgroundColor: "var(--bg-hover)",
-                      color: "var(--text-primary)",
-                    }
-                  : undefined
-              }
-            >
-              {downloadState === "downloading" ? (
-                <>
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-violet-400/30 border-t-violet-400" />
-                  Downloading...
-                </>
-              ) : downloadState === "downloaded" ? (
-                <>
-                  <Check className="h-4 w-4 animate-bounce" />
-                  Downloaded!
-                </>
-              ) : (
-                <>
-                  <Download className="h-4 w-4" />
-                  Download Image
-                </>
-              )}
-            </button>
+            <div className="mt-4 flex gap-3">
+              {/* Download Button */}
+              <button
+                type="button"
+                onClick={downloadImage}
+                disabled={downloadState === "downloading"}
+                className={`flex-1 flex items-center justify-center gap-2 rounded-xl border px-5 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer
+      ${
+        downloadState === "downloaded"
+          ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
+          : downloadState === "downloading"
+            ? "border-violet-500/40 bg-violet-500/10 text-violet-500 cursor-not-allowed"
+            : ""
+      }`}
+                style={
+                  downloadState === "idle"
+                    ? {
+                        borderColor: "var(--border)",
+                        backgroundColor: "var(--bg-hover)",
+                        color: "var(--text-primary)",
+                      }
+                    : undefined
+                }
+              >
+                {downloadState === "downloading" ? (
+                  <>
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-violet-400/30 border-t-violet-400" />
+                    Downloading...
+                  </>
+                ) : downloadState === "downloaded" ? (
+                  <>
+                    <Check className="h-4 w-4 animate-bounce" />
+                    Downloaded!
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4" />
+                    Download Image
+                  </>
+                )}
+              </button>
+
+              {/* Clear Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  setImageUrl("");
+                  setPrompt("");
+                  setError("");
+                  setStatusMsg("");
+                  setDownloadState("idle");
+                }}
+                className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/5 px-5 py-3 text-sm font-semibold text-red-400 transition-all duration-300 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300 cursor-pointer"
+              >
+                <Trash2 className="h-4 w-4" />
+                Clear
+              </button>
+            </div>
           </div>
         )}
       </div>
