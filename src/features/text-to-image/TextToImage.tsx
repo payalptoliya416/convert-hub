@@ -252,8 +252,7 @@ export default function TextToImage() {
             </p>
 
             <p className="mt-1 text-xs text-slate-500">
-              This may take some time because the free service uses community
-              GPUs.
+              This may take some time
             </p>
           </div>
         )}
