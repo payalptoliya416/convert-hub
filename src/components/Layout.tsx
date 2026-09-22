@@ -169,7 +169,7 @@ export default function Layout({ children }: LayoutProps) {
                     className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] rounded-2xl border shadow-2xl z-20 flex flex-col overflow-hidden"
                     style={{
                   borderColor: 'var(--border)',
-                  backgroundColor: 'var(--bg-surface-60)',
+                  backgroundColor: 'var(--bg-surface)',
                 }}
                   >
                     {/* Search */}
