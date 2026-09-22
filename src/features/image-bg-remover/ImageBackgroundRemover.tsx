@@ -117,7 +117,7 @@ const ImageBackgroundRemover: React.FC = () => {
 
           <div>
             <h1 className="text-3xl font-bold text-[var(--text-heading)]">
-              AI background Remover
+              AI Background Remover
             </h1>
 
             <p className="text-[var(--text-secondary)] text-sm mt-1">
