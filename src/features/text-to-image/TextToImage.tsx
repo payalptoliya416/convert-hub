@@ -198,7 +198,7 @@ export default function TextToImage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-3xl">
       {/* Header */}
       <div
         className="flex items-center gap-4 border-b pb-6"
@@ -209,7 +209,7 @@ export default function TextToImage() {
         </div>
         <div>
           <h1
-            className="text-3xl font-bold"
+            className="text-2xl sm:text-3xl font-bold"
             style={{ color: "var(--text-heading)" }}
           >
             Text to Image
@@ -326,7 +326,7 @@ export default function TextToImage() {
               />
             </div>
 
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex gap-3 flex-col md:flex-row">
               {/* Download Button */}
               <button
                 type="button"
