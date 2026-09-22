@@ -1,333 +1,293 @@
-import { useState, useRef, useCallback } from "react";
-import {
-  Sparkles,
-  ImageIcon,
-  Download,
-  Loader2,
-  ChevronDown,
-  Dices,
-  RefreshCw,
-  AlertCircle,
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
+import React, { useRef, useState } from "react";
 
-interface StyleOption {
-  label: string;
-  suffix: string;
-}
-
-interface RatioOption {
-  label: string;
-  width: number;
-  height: number;
-}
-
-const ART_STYLES: StyleOption[] = [
-  { label: "Default", suffix: "" },
-  { label: "Photorealistic", suffix: ", photorealistic, highly detailed, realistic lighting" },
-  { label: "Anime", suffix: ", anime style, vibrant colors, studio anime artwork" },
-  { label: "Digital Art", suffix: ", digital art, concept art, trending on artstation" },
-  { label: "Oil Painting", suffix: ", oil painting, textured brush strokes, classical art" },
-  { label: "Watercolor", suffix: ", watercolor painting, soft edges, paper texture" },
-  { label: "Sketch", suffix: ", pencil sketch, hand drawn, black and white line art" },
-  { label: "3D Render", suffix: ", 3d render, octane render, cinematic lighting" },
-];
-
-const ASPECT_RATIOS: RatioOption[] = [
-  { label: "1:1", width: 1024, height: 1024 },
-  { label: "16:9", width: 1280, height: 720 },
-  { label: "9:16", width: 720, height: 1280 },
-  { label: "4:3", width: 1024, height: 768 },
-  { label: "3:4", width: 768, height: 1024 },
-];
-
-const MAX_CHARS = 500;
-
-function buildImageUrl(opts: {
-  prompt: string;
-  style: StyleOption;
-  ratio: RatioOption;
-  seed: number;
-  enhance: boolean;
-}) {
-  const fullPrompt = `${opts.prompt.trim()}${opts.style.suffix}`;
-  const encoded = encodeURIComponent(fullPrompt);
-  const params = new URLSearchParams({
-    width: String(opts.ratio.width),
-    height: String(opts.ratio.height),
-    seed: String(opts.seed),
-    nologo: "true",
-  });
-  if (opts.enhance) params.set("enhance", "true");
-  return `https://image.pollinations.ai/prompt/${encoded}?${params.toString()}`;
-}
+const HORDE_BASE = "https://stablehorde.net/api/v2";
+const ANON_KEY = "0000000000";
 
 export default function TextToImage() {
   const [prompt, setPrompt] = useState("");
-  const [styleIndex, setStyleIndex] = useState(0);
-  const [ratioIndex, setRatioIndex] = useState(0);
-  const [seed, setSeed] = useState<number>(() => Math.floor(Math.random() * 1_000_000));
-  const [enhance, setEnhance] = useState(true);
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState("");
+  const [error, setError] = useState("");
 
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const cancelRef = useRef(false);
 
-  const requestIdRef = useRef(0);
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
-  const randomizeSeed = () => setSeed(Math.floor(Math.random() * 1_000_000));
-
-  const handleGenerate = useCallback(() => {
-    const trimmed = prompt.trim();
-    if (!trimmed) {
-      setError("Please describe what you want to see first.");
+  const generateImage = async () => {
+    if (!prompt.trim()) {
+      setError("Please enter a prompt");
       return;
     }
 
-    setError(null);
-    setIsGenerating(true);
-    setImageUrl(null);
+    setError("");
+    setImageUrl("");
+    setLoading(true);
+    setStatusMsg("");
+    cancelRef.current = false;
 
-    const myRequestId = ++requestIdRef.current;
-    const url = buildImageUrl({
-      prompt: trimmed,
-      style: ART_STYLES[styleIndex],
-      ratio: ASPECT_RATIOS[ratioIndex],
-      seed,
-      enhance,
-    });
+    try {
+      setStatusMsg("Submitting request...");
 
-    // Preload so we only show the image once it's actually ready,
-    // and can surface a proper error state if generation fails.
-    const img = new Image();
-    img.onload = () => {
-      if (requestIdRef.current !== myRequestId) return; // a newer request superseded this one
-      setImageUrl(url);
-      setIsGenerating(false);
-    };
-    img.onerror = () => {
-      if (requestIdRef.current !== myRequestId) return;
-      setError("Image generation failed. Please try again in a moment.");
-      setIsGenerating(false);
-    };
-    img.src = url;
-  }, [prompt, styleIndex, ratioIndex, seed, enhance]);
+      const submitRes = await fetch(`${HORDE_BASE}/generate/async`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: ANON_KEY,
+        },
+        body: JSON.stringify({
+          prompt: prompt.trim(),
+          params: {
+            width: 512,
+            height: 512,
+            steps: 25,
+            n: 1,
+          },
+          r2: true,
+        }),
+      });
 
-  const handleRegenerate = () => {
-    randomizeSeed();
-    // regenerate uses the freshly randomized seed on next tick
-    setTimeout(handleGenerate, 0);
+      if (!submitRes.ok) {
+        const data = await submitRes.json().catch(() => ({}));
+
+        throw new Error(
+          data?.message || `Request failed (${submitRes.status})`,
+        );
+      }
+
+      const submitData = await submitRes.json();
+      const requestId = submitData.id;
+
+      if (!requestId) {
+        throw new Error("No generation request ID returned");
+      }
+
+      const maxAttempts = 60;
+
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        if (cancelRef.current) return;
+
+        await sleep(3000);
+
+        const checkRes = await fetch(
+          `${HORDE_BASE}/generate/check/${requestId}`,
+        );
+
+        if (!checkRes.ok) {
+          throw new Error(`Status check failed (${checkRes.status})`);
+        }
+
+        const checkData = await checkRes.json();
+
+        if (checkData.faulted) {
+          throw new Error(
+            "Image generation failed on the server. Please try again.",
+          );
+        }
+
+        if (checkData.done) {
+          setStatusMsg("Finalizing image...");
+
+          const statusRes = await fetch(
+            `${HORDE_BASE}/generate/status/${requestId}`,
+          );
+
+          if (!statusRes.ok) {
+            throw new Error(
+              `Fetching generated image failed (${statusRes.status})`,
+            );
+          }
+
+          const statusData = await statusRes.json();
+
+          const image = statusData?.generations?.[0]?.img;
+
+          if (!image) {
+            throw new Error("No image was returned.");
+          }
+
+          setImageUrl(image);
+          setLoading(false);
+          setStatusMsg("");
+
+          return;
+        }
+
+        const queuePosition = checkData.queue_position ?? "?";
+        const waitTime = checkData.wait_time ?? "?";
+
+        setStatusMsg(
+          `Generating... Queue: ${queuePosition} • About ${waitTime}s`,
+        );
+      }
+
+      throw new Error("Generation timed out. Please try again.");
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Failed to generate image. Please try again.";
+
+      setError(message);
+      setLoading(false);
+      setStatusMsg("");
+    }
   };
 
-  const handleDownload = async () => {
+  const downloadImage = async () => {
     if (!imageUrl) return;
+
     try {
-      const res = await fetch(imageUrl);
-      const blob = await res.blob();
-      const objectUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = objectUrl;
-      a.download = `text-to-image-${seed}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(objectUrl);
-    } catch {
-      setError("Couldn't download the image. Try right-click → Save image instead.");
+      const response = await fetch(imageUrl);
+
+      if (!response.ok) {
+        throw new Error("Failed to download image");
+      }
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "generated-image.png";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed:", error);
+      setError("Failed to download image. Please try again.");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !loading) {
+      generateImage();
     }
   };
 
   return (
-    <div className="mx-auto py-8 text-[var(--text-primary)]">
+    <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="mb-6 flex items-start gap-3 border-b border-[var(--border)] pb-6">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-500/15 text-violet-400">
-          <Sparkles className="h-5 w-5" />
-        </span>
+      <div
+        className="flex items-center gap-4 border-b pb-6"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <div className="rounded-xl border border-violet-500/20 bg-violet-500/10 p-3 text-violet-400">
+          <Sparkles className="h-8 w-8" />
+        </div>
+
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-heading)]">Text to Image</h1>
-          <p className="text-sm text-[var(--text-secondary)]">Turn your words into stunning AI-generated images — free.</p>
+          <h1
+            className="text-3xl font-bold"
+            style={{ color: "var(--text-heading)" }}
+          >
+            Text to Image
+          </h1>
+
+          <p
+            className="mt-1 text-sm"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Turn your text description into a beautiful AI-generated image.
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Left: controls */}
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5">
-          <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
-            <Sparkles className="h-4 w-4 text-violet-400" />
+      {/* Main Card */}
+      <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 shadow-2xl sm:p-6 mt-8">
+        {/* Prompt */}
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-200">
             Describe your image
-          </div>
+          </label>
 
-          <textarea
+          <input
+            type="text"
             value={prompt}
-            onChange={(e) => setPrompt(e.target.value.slice(0, MAX_CHARS))}
-            placeholder="e.g. A beautiful sunset over glowing mountains with purple sky..."
-            rows={5}
-            className="w-full resize-none rounded-xl border border-[var(--border-hover)] bg-[var(--bg-base)] p-3 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-violet-500"
+            onChange={(e) => {
+              setPrompt(e.target.value);
+              setError("");
+            }}
+            onKeyDown={handleKeyDown}
+            disabled={loading}
+            placeholder="A futuristic city at sunset with flying cars..."
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 disabled:cursor-not-allowed disabled:opacity-60"
           />
-          <div className="mt-1 text-right text-xs text-[var(--text-muted)]">
-            {prompt.length}/{MAX_CHARS}
-          </div>
+        </div>
 
-          {/* Art style */}
-          <div className="mt-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Art Style</p>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {ART_STYLES.map((style, i) => (
-                <button
-                  key={style.label}
-                  onClick={() => setStyleIndex(i)}
-                  className={`rounded-lg border px-2 py-2 text-xs font-medium transition ${
-                    i === styleIndex
-                      ? "border-violet-500 bg-violet-600 text-white"
-                      : "border-[var(--border-hover)] bg-[var(--bg-hover)]/60 text-[var(--text-secondary)] hover:border-slate-600"
-                  }`}
-                >
-                  {style.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Aspect ratio */}
-          <div className="mt-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Aspect Ratio</p>
-            <div className="flex flex-wrap gap-2">
-              {ASPECT_RATIOS.map((ratio, i) => (
-                <button
-                  key={ratio.label}
-                  onClick={() => setRatioIndex(i)}
-                  className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
-                    i === ratioIndex
-                      ? "border-violet-500 bg-violet-600 text-white"
-                      : "border-[var(--border-hover)] bg-[var(--bg-hover)]/60 text-[var(--text-secondary)] hover:border-slate-600"
-                  }`}
-                >
-                  {ratio.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Advanced options */}
-          <div className="mt-4">
-            <button
-              onClick={() => setShowAdvanced((v) => !v)}
-              className="flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-            >
-              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${showAdvanced ? "rotate-180" : ""}`} />
-              Advanced Options
-            </button>
-
-            {showAdvanced && (
-              <div className="mt-3 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)]/60 p-3">
-                <div>
-                  <label className="mb-1 block text-xs font-medium text-[var(--text-secondary)]">Seed</label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      value={seed}
-                      onChange={(e) => setSeed(Number(e.target.value) || 0)}
-                      className="w-full rounded-lg border border-[var(--border-hover)] bg-[var(--bg-surface)] px-2.5 py-1.5 text-xs text-[var(--text-primary)] outline-none focus:border-violet-500"
-                    />
-                    <button
-                      onClick={randomizeSeed}
-                      title="Randomize seed"
-                      className="rounded-lg border border-[var(--border-hover)] p-1.5 text-[var(--text-secondary)] hover:border-slate-600 hover:text-[var(--text-primary)]"
-                    >
-                      <Dices className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                  <p className="mt-1 text-[10px] text-[var(--text-muted)]">Same seed + prompt = same image. Change it for variations.</p>
-                </div>
-
-                <label className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
-                  <input
-                    type="checkbox"
-                    checked={enhance}
-                    onChange={(e) => setEnhance(e.target.checked)}
-                    className="h-3.5 w-3.5 rounded border-slate-600 bg-[var(--bg-surface)] accent-violet-600"
-                  />
-                  Enhance prompt (sharper detail, may change style slightly)
-                </label>
-              </div>
-            )}
-          </div>
-
-          {error && (
-            <p className="mt-3 flex items-center gap-1.5 text-xs font-medium text-rose-400">
-              <AlertCircle className="h-3.5 w-3.5" />
-              {error}
-            </p>
+        {/* Generate Button */}
+        <button
+          type="button"
+          onClick={generateImage}
+          disabled={loading}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {loading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+              Generating...
+            </>
+          ) : (
+            <>Generate Image</>
           )}
+        </button>
 
-          <button
-            onClick={handleGenerate}
-            disabled={isGenerating}
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-semibold text-white transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Sparkles className="h-4 w-4" />
-                Generate Image
-              </>
-            )}
-          </button>
-        </div>
+        {/* Error */}
+        {error && (
+          <div className="mt-4 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3">
+            <p className="text-sm text-red-400">{error}</p>
+          </div>
+        )}
 
-        {/* Right: preview */}
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5">
-          <div className="mb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
-              <ImageIcon className="h-4 w-4 text-violet-400" />
-              Preview
+        {/* Loading Status */}
+        {loading && (
+          <div className="mt-4 rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 text-center">
+            <p className="text-sm text-violet-300">
+              {statusMsg || "Generating your image..."}
+            </p>
+
+            <p className="mt-1 text-xs text-slate-500">
+              This may take some time because the free service uses community
+              GPUs.
+            </p>
+          </div>
+        )}
+
+        {/* Generated Image */}
+        {imageUrl && !loading && (
+          <div className="mt-6">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-slate-200">
+                Generated Image
+              </h2>
+
+              <span className="rounded-md bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
+                Generated
+              </span>
             </div>
-            {imageUrl && !isGenerating && (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleRegenerate}
-                  className="flex items-center gap-1 rounded-lg border border-[var(--border-hover)] px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)] hover:border-slate-600"
-                >
-                  <RefreshCw className="h-3.5 w-3.5" />
-                  Regenerate
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-emerald-500"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  Download
-                </button>
-              </div>
-            )}
-          </div>
 
-          <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-base)]">
-            {isGenerating ? (
-              <div className="flex flex-col items-center gap-3 text-center">
-                <Loader2 className="h-8 w-8 animate-spin text-violet-400" />
-                <p className="text-sm text-[var(--text-secondary)]">Creating your image...</p>
-              </div>
-            ) : imageUrl ? (
-              <img src={imageUrl} alt={prompt} className="h-full w-full object-contain" />
-            ) : (
-              <div className="flex flex-col items-center gap-3 px-6 text-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--bg-hover)] text-[var(--text-muted)]">
-                  <ImageIcon className="h-6 w-6" />
-                </span>
-                <p className="text-sm font-medium text-[var(--text-secondary)]">Your image will appear here</p>
-                <p className="text-xs text-[var(--text-muted)]">
-                  Enter a description, choose a style and click Generate Image.
-                </p>
-              </div>
-            )}
+            <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+              <img
+                src={imageUrl}
+                alt={prompt}
+                className="block h-auto w-full object-contain"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={downloadImage}
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-300 transition hover:border-violet-500/40 hover:bg-slate-800 hover:text-white"
+            >
+              Download Image
+            </button>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
