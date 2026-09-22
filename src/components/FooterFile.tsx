@@ -18,6 +18,7 @@ import {
   ImageIcon,
   QrCode,
   Braces,
+  Sparkles,
 } from "lucide-react";
 
 interface Tool {
@@ -93,31 +94,12 @@ const FooterFile: React.FC = () => {
   ];
 
   const webTools: Tool[] = [
-  {
-    name: "HTML Viewer",
-    path: "/html-viewer",
-    icon: Code2,
-  },
-  {
-    name: "Remove Background",
-    path: "/remove-background",
-    icon: ImageIcon,
-  },
-  {
-    name: "QR Code Generator",
-    path: "/qr-code-generator",
-    icon: QrCode,
-  },
-  {
-    name: "Password Generator",
-    path: "/password-generator",
-    icon: LockKeyhole,
-  },
-  {
-    name: "JSON Formatter",
-    path: "/json-formatter",
-    icon: Braces,
-  },
+  {  name: "HTML Viewer",        path: "/html-viewer",        icon: Code2,       },
+  {  name: "Text to Image",      path: "/text-to-image",      icon: Sparkles,    },
+  {  name: "Remove Background",  path: "/remove-background",  icon: ImageIcon,   },
+  {  name: "QR Code Generator",  path: "/qr-code-generator",  icon: QrCode,      },
+  {  name: "Password Generator", path: "/password-generator", icon: LockKeyhole, },
+  {  name: "JSON Formatter",     path: "/json-formatter",     icon: Braces,      },
 ];
 
   return (
