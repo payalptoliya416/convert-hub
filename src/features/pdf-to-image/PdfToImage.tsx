@@ -191,7 +191,7 @@ export default function PdfToImage() {
                   onClick={() => setImageFormat('image/png')}
                   className={`py-2 rounded-lg text-sm font-semibold transition border cursor-pointer ${
                     imageFormat === 'image/png'
-                      ? 'bg-violet-600 border-violet-500 text-[var(--text-heading)]'
+                      ? 'bg-violet-600 border-violet-500 text-white'
                       : 'bg-[var(--bg-base)] border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-heading)]'
                   }`}
                 >
@@ -202,7 +202,7 @@ export default function PdfToImage() {
                   onClick={() => setImageFormat('image/jpeg')}
                   className={`py-2 rounded-lg text-sm font-semibold transition border cursor-pointer ${
                     imageFormat === 'image/jpeg'
-                      ? 'bg-violet-600 border-violet-500 text-[var(--text-heading)]'
+                      ? 'bg-violet-600 border-violet-500 text-white'
                       : 'bg-[var(--bg-base)] border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-heading)]'
                   }`}
                 >
@@ -233,8 +233,8 @@ export default function PdfToImage() {
                 !file 
                   ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
+                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
               }`}
             >
               {loading ? (
@@ -321,7 +321,7 @@ export default function PdfToImage() {
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-300">Conversion Failed</h4>
+                    <h4 className="font-semibold text-red-400">Conversion Failed</h4>
                     <p className="text-sm mt-1 text-red-400/90">{error}</p>
                   </div>
                 </div>
@@ -336,7 +336,7 @@ export default function PdfToImage() {
                     </h3>
                     <button
                       onClick={downloadAllAsZip}
-                      className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
+                      className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
                     >
                       <Download className="w-4 h-4" /> Download All (ZIP)
                     </button>

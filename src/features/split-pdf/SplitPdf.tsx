@@ -682,12 +682,12 @@ export default function SplitPdf() {
             </h2>
 
             {/* Top Navigation Tabs */}
-            <div className="grid grid-cols-3 border border-[var(--border)] rounded-2xl bg-[var(--bg-base)]/60 p-1.5 gap-1">
+            <div className="grid grid-cols-3 border border-[var(--border)] rounded-2xl bg-[var(--bg-base)]/60 p-1.5 gap-8">
               {/* TAB 1: Range */}
               <button
                 type="button"
                 onClick={() => setActiveTab("range")}
-                className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
+                className={`flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
                   activeTab === "range"
                     ? "bg-[var(--bg-hover)] text-[var(--text-heading)] border border-[var(--border)] shadow-md"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-60)]"
@@ -706,7 +706,7 @@ export default function SplitPdf() {
               <button
                 type="button"
                 onClick={() => setActiveTab("pages")}
-                className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
+                className={`flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
                   activeTab === "pages"
                     ? "bg-[var(--bg-hover)] text-[var(--text-heading)] border border-[var(--border)] shadow-md"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-60)]"
@@ -725,7 +725,7 @@ export default function SplitPdf() {
               <button
                 type="button"
                 onClick={() => setActiveTab("size")}
-                className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
+                className={`flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
                   activeTab === "size"
                     ? "bg-[var(--bg-hover)] text-[var(--text-heading)] border border-[var(--border)] shadow-md"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-60)]"
@@ -961,7 +961,7 @@ export default function SplitPdf() {
                 </div>
 
                 {/* Blue Info Box */}
-                <div className="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-4 flex items-start gap-3 text-sky-400 text-xs leading-relaxed">
+                <div className="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-2 flex items-start gap-3 text-sky-400 text-xs leading-relaxed">
                   <Info className="w-4 h-4 shrink-0 mt-0.5" />
                   <p>
                     Selected pages will be converted into separate PDF files.{" "}
@@ -1034,7 +1034,7 @@ export default function SplitPdf() {
                 </div>
 
                 {/* Info Box */}
-                <div className="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-4 flex items-start gap-3 text-sky-400 text-xs leading-relaxed">
+                <div className="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-2 flex items-start gap-3 text-sky-400 text-xs leading-relaxed">
                   <Info className="w-4 h-4 shrink-0 mt-0.5" />
                   <p>
                     This PDF will be split into files no larger than {maxSize}{" "}
@@ -1079,12 +1079,12 @@ export default function SplitPdf() {
                     extractMode === "select" &&
                     !pagesInput.trim())
                 }
-                className={`w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition cursor-pointer shadow-xl ${
+                className={`w-full py-3 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition cursor-pointer shadow-xl ${
                   !file
-                    ? "bg-red-600/50 text-[var(--text-heading)]/70 border border-red-500/30 cursor-not-allowed opacity-80"
+                    ? "bg-red-600/50 text-white/70 border border-red-500/30 cursor-not-allowed opacity-80"
                     : loading
                       ? "bg-slate-700 text-[var(--text-heading)] border border-[var(--border-hover)] cursor-not-allowed"
-                      : "bg-red-600 hover:bg-red-500 text-[var(--text-heading)] border border-red-500 shadow-red-600/20"
+                      : "bg-red-600 hover:bg-red-500 text-white border border-red-500 shadow-red-600/20"
                 }`}
               >
                 <span>{loading ? "Processing..." : "Split PDF"}</span>
@@ -1101,7 +1101,7 @@ export default function SplitPdf() {
                 <button
                   type="button"
                   onClick={downloadResult}
-                  className="w-full p-3 rounded-2xl font-bold text-[var(--text-heading)] bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-emerald-600/20 cursor-pointer"
+                  className="w-full p-3 rounded-2xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-emerald-600/20 cursor-pointer"
                 >
                   Download {resultName}
                 </button>

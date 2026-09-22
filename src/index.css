@@ -42,27 +42,28 @@
 
   --selection-bg:   rgba(124,58,237,0.30);
   --selection-text: #ffffff;
+   --bg-elevated:    #ffffff;
 }
 
 /* ---------- LIGHT THEME ---------- */
 [data-theme="light"] {
-  --bg-base:        #f8fafc;   /* slate-50 */
+  --bg-base:        #f1f5f9;   /* slate-100 */
   --bg-surface:     #ffffff;   /* white */
-  --bg-surface-60:  rgba(255,255,255,0.75);
+  --bg-surface-60:  #ffffff;   /* white – cards fully visible */
   --bg-elevated:    #ffffff;
-  --bg-input:       #f1f5f9;   /* slate-100 */
-  --bg-hover:       #f1f5f9;   /* slate-100 */
+  --bg-input:       #f8fafc;   /* slate-50 – inputs slightly off-white */
+  --bg-hover:       #e2e8f0;   /* slate-200 – clear hover state */
 
-  --border:         #e2e8f0;   /* slate-200 */
-  --border-soft:    rgba(226,232,240,0.80);
-  --border-hover:   #cbd5e1;   /* slate-300 */
+  --border:         #cbd5e1;   /* slate-300 – visible borders */
+  --border-soft:    rgba(203,213,225,0.80);
+  --border-hover:   #94a3b8;   /* slate-400 */
 
   --text-primary:   #0f172a;   /* slate-900 */
-  --text-secondary: #475569;   /* slate-600 */
-  --text-muted:     #94a3b8;   /* slate-400 */
+  --text-secondary: #334155;   /* slate-700 – darker for readability */
+  --text-muted:     #64748b;   /* slate-500 */
   --text-heading:   #0f172a;   /* slate-900 */
 
-  --nav-bg:         rgba(248,250,252,0.85); /* slate-50/85 */
+  --nav-bg:         rgba(255,255,255,0.90);
   --nav-border:     #e2e8f0;   /* slate-200 */
 
   --selection-bg:   rgba(124,58,237,0.15);
@@ -84,10 +85,37 @@ html {
 }
 
 /* ============================================================
-   SCROLLBAR
+   SCROLLBAR — global + custom-scrollbar class
+   Works in both dark and light mode via CSS variables
 ============================================================ */
+
+/* Global scrollbar (all elements) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-surface);
+}
+
+/* Thin custom-scrollbar variant (used in dropdowns, code panels) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 3px;
+  width: 4px;
+  height: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -95,10 +123,16 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.25);
+  background: var(--border-hover);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.45);
+  background: var(--text-muted);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) var(--bg-surface);
 }

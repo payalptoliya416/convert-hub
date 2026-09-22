@@ -165,8 +165,8 @@
 //                 !file 
 //                   ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed'
 //                   : loading
-//                     ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
-//                     : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
+//                     ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
+//                     : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
 //               }`}
 //             >
 //               {loading ? (
@@ -232,7 +232,7 @@
 //                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
 //                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
 //                   <div>
-//                     <h4 className="font-semibold text-red-300">Error</h4>
+//                     <h4 className="font-semibold text-red-400">Error</h4>
 //                     <p className="text-sm mt-1 text-red-400/90">{error}</p>
 //                   </div>
 //                 </div>
@@ -240,16 +240,16 @@
 
 //               {success && watermarkedBlob && (
 //                 <div className="space-y-4">
-//                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6 flex items-start gap-3">
+//                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 flex items-start gap-3">
 //                     <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
 //                     <div>
-//                       <h4 className="font-semibold text-emerald-300">Watermark Added Successfully!</h4>
+//                       <h4 className="font-semibold text-emerald-400">Watermark Added Successfully!</h4>
 //                       <p className="text-sm mt-1 text-emerald-400/90">{(watermarkedBlob.size / 1024).toFixed(1)} KB</p>
 //                     </div>
 //                   </div>
 //                   <button
 //                     onClick={downloadWatermarked}
-//                     className="w-full py-3 bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-violet-600/10"
+//                     className="w-full py-3 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-violet-600/10"
 //                   >
 //                     <Download className="w-4 h-4" /> Download Watermarked PDF
 //                   </button>

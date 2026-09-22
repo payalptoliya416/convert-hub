@@ -79,7 +79,7 @@ function UrlModal({ onAdd, onClose }: { onAdd: (url: string) => void; onClose: (
       )}
 
       <div className="rounded-xl border border-sky-500/20 bg-sky-500/10 p-4">
-        <p className="text-xs leading-5 text-sky-300">
+        <p className="text-xs leading-5 text-sky-600">
           Some websites block cross-origin requests (CORS).
           Public websites usually work best.
         </p>
@@ -92,7 +92,7 @@ function UrlModal({ onAdd, onClose }: { onAdd: (url: string) => void; onClose: (
 
       <button
         onClick={handleAdd}
-        className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-[var(--text-heading)] transition hover:bg-red-500 cursor-pointer shadow-lg shadow-red-600/20"
+        className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500 cursor-pointer shadow-lg shadow-red-600/20"
       >
         Add URL
       </button>
@@ -436,7 +436,7 @@ export default function HtmlToPdf() {
                 }}
                 spellCheck={false}
                 autoFocus
-                className="w-full bg-[var(--bg-base)] text-green-300 font-mono text-xs px-4 py-4 outline-none resize-none border-0"
+                className="w-full bg-[var(--bg-base)] text-green-700 font-mono text-xs px-4 py-4 outline-none resize-none border-0"
                 style={{ minHeight: '420px', tabSize: 2 }}
                 placeholder="Paste or write HTML here…"
               />
@@ -449,7 +449,7 @@ export default function HtmlToPdf() {
               className={`w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-xl text-sm ${
                 loading || !hasContent
                   ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border-hover)] cursor-not-allowed'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-[var(--text-heading)] border border-indigo-500 shadow-indigo-600/20'
+                  : 'bg-indigo-600 hover:bg-indigo-500 text-white border border-indigo-500 shadow-indigo-600/20'
               }`}
             >
               {loading
@@ -461,7 +461,7 @@ export default function HtmlToPdf() {
             {success && pdfBlob && (
               <button
                 onClick={downloadPdf}
-                className="w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] border border-emerald-500 shadow-xl shadow-emerald-600/20 transition cursor-pointer text-sm"
+                className="w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-500 shadow-xl shadow-emerald-600/20 transition cursor-pointer text-sm"
               >
                 <Download className="w-4 h-4" /> Download {fileName || 'document'}.pdf
               </button>

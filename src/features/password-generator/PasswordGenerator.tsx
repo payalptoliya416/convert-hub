@@ -238,7 +238,7 @@ const PasswordGenerator: React.FC = () => {
                   <button
                     type="button"
                     onClick={copyPassword}
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-[var(--text-heading)] transition hover:bg-violet-500"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-white transition hover:bg-violet-500"
                     title="Copy password"
                   >
                     {copied ? (
@@ -470,7 +470,7 @@ const PasswordGenerator: React.FC = () => {
             <button
               type="button"
               onClick={() => generatePassword()}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-[var(--text-heading)] shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
             >
               <RefreshCcw className="h-5 w-5" />
               Generate Password

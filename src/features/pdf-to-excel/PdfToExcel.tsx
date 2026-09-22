@@ -223,8 +223,8 @@ export default function PdfToExcel() {
                 !file
                   ? "bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed"
                   : loading
-                    ? "bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed"
-                    : "bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20"
+                    ? "bg-violet-700 text-white border border-violet-600 cursor-not-allowed"
+                    : "bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20"
               }`}
             >
               {loading ? (
@@ -307,7 +307,7 @@ export default function PdfToExcel() {
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-300">Extraction Failed</h4>
+                    <h4 className="font-semibold text-red-400">Extraction Failed</h4>
                     <p className="text-sm mt-1 text-red-400/90">{error}</p>
                   </div>
                 </div>
@@ -321,7 +321,7 @@ export default function PdfToExcel() {
                     </h3>
                     <button
                       onClick={downloadExcel}
-                      className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
+                      className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
                     >
                       <Download className="w-4 h-4" /> Download Excel (.xlsx)
                     </button>

@@ -145,14 +145,14 @@ export default function RemovePages() {
             <button
               onClick={removePages}
               disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-[var(--text-heading)] cursor-not-allowed' : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)]'}`}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-white cursor-not-allowed' : 'bg-violet-600 hover:bg-violet-500 text-white cursor-pointer'}`}
               style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
               {loading ? <><RefreshCw className="w-5 h-5 animate-spin" /> Removing...</> : <>Remove Pages</>}
             </button>
 
             {outBlob && (
-              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg font-semibold">Download Result</button>
+              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download Result</button>
             )}
           </div>
         </div>
@@ -192,17 +192,17 @@ export default function RemovePages() {
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-300">Error</h4>
+                    <h4 className="font-semibold text-red-400">Error</h4>
                     <p className="text-sm mt-1 text-red-400/90">{error}</p>
                   </div>
                 </div>
               )}
 
               {success && outBlob && (
-                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6 flex items-start gap-3">
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-emerald-300">Pages Removed</h4>
+                    <h4 className="font-semibold text-emerald-400">Pages Removed</h4>
                     <p className="text-sm mt-1 text-emerald-400/90">Download the modified PDF using the button on the left.</p>
                   </div>
                 </div>

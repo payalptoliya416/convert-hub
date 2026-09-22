@@ -100,7 +100,7 @@ const FooterFile: React.FC = () => {
       {/* Top Glow */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
 
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-7xl">
 
         {/* Footer Main */}
         <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1fr] lg:gap-12 lg:py-14">
@@ -132,7 +132,7 @@ const FooterFile: React.FC = () => {
 
         {/* Bottom */}
         <div className="border-t" style={{ borderColor: 'var(--border-soft)' }}>
-          <div className="flex flex-col items-center justify-center gap-3 py-6 text-center sm:flex-row sm:text-left">
+          <div className="flex flex-col items-center justify-center gap-3 pt-6 text-center sm:flex-row sm:text-left">
             <p className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>
               © {new Date().getFullYear()} ConvertHub. All rights reserved.
             </p>

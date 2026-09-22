@@ -344,7 +344,7 @@ const JsonFormatter: React.FC = () => {
               <div className="min-w-0">
                 <p className="text-sm font-medium text-red-400">Invalid JSON</p>
 
-                <p className="mt-1 break-all text-xs leading-5 text-red-400/70">
+                <p className="mt-1 break-all text-xs leading-5 text-red-400/90">
                   {error.replace("Invalid JSON: ", "")}
                 </p>
               </div>
@@ -357,28 +357,9 @@ const JsonFormatter: React.FC = () => {
             <button
               type="button"
               onClick={formatJson}
-              className="
-              flex
-              min-h-[46px]
-              w-full
-              items-center
-              justify-center
-              gap-2
-              rounded-xl
-              bg-gradient-to-r
-              from-violet-600
-              to-indigo-600
-              px-5
-              py-3
-              text-sm
-              font-semibold
-              text-[var(--text-heading)]
-              shadow-lg
-              shadow-violet-600/20
-              transition
-              hover:from-violet-500
-              hover:to-indigo-500
-            "
+              className="flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r
+              from-violet-600 to-indigo-600 px-5 py-3 text-sm font-semibold text-white
+              shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
             >
               <Maximize2 className="h-4 w-4" />
               Format JSON

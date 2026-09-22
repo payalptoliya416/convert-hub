@@ -160,8 +160,8 @@ export default function MergePdf() {
                 pdfs.length < 2 
                   ? 'border border-[var(--border)] cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
+                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
               }`}
               style={pdfs.length < 2 ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
@@ -199,7 +199,7 @@ export default function MergePdf() {
             <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-red-300">Merging Failed</h4>
+                <h4 className="font-semibold text-red-400">Merging Failed</h4>
                 <p className="text-sm mt-1 text-red-400/90">{error}</p>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function MergePdf() {
                   </div>
                   <button
                     onClick={downloadMergedPdf}
-                    className="py-2.5 px-5 bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-violet-600/10"
+                    className="py-2.5 px-5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-violet-600/10"
                   >
                     <Download className="w-4 h-4" /> Download Merged PDF
                   </button>

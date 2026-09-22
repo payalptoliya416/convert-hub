@@ -179,7 +179,7 @@ export default function TextToImage() {
                   onClick={() => setStyleIndex(i)}
                   className={`rounded-lg border px-2 py-2 text-xs font-medium transition ${
                     i === styleIndex
-                      ? "border-violet-500 bg-violet-600 text-[var(--text-heading)]"
+                      ? "border-violet-500 bg-violet-600 text-white"
                       : "border-[var(--border-hover)] bg-[var(--bg-hover)]/60 text-[var(--text-secondary)] hover:border-slate-600"
                   }`}
                 >
@@ -199,7 +199,7 @@ export default function TextToImage() {
                   onClick={() => setRatioIndex(i)}
                   className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
                     i === ratioIndex
-                      ? "border-violet-500 bg-violet-600 text-[var(--text-heading)]"
+                      ? "border-violet-500 bg-violet-600 text-white"
                       : "border-[var(--border-hover)] bg-[var(--bg-hover)]/60 text-[var(--text-secondary)] hover:border-slate-600"
                   }`}
                 >
@@ -264,7 +264,7 @@ export default function TextToImage() {
           <button
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-semibold text-[var(--text-heading)] transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-semibold text-white transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isGenerating ? (
               <>
@@ -298,7 +298,7 @@ export default function TextToImage() {
                 </button>
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-medium text-[var(--text-heading)] hover:bg-emerald-500"
+                  className="flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-emerald-500"
                 >
                   <Download className="h-3.5 w-3.5" />
                   Download

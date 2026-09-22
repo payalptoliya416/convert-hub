@@ -191,7 +191,7 @@ const QRCodeGenerator: React.FC = () => {
                 type="button"
                 onClick={generateQRCode}
                 disabled={!text.trim()}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-[var(--text-heading)] shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
               >
                 <QrCode className="h-5 w-5" />
                 Generate QR Code
@@ -261,7 +261,7 @@ const QRCodeGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={downloadQRCode}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-[var(--text-heading)] transition hover:bg-violet-500"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-500"
                 >
                   <Download className="h-4 w-4" />
                   Download

@@ -104,14 +104,14 @@ export default function JpgToPdf() {
             <button
               onClick={convertToPdf}
               disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-[var(--text-heading)]' : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)]'}`}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-white' : 'bg-violet-600 hover:bg-violet-500 text-white'}`}
               style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
               {loading ? <><RefreshCw className="w-5 h-5 animate-spin" /> Converting...</> : <><Download className="w-5 h-5" /> Convert</>}
             </button>
 
             {success && pdfBlob && (
-              <button onClick={downloadPdf} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg font-semibold">Download PDF</button>
+              <button onClick={downloadPdf} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download PDF</button>
             )}
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function JpgToPdf() {
             <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-red-300">Error</h4>
+                <h4 className="font-semibold text-red-400">Error</h4>
                 <p className="text-sm mt-1 text-red-400/90">{error}</p>
               </div>
             </div>

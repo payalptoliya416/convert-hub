@@ -255,7 +255,7 @@ export default function ProtectPdf() {
               {success && protectedBlob && (
                 <button
                   onClick={downloadProtected}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/20"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/20"
                 >
                   <Download className="w-5 h-5" /> Download Protected PDF
                 </button>
@@ -383,8 +383,8 @@ export default function ProtectPdf() {
                 !file || !password || !confirmPassword || password !== confirmPassword
                   ? 'cursor-not-allowed'
                   : loading
-                    ? 'bg-red-700 text-[var(--text-heading)] border border-red-600 cursor-not-allowed'
-                    : 'bg-red-600 hover:bg-red-500 text-[var(--text-heading)] border border-red-500 shadow-red-600/20'
+                    ? 'bg-red-700 text-white border border-red-600 cursor-not-allowed'
+                    : 'bg-red-600 hover:bg-red-500 text-white border border-red-500 shadow-red-600/20'
               }`}
               style={(!file || !password || !confirmPassword || password !== confirmPassword) ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)', borderColor: 'var(--border)' } : undefined}
             >

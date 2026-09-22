@@ -334,7 +334,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
   </div>
 </div>
     <div
-      className={`flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] shadow-xl shadow-black/20 ${
+      className={`flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] shadow-xl shadow-black/20 mt-7 ${
         isFullscreen
           ? "fixed inset-0 z-50 rounded-none h-screen"
           : "h-[calc(100vh-6rem)] min-h-[550px]"
@@ -502,7 +502,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             onDragLeave={() => setIsDraggingFile(false)}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`flex h-full min-h-[280px] cursor-pointer flex-col items-center justify-center gap-3 border-2 border-dashed p-8 text-center transition ${
+            className={`flex h-full min-h-[280px] cursor-pointer flex-col items-center justify-center gap-3  p-8 text-center transition ${
               isDraggingFile
                 ? "border-violet-500 bg-violet-500/5"
                 : "border-[var(--border-hover)] hover:border-slate-600 hover:bg-[var(--bg-surface-60)]"
@@ -754,7 +754,7 @@ function ModeButton({
       onClick={onClick}
       className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition cursor-pointer ${
         active
-          ? "bg-violet-600 text-[var(--text-heading)] shadow-sm"
+          ? "bg-violet-600 text-white shadow-sm"
           : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       }`}
     >
@@ -782,7 +782,7 @@ function DeviceButton({
       title={title}
       className={`rounded-md px-2 py-1 text-xs transition  cursor-pointer ${
         active
-          ? "bg-violet-600 text-[var(--text-heading)]"
+          ? "bg-violet-600 text-white"
           : "text-[var(--text-secondary)] hover:bg-slate-700 hover:text-[var(--text-primary)]"
       }`}
     >

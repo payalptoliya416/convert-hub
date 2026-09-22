@@ -214,7 +214,7 @@ export default function PdfToWord() {
                 Conversion Mode
               </label>
 
-              <div className="rounded-lg border border-violet-500 bg-violet-600 text-[var(--text-heading)] px-4 py-3 mt-3">
+              <div className="rounded-lg border border-violet-500 bg-violet-600 text-white px-4 py-3 mt-3">
                 <p className="font-semibold">Preserve Layout</p>
                 <p className="text-xs opacity-80">
                   Keeps images, screenshots and page layout.
@@ -225,12 +225,12 @@ export default function PdfToWord() {
             <button
               onClick={convert}
               disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
                 !file
                   ? "cursor-not-allowed"
                   : loading
-                    ? "bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed"
-                    : "bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20"
+                    ? "bg-violet-700 text-white border border-violet-600 cursor-not-allowed"
+                    : "bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20"
               }
               style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)', borderColor: 'var(--border)' } : undefined}`}
             >
@@ -322,7 +322,7 @@ export default function PdfToWord() {
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-300">
+                    <h4 className="font-semibold text-red-400">
                       Conversion Failed
                     </h4>
                     <p className="text-sm mt-1 text-red-400/90">{error}</p>
@@ -339,7 +339,7 @@ export default function PdfToWord() {
                     </h3>
                     <button
                       onClick={downloadDocx}
-                      className="py-2.5 px-5 bg-blue-600 hover:bg-blue-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-blue-600/10"
+                      className="py-2.5 px-5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-blue-600/10"
                     >
                       <Download className="w-4 h-4" /> Download Word (.docx)
                     </button>
