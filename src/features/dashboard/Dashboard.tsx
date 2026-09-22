@@ -22,6 +22,7 @@ import {
   QrCode,
   LockKeyhole,
   Braces,
+  Sparkles,
 } from 'lucide-react';
 
 interface Tool {
@@ -223,17 +224,17 @@ const tools: Tool[] = [
   },
 
   // Text to Image
-  // {
-  //   id: 'text-to-image',
-  //   name: 'Text to Image',
-  //   description:
-  //     'Turn your text description into a beautiful AI-generated image directly in your browser.',
-  //   path: '/text-to-image',
-  //   icon: Sparkles,
-  //   color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
-  //   category: 'web-tools',
-  //   badge: 'New',
-  // },
+  {
+    id: 'text-to-image',
+    name: 'Text to Image',
+    description:
+      'Turn your text description into a beautiful AI-generated image directly in your browser.',
+    path: '/text-to-image',
+    icon: Sparkles,
+    color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
+    category: 'web-tools',
+    badge: 'New',
+  },
 
   // Image Background Remover
   {
