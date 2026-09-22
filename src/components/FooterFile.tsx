@@ -15,6 +15,9 @@ import {
   Trash2,
   Files,
   LockKeyhole,
+  ImageIcon,
+  QrCode,
+  Braces,
 } from "lucide-react";
 
 interface Tool {
@@ -89,6 +92,34 @@ const FooterFile: React.FC = () => {
     { name: "Protect PDF",  path: "/protect-pdf",  icon: LockKeyhole},
   ];
 
+  const webTools: Tool[] = [
+  {
+    name: "HTML Viewer",
+    path: "/html-viewer",
+    icon: Code2,
+  },
+  {
+    name: "Remove Background",
+    path: "/remove-background",
+    icon: ImageIcon,
+  },
+  {
+    name: "QR Code Generator",
+    path: "/qr-code-generator",
+    icon: QrCode,
+  },
+  {
+    name: "Password Generator",
+    path: "/password-generator",
+    icon: LockKeyhole,
+  },
+  {
+    name: "JSON Formatter",
+    path: "/json-formatter",
+    icon: Braces,
+  },
+];
+
   return (
     <footer
       className="relative border-t mx-4"
@@ -103,7 +134,7 @@ const FooterFile: React.FC = () => {
       <div className="mx-auto max-w-7xl">
 
         {/* Footer Main */}
-        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1fr] lg:gap-12 lg:py-14">
+       <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1fr_1fr] lg:gap-8 lg:py-14">
 
           {/* Brand */}
           <div className="lg:pr-8">
@@ -128,6 +159,7 @@ const FooterFile: React.FC = () => {
           <FooterColumn title="PDF Conversion" tools={pdfConversionTools} />
           <FooterColumn title="Convert to PDF"  tools={convertToPdfTools}  />
           <FooterColumn title="PDF Utilities"   tools={pdfUtilities}       />
+          <FooterColumn title="Web Tools" tools={webTools} />
         </div>
 
         {/* Bottom */}
