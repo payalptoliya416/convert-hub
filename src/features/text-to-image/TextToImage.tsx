@@ -201,7 +201,7 @@ export default function TextToImage() {
     <div className="mx-auto w-full max-w-3xl">
       {/* Header */}
       <div
-        className="flex items-center gap-4 border-b pb-6"
+        className="flex items-start sm:items-center gap-4 border-b pb-6"
         style={{ borderColor: "var(--border)" }}
       >
         <div className="rounded-xl border border-violet-500/20 bg-violet-500/10 p-3 text-violet-500">

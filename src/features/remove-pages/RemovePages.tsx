@@ -115,12 +115,12 @@ export default function RemovePages() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
+      <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-400">
           <FileText className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Remove pages</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Remove pages</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Select pages you want to remove from the PDF and download the result.</p>
         </div>
       </div>

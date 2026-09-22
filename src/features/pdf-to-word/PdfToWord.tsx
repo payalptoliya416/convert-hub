@@ -190,12 +190,12 @@ export default function PdfToWord() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
+      <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
           <FileText className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>PDF to Word</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>PDF to Word</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
             Convert any PDF (text, images, screenshots) to an editable Word
             (.docx) file — 100% in your browser.

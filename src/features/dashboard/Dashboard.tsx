@@ -235,7 +235,7 @@ const tools: Tool[] = [
   // Image Background Remover
   {
     id: 'remove-background',
-    name: 'Remove Background',
+    name: 'AI background Remover',
     description: 'Remove backgrounds from your images and download transparent PNG images.',
     path: '/remove-background',
     icon: ImageIcon,

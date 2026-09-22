@@ -135,12 +135,12 @@ export default function ExcelToPdf() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
+      <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
           <Table className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Excel to PDF</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Excel to PDF</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
             Convert Microsoft Excel (.xlsx) spreadsheets to formatted PDF documents locally.
           </p>

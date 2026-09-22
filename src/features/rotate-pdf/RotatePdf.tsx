@@ -165,12 +165,12 @@ const generatePreview = async (pdfFile: File | Blob) => {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
+      <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20 text-cyan-400">
           <RotateCw className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Rotate PDF</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Rotate PDF</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
             Rotate all pages of your PDF document by 90°, 180°, or 270°.
           </p>
