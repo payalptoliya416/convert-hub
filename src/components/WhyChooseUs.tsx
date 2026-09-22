@@ -72,7 +72,7 @@ const WhyChooseUs: React.FC = () => {
             return (
               <div
                 key={feature.title}
-                className="group min-h-[270px] rounded-2xl border transition-all duration-300 hover:-translate-y-1 sm:min-h-[270px] p-4"
+                className="group min-h-[200px] rounded-2xl border transition-all duration-300 hover:-translate-y-1 sm:min-h-[250px] p-4"
                 style={{
                   backgroundColor: 'var(--bg-input)',
                   borderColor: 'var(--border)',
