@@ -168,9 +168,9 @@ export default function Layout({ children }: LayoutProps) {
                   <div
                     className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] rounded-2xl border shadow-2xl z-20 flex flex-col overflow-hidden"
                     style={{
-                      backgroundColor: 'var(--bg-elevated)',
-                      borderColor: 'var(--border)',
-                    }}
+                  borderColor: 'var(--border)',
+                  backgroundColor: 'var(--bg-surface-60)',
+                }}
                   >
                     {/* Search */}
                     <div
@@ -220,7 +220,7 @@ export default function Layout({ children }: LayoutProps) {
                     </div>
 
                     {/* Tool List */}
-                    <div className="overflow-y-auto custom-scrollbar flex-1 p-2">
+                    <div className="overflow-y-auto custom-scrollbar flex-1 p-2" >
                       {(() => {
                         const filtered = dropdownTools.filter(t =>
                           t.name.toLowerCase().includes(searchQuery.toLowerCase())
