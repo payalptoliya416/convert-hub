@@ -12,6 +12,7 @@ export default function TextToImage() {
   const [error, setError] = useState("");
 
   const cancelRef = useRef(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -136,31 +137,57 @@ export default function TextToImage() {
     }
   };
 
-  const downloadImage = async () => {
+  const downloadImage = () => {
     if (!imageUrl) return;
 
+    setError("");
+
     try {
-      const response = await fetch(imageUrl);
+      // Use a canvas to draw the already-loaded image and export it as a blob.
+      // This avoids CORS issues because the image is already rendered in the browser.
+      const imgEl = imgRef.current;
 
-      if (!response.ok) {
-        throw new Error("Failed to download image");
+      if (imgEl && imgEl.complete && imgEl.naturalWidth > 0) {
+        const canvas = document.createElement("canvas");
+        canvas.width = imgEl.naturalWidth;
+        canvas.height = imgEl.naturalHeight;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) throw new Error("Canvas not supported");
+
+        ctx.drawImage(imgEl, 0, 0);
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              // Fallback: open in new tab so user can save manually
+              window.open(imageUrl, "_blank");
+              return;
+            }
+
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = "generated-image.png";
+            link.style.display = "none";
+            document.body.appendChild(link);
+            link.click();
+
+            setTimeout(() => {
+              document.body.removeChild(link);
+              URL.revokeObjectURL(blobUrl);
+            }, 1000);
+          },
+          "image/png",
+        );
+      } else {
+        // Image element not found or not loaded — open in new tab as fallback
+        window.open(imageUrl, "_blank");
       }
-
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = "generated-image.png";
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error("Download failed:", error);
-      setError("Failed to download image. Please try again.");
+    } catch (err) {
+      console.error("Image download error:", err);
+      // Final fallback: open in new tab
+      window.open(imageUrl, "_blank");
     }
   };
 
@@ -272,8 +299,10 @@ export default function TextToImage() {
 
             <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
               <img
+                ref={imgRef}
                 src={imageUrl}
                 alt={prompt}
+                crossOrigin="anonymous"
                 className="block h-auto w-full object-contain"
               />
             </div>
