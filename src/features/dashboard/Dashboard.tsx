@@ -46,7 +46,6 @@ const tools: Tool[] = [
     icon: FileText,
     color: 'from-blue-500 to-indigo-600 shadow-blue-500/20',
     category: 'from-pdf',
-    popular: true
   },
   {
     id: 'pdf-to-ppt',
@@ -56,7 +55,6 @@ const tools: Tool[] = [
     icon: Presentation,
     color: 'from-orange-500 to-red-600 shadow-orange-500/20',
     category: 'from-pdf',
-    popular: true
   },
   {
     id: 'pdf-to-excel',
@@ -75,7 +73,6 @@ const tools: Tool[] = [
     icon: Image,
     color: 'from-purple-500 to-pink-600 shadow-purple-500/20',
     category: 'from-pdf',
-    popular: true
   },
   {
     id: 'image-to-pdf',
@@ -233,7 +230,6 @@ const tools: Tool[] = [
     icon: Sparkles,
     color: 'from-fuchsia-500 to-violet-600 shadow-fuchsia-500/20',
     category: 'web-tools',
-    badge: 'New',
   },
 
   // Image Background Remover
