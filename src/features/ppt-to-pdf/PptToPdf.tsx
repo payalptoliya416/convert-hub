@@ -365,13 +365,13 @@ export default function PptToPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20 text-orange-400">
           <Presentation className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">PowerPoint to PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>PowerPoint to PDF</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
             Convert PowerPoint presentation slides (.pptx) to PDF documents locally — with embedded images preserved.
           </p>
         </div>
@@ -381,11 +381,11 @@ export default function PptToPdf() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left Column: Actions */}
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
+            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
               <Settings className="w-5 h-5 text-violet-400" /> Actions
             </h2>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               Slides are parsed from the .pptx package. Embedded images and text are rendered onto a PDF matching your original slide dimensions.
             </p>
 
@@ -394,10 +394,10 @@ export default function PptToPdf() {
               disabled={!file || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 !file
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                  ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
               }`}
             >
               {loading ? (
@@ -420,7 +420,8 @@ export default function PptToPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+              className="flex flex-col items-center justify-center border-2 border-dashed hover:border-violet-500/50 rounded-3xl p-16 text-center cursor-pointer transition group"
+              style={{ borderColor: 'var(--border)' }}
             >
               <input
                 type="file"
@@ -429,24 +430,24 @@ export default function PptToPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your PPTX file here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+              <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>Drag and drop your PPTX file here</h3>
+              <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
                 Or click to browse. Images and text embedded in your slides will be preserved in the PDF.
               </p>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="rounded-2xl border p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-orange-500/15 rounded-xl border border-orange-500/20 text-orange-400">
                     <Presentation className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">{file.name}</h4>
-                    <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <h4 className="font-semibold truncate max-w-sm sm:max-w-md" style={{ color: 'var(--text-heading)' }}>{file.name}</h4>
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button
@@ -463,7 +464,7 @@ export default function PptToPdf() {
               </div>
 
               {loading && (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center text-sm text-slate-400 space-y-2">
+                <div className="rounded-2xl border p-6 text-center text-sm space-y-2" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}>
                   <RefreshCw className="w-6 h-6 animate-spin mx-auto text-violet-400" />
                   <p>{status || 'Processing presentation...'}</p>
                 </div>
@@ -481,19 +482,19 @@ export default function PptToPdf() {
 
               {success && pdfBlob && (
                 <div className="space-y-6">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
+                  <div className="rounded-2xl border p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                     <div className="flex items-center gap-3">
                       <div className="p-3 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
                         <CheckCircle2 className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white">PDF Compiled Successfully!</h4>
-                        <p className="text-xs text-slate-400">{(pdfBlob.size / 1024).toFixed(1)} KB</p>
+                        <h4 className="font-bold" style={{ color: 'var(--text-heading)' }}>PDF Compiled Successfully!</h4>
+                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(pdfBlob.size / 1024).toFixed(1)} KB</p>
                       </div>
                     </div>
                     <button
                       onClick={downloadPdf}
-                      className="py-2.5 px-5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-orange-600/10"
+                      className="py-2.5 px-5 bg-orange-600 hover:bg-orange-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-orange-600/10"
                     >
                       <Download className="w-4 h-4" /> Download PDF Document
                     </button>

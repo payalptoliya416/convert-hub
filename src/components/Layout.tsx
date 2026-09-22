@@ -26,7 +26,10 @@ import {
   LockKeyhole,
   Braces,
   Search,
+  Sun,
+  Moon,
 } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -67,6 +70,7 @@ export default function Layout({ children }: LayoutProps) {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const { theme, toggleTheme } = useTheme();
 
   // Scroll to top on every route change
   useEffect(() => {
@@ -84,44 +88,63 @@ export default function Layout({ children }: LayoutProps) {
   }, [mobileMenuOpen]);
 
   useEffect(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setDropdownOpen(false);
-    }
-  };
-
-  document.addEventListener('mousedown', handleClickOutside);
-
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, []);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-violet-600/30 selection:text-white">
+    <div
+      className="min-h-screen flex flex-col font-sans"
+      style={{
+        backgroundColor: 'var(--bg-base)',
+        color: 'var(--text-primary)',
+      }}
+    >
 
       {/* Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/75 border-b border-slate-900">
+      <header
+        className="sticky top-0 z-50 backdrop-blur-md border-b"
+        style={{
+          backgroundColor: 'var(--nav-bg)',
+          borderColor: 'var(--nav-border)',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          
+
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-violet-600/20 group-hover:scale-105 transition duration-300">
               <Merge className="w-5 h-5 rotate-45" />
             </div>
-            <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-violet-400 transition">
+            <span
+              className="font-extrabold text-xl tracking-tight group-hover:text-violet-400 transition"
+              style={{ color: 'var(--text-heading)' }}
+            >
               Convert<span className="text-violet-500">Hub</span>
             </span>
           </Link>
 
-          {/* Desktop Nav links */}
+
+          {/* Right side: Theme toggle + mobile menu */}
+          <div className="flex items-center gap-2">
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link 
-              to="/" 
-              className={`text-sm font-semibold flex items-center gap-1.5 transition ${location.pathname === '/' ? 'text-violet-400' : 'text-slate-400 hover:text-white'}`}
+            <Link
+              to="/"
+              className={`text-sm font-semibold flex items-center gap-1.5 transition ${
+                location.pathname === '/' ? 'text-violet-400' : 'hover:text-white'
+              }`}
+              style={location.pathname !== '/' ? { color: 'var(--text-secondary)' } : {}}
             >
               <Home className="w-4 h-4" /> Dashboard
             </Link>
@@ -131,21 +154,30 @@ export default function Layout({ children }: LayoutProps) {
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className={`text-sm font-semibold flex items-center gap-1 transition cursor-pointer ${
-                  location.pathname !== '/' ? 'text-violet-400' : 'text-slate-400 hover:text-white'
+                  location.pathname !== '/' ? 'text-violet-400' : 'hover:text-white'
                 }`}
+                style={location.pathname === '/' ? { color: 'var(--text-secondary)' } : {}}
               >
                 All Tools <ChevronDown className={`w-4 h-4 transition duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {dropdownOpen && (
                 <>
-                  {/* Backdrop overlay to close dropdown */}
                   <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)}></div>
-                  
-                  <div className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl z-20 flex flex-col overflow-hidden">
-                    {/* Search input — sticky */}
-                    <div className="relative p-3 border-b border-slate-800 shrink-0">
-                      <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500 pointer-events-none" />
+
+                  <div
+                    className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] rounded-2xl border shadow-2xl z-20 flex flex-col overflow-hidden"
+                    style={{
+                      backgroundColor: 'var(--bg-elevated)',
+                      borderColor: 'var(--border)',
+                    }}
+                  >
+                    {/* Search */}
+                    <div
+                      className="relative p-3 border-b shrink-0"
+                      style={{ borderColor: 'var(--border)' }}
+                    >
+                      <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--text-muted)' }} />
                       <input
                         ref={searchRef}
                         autoFocus
@@ -169,57 +201,73 @@ export default function Layout({ children }: LayoutProps) {
                           }
                         }}
                         placeholder="Search tools..."
-                        className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white placeholder:text-slate-500 outline-none focus:border-violet-500 transition"
+                        className="w-full pl-9 pr-8 py-2 rounded-xl border text-sm outline-none focus:border-violet-500 transition"
+                        style={{
+                          backgroundColor: 'var(--bg-input)',
+                          borderColor: 'var(--border)',
+                          color: 'var(--text-primary)',
+                        }}
                       />
                       {searchQuery && (
                         <button
                           onClick={() => setSearchQuery('')}
-                          className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition"
+                          className="absolute right-6 top-1/2 -translate-y-1/2 transition"
+                          style={{ color: 'var(--text-muted)' }}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
                       )}
                     </div>
 
-                    {/* Scrollable tool list */}
+                    {/* Tool List */}
                     <div className="overflow-y-auto custom-scrollbar flex-1 p-2">
-                    {(() => {
-                      const filtered = dropdownTools.filter(t =>
-                        t.name.toLowerCase().includes(searchQuery.toLowerCase())
-                      );
-                      if (filtered.length === 0) {
-                        return (
-                          <div className="px-3 py-6 text-center text-sm text-slate-500">
-                            No tools found
-                          </div>
+                      {(() => {
+                        const filtered = dropdownTools.filter(t =>
+                          t.name.toLowerCase().includes(searchQuery.toLowerCase())
                         );
-                      }
-                      return filtered.map((tool) => {
-                        const Icon = tool.icon;
-                        return (
-                          <Link
-                            key={tool.path}
-                            to={tool.path}
-                            onClick={() => { setDropdownOpen(false); setSearchQuery(''); }}
-                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition ${
-                              location.pathname === tool.path
-                                ? 'bg-violet-600/10 text-violet-400 font-semibold'
-                                : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                            }`}
-                          >
-                            <Icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
-                            {searchQuery ? (
-                              <span dangerouslySetInnerHTML={{
-                                __html: tool.name.replace(
-                                  new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
-                                  '<mark class="bg-violet-500/30 text-violet-300 rounded px-0.5">$1</mark>'
-                                )
-                              }} />
-                            ) : tool.name}
-                          </Link>
-                        );
-                      });
-                    })()}
+                        if (filtered.length === 0) {
+                          return (
+                            <div className="px-3 py-6 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+                              No tools found
+                            </div>
+                          );
+                        }
+                        return filtered.map((tool) => {
+                          const Icon = tool.icon;
+                          const isActive = location.pathname === tool.path;
+                          return (
+                            <Link
+                              key={tool.path}
+                              to={tool.path}
+                              onClick={() => { setDropdownOpen(false); setSearchQuery(''); }}
+                              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition ${
+                                isActive
+                                  ? 'bg-violet-600/10 text-violet-400 font-semibold'
+                                  : 'hover:text-white'
+                              }`}
+                              style={!isActive ? {
+                                color: 'var(--text-secondary)',
+                              } : {}}
+                              onMouseEnter={e => {
+                                if (!isActive) (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--bg-hover)';
+                              }}
+                              onMouseLeave={e => {
+                                if (!isActive) (e.currentTarget as HTMLElement).style.backgroundColor = '';
+                              }}
+                            >
+                              <Icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
+                              {searchQuery ? (
+                                <span dangerouslySetInnerHTML={{
+                                  __html: tool.name.replace(
+                                    new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
+                                    '<mark class="bg-violet-500/30 text-violet-300 rounded px-0.5">$1</mark>'
+                                  )
+                                }} />
+                              ) : tool.name}
+                            </Link>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                 </>
@@ -227,11 +275,34 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </nav>
 
-          {/* Mobile menu trigger */}
-          <div className="flex md:hidden">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="p-2 rounded-lg border transition cursor-pointer"
+              style={{
+                backgroundColor: 'var(--bg-surface)',
+                borderColor: 'var(--border)',
+                color: 'var(--text-secondary)',
+              }}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-500" />
+              )}
+            </button>
+
+            {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white transition cursor-pointer"
+              className="md:hidden p-1.5 border rounded-lg transition cursor-pointer"
+              style={{
+                backgroundColor: 'var(--bg-surface)',
+                borderColor: 'var(--border)',
+                color: 'var(--text-secondary)',
+              }}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -240,34 +311,52 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-900 bg-slate-950 shadow-2xl flex flex-col" style={{ maxHeight: 'calc(100dvh - 64px)' }}>
-            
-            {/* Dashboard link — sticky top */}
+          <div
+            className="md:hidden border-t shadow-2xl flex flex-col"
+            style={{
+              maxHeight: 'calc(100dvh - 64px)',
+              backgroundColor: 'var(--bg-base)',
+              borderColor: 'var(--border)',
+            }}
+          >
+            {/* Dashboard link */}
             <div className="px-4 pt-3 pb-2 shrink-0">
               <Link
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-2.5 px-3 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-900"
+                className="block py-2.5 px-3 rounded-xl text-sm font-semibold transition"
+                style={{ color: 'var(--text-secondary)' }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--bg-surface)')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = '')}
               >
                 Dashboard
               </Link>
             </div>
 
-            {/* Search bar — sticky */}
-            <div className="px-4 pb-3 shrink-0 border-b border-slate-900">
+            {/* Search bar */}
+            <div
+              className="px-4 pb-3 shrink-0 border-b"
+              style={{ borderColor: 'var(--border)' }}
+            >
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'var(--text-muted)' }} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search tools..."
-                  className="w-full pl-9 pr-8 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white placeholder:text-slate-500 outline-none focus:border-violet-500 transition"
+                  className="w-full pl-9 pr-8 py-2.5 rounded-xl border text-sm outline-none focus:border-violet-500 transition"
+                  style={{
+                    backgroundColor: 'var(--bg-surface)',
+                    borderColor: 'var(--border)',
+                    color: 'var(--text-primary)',
+                  }}
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 transition"
+                    style={{ color: 'var(--text-muted)' }}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -283,26 +372,34 @@ export default function Layout({ children }: LayoutProps) {
                 );
                 if (filtered.length === 0) {
                   return (
-                    <div className="py-8 text-center text-sm text-slate-500">No tools found</div>
+                    <div className="py-8 text-center text-sm" style={{ color: 'var(--text-muted)' }}>No tools found</div>
                   );
                 }
                 return (
                   <div className="flex flex-col gap-1">
-                    {filtered.map((tool) => (
-                      <Link
-                        key={tool.path}
-                        to={tool.path}
-                        onClick={() => { setMobileMenuOpen(false); setSearchQuery(''); }}
-                        className={`flex items-center gap-3 py-2.5 px-3 rounded-xl text-sm transition ${
-                          location.pathname === tool.path
-                            ? 'bg-violet-600/10 text-violet-400 font-semibold'
-                            : 'text-slate-300 hover:bg-slate-900'
-                        }`}
-                      >
-                        <tool.icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
-                        <span className="truncate">{tool.name}</span>
-                      </Link>
-                    ))}
+                    {filtered.map((tool) => {
+                      const isActive = location.pathname === tool.path;
+                      return (
+                        <Link
+                          key={tool.path}
+                          to={tool.path}
+                          onClick={() => { setMobileMenuOpen(false); setSearchQuery(''); }}
+                          className={`flex items-center gap-3 py-2.5 px-3 rounded-xl text-sm transition ${
+                            isActive ? 'bg-violet-600/10 text-violet-400 font-semibold' : ''
+                          }`}
+                          style={!isActive ? { color: 'var(--text-secondary)' } : {}}
+                          onMouseEnter={e => {
+                            if (!isActive) (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--bg-surface)';
+                          }}
+                          onMouseLeave={e => {
+                            if (!isActive) (e.currentTarget as HTMLElement).style.backgroundColor = '';
+                          }}
+                        >
+                          <tool.icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
+                          <span className="truncate">{tool.name}</span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 );
               })()}
@@ -311,7 +408,7 @@ export default function Layout({ children }: LayoutProps) {
         )}
       </header>
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <main className="flex-grow max-w-7xl w-full mx-auto px-4 py-7">
         {children}
       </main>

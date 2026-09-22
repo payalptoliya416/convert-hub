@@ -200,13 +200,13 @@ export default function ImageToPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
         <div className="p-3 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-400">
           <FileImage className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Image to PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">Convert PNG, JPG, WebP images to a combined high-quality PDF document locally.</p>
+          <h1 className="text-3xl font-bold text-[var(--text-heading)]">Image to PDF</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">Convert PNG, JPG, WebP images to a combined high-quality PDF document locally.</p>
         </div>
       </div>
 
@@ -215,18 +215,18 @@ export default function ImageToPdf() {
         
         {/* Left Column: Options */}
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] p-6 space-y-6 shadow-xl">
+            <h2 className="text-lg font-bold text-[var(--text-heading)] flex items-center gap-2">
               <Settings className="w-5 h-5 text-violet-400" /> Options
             </h2>
 
             {/* Page Size settings */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Page Size Mode</label>
+              <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Page Size Mode</label>
               <select
                 value={pageSize}
                 onChange={(e) => setPageSize(e.target.value as any)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg py-2.5 px-3 text-white text-sm focus:outline-none focus:ring-1 focus:ring-violet-500 cursor-pointer"
+                className="w-full bg-[var(--bg-base)] border border-[var(--border)] rounded-lg py-2.5 px-3 text-[var(--text-heading)] text-sm focus:outline-none focus:ring-1 focus:ring-violet-500 cursor-pointer"
               >
                 <option value="fit">Fit Page to Image Size</option>
                 <option value="a4">Standard A4 size</option>
@@ -236,11 +236,11 @@ export default function ImageToPdf() {
 
             {/* Margins */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Page Margins</label>
+              <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Page Margins</label>
               <select
                 value={margin}
                 onChange={(e) => setMargin(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg py-2.5 px-3 text-white text-sm focus:outline-none focus:ring-1 focus:ring-violet-500 cursor-pointer"
+                className="w-full bg-[var(--bg-base)] border border-[var(--border)] rounded-lg py-2.5 px-3 text-[var(--text-heading)] text-sm focus:outline-none focus:ring-1 focus:ring-violet-500 cursor-pointer"
               >
                 <option value="0">No Margins (0mm)</option>
                 <option value="5">Small Margins (5mm)</option>
@@ -255,10 +255,10 @@ export default function ImageToPdf() {
               disabled={images.length === 0 || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 images.length === 0 
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                  ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
               }`}
             >
               {loading ? (
@@ -281,7 +281,7 @@ export default function ImageToPdf() {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={triggerFileSelect}
-            className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-8 text-center cursor-pointer transition group"
+            className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--border)] hover:border-violet-500/50 hover:bg-[var(--bg-surface-60)] rounded-3xl p-8 text-center cursor-pointer transition group"
           >
             <input 
               type="file" 
@@ -291,11 +291,11 @@ export default function ImageToPdf() {
               ref={fileInputRef}
               onChange={handleFileChange}
             />
-            <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 text-slate-400 group-hover:text-violet-400 transition">
+            <div className="p-3 bg-[var(--bg-surface)] rounded-xl border border-[var(--border)] text-[var(--text-secondary)] group-hover:text-violet-400 transition">
               <Plus className="w-8 h-8" />
             </div>
-            <h3 className="text-md font-bold text-white mt-4">Add images to PDF</h3>
-            <p className="text-slate-400 text-xs mt-1">
+            <h3 className="text-md font-bold text-[var(--text-heading)] mt-4">Add images to PDF</h3>
+            <p className="text-[var(--text-secondary)] text-xs mt-1">
               Drag images here or click to browse. Reorder and set margins as needed.
             </p>
           </div>
@@ -316,19 +316,19 @@ export default function ImageToPdf() {
             <div className="space-y-6">
               {/* Success Result */}
               {success && pdfBlob && (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
+                <div className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
                       <CheckCircle2 className="w-6 h-6" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-white">PDF Compiled Successfully!</h4>
-                      <p className="text-xs text-slate-400">Contains {images.length} pages • {(pdfBlob.size / (1024 * 1024)).toFixed(2)} MB</p>
+                      <h4 className="font-bold text-[var(--text-heading)]">PDF Compiled Successfully!</h4>
+                      <p className="text-xs text-[var(--text-secondary)]">Contains {images.length} pages • {(pdfBlob.size / (1024 * 1024)).toFixed(2)} MB</p>
                     </div>
                   </div>
                   <button
                     onClick={downloadPdf}
-                    className="py-2.5 px-5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-rose-600/10"
+                    className="py-2.5 px-5 bg-rose-600 hover:bg-rose-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-rose-600/10"
                   >
                     <Download className="w-4 h-4" /> Download PDF Document
                   </button>
@@ -338,7 +338,7 @@ export default function ImageToPdf() {
               {/* Items List */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center px-1">
-                  <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Images Queue ({images.length})</h3>
+                  <h3 className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-wider">Images Queue ({images.length})</h3>
                   <button 
                     onClick={() => setImages([])} 
                     className="text-xs font-semibold text-red-400 hover:text-red-300 cursor-pointer"
@@ -351,15 +351,15 @@ export default function ImageToPdf() {
                   {images.map((img, idx) => (
                     <div 
                       key={img.id} 
-                      className="bg-slate-900 border border-slate-800/80 rounded-xl p-3 flex items-center justify-between gap-4"
+                      className="bg-[var(--bg-surface)] border border-[var(--border-soft)] rounded-xl p-3 flex items-center justify-between gap-4"
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-12 h-12 rounded-lg bg-slate-950 border border-slate-800 overflow-hidden flex items-center justify-center shrink-0">
+                        <div className="w-12 h-12 rounded-lg bg-[var(--bg-base)] border border-[var(--border)] overflow-hidden flex items-center justify-center shrink-0">
                           <img src={img.previewUrl} alt="thumbnail" className="object-cover w-full h-full" />
                         </div>
                         <div className="min-w-0">
-                          <h4 className="font-semibold text-xs text-white truncate max-w-[200px] sm:max-w-xs">{img.file.name}</h4>
-                          <p className="text-[10px] text-slate-500">{(img.file.size / 1024).toFixed(1)} KB • Index: {idx + 1}</p>
+                          <h4 className="font-semibold text-xs text-[var(--text-heading)] truncate max-w-[200px] sm:max-w-xs">{img.file.name}</h4>
+                          <p className="text-[10px] text-[var(--text-muted)]">{(img.file.size / 1024).toFixed(1)} KB • Index: {idx + 1}</p>
                         </div>
                       </div>
 
@@ -369,7 +369,7 @@ export default function ImageToPdf() {
                           type="button"
                           onClick={() => moveImage(idx, 'up')}
                           disabled={idx === 0}
-                          className={`p-1.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition cursor-pointer ${idx === 0 ? 'opacity-30 cursor-not-allowed' : ''}`}
+                          className={`p-1.5 rounded bg-[var(--bg-base)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-heading)] transition cursor-pointer ${idx === 0 ? 'opacity-30 cursor-not-allowed' : ''}`}
                           title="Move Up"
                         >
                           <ArrowUp className="w-3.5 h-3.5" />
@@ -378,7 +378,7 @@ export default function ImageToPdf() {
                           type="button"
                           onClick={() => moveImage(idx, 'down')}
                           disabled={idx === images.length - 1}
-                          className={`p-1.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition cursor-pointer ${idx === images.length - 1 ? 'opacity-30 cursor-not-allowed' : ''}`}
+                          className={`p-1.5 rounded bg-[var(--bg-base)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-heading)] transition cursor-pointer ${idx === images.length - 1 ? 'opacity-30 cursor-not-allowed' : ''}`}
                           title="Move Down"
                         >
                           <ArrowDown className="w-3.5 h-3.5" />
@@ -386,7 +386,7 @@ export default function ImageToPdf() {
                         <button
                           type="button"
                           onClick={() => removeImage(img.id)}
-                          className="p-1.5 rounded bg-slate-950 border border-slate-800 text-red-400 hover:text-red-300 hover:bg-red-500/10 transition cursor-pointer ml-2"
+                          className="p-1.5 rounded bg-[var(--bg-base)] border border-[var(--border)] text-red-400 hover:text-red-300 hover:bg-red-500/10 transition cursor-pointer ml-2"
                           title="Remove Image"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

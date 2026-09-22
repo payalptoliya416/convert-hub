@@ -157,13 +157,13 @@ export default function ProtectPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400">
           <Lock className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Protect PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Protect PDF</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
             Add password protection to your PDF — works entirely in your browser.
           </p>
         </div>
@@ -178,7 +178,8 @@ export default function ProtectPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-red-500/50 hover:bg-slate-900/30 rounded-3xl p-16 text-center cursor-pointer transition min-h-[360px] group"
+              className="flex flex-col items-center justify-center border-2 border-dashed hover:border-red-500/50 rounded-3xl p-16 text-center cursor-pointer transition min-h-[360px] group"
+              style={{ borderColor: 'var(--border)' }}
             >
               <input
                 type="file"
@@ -187,25 +188,25 @@ export default function ProtectPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-red-400 group-hover:scale-110 transition duration-300 shadow-xl">
+              <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-red-400 group-hover:scale-110 transition duration-300 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag & drop your PDF here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+              <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>Drag & drop your PDF here</h3>
+              <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
                 Or click to browse. Your file never leaves the browser.
               </p>
             </div>
           ) : (
-            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 space-y-6 min-h-[360px] flex flex-col justify-between">
+            <div className="rounded-3xl border p-6 space-y-6 min-h-[360px] flex flex-col justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
               {/* File info */}
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'var(--border)' }}>
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="p-2.5 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400 shrink-0">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-semibold text-white truncate max-w-xs">{file.name}</p>
-                    <p className="text-xs text-slate-400 mt-0.5">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <p className="font-semibold truncate max-w-xs" style={{ color: 'var(--text-heading)' }}>{file.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button
@@ -221,7 +222,7 @@ export default function ProtectPdf() {
                 <div className={`p-6 rounded-3xl border-2 transition-all duration-500 ${success ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
                   <ShieldCheck className="w-16 h-16" />
                 </div>
-                <p className="text-sm text-slate-400 text-center">
+                <p className="text-sm text-center" style={{ color: 'var(--text-secondary)' }}>
                   {success ? 'PDF is now password protected' : 'Set a password to protect this PDF'}
                 </p>
               </div>
@@ -229,11 +230,11 @@ export default function ProtectPdf() {
               {/* Progress */}
               {loading && (
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-slate-400">
+                  <div className="flex justify-between text-xs" style={{ color: 'var(--text-secondary)' }}>
                     <span>Encrypting pages...</span>
                     <span className="text-red-400 font-semibold">{progress}%</span>
                   </div>
-                  <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--border)' }}>
                     <div
                       className="h-full bg-gradient-to-r from-red-500 to-rose-400 rounded-full transition-all duration-300"
                       style={{ width: `${progress}%` }}
@@ -254,7 +255,7 @@ export default function ProtectPdf() {
               {success && protectedBlob && (
                 <button
                   onClick={downloadProtected}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/20"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/20"
                 >
                   <Download className="w-5 h-5" /> Download Protected PDF
                 </button>
@@ -265,29 +266,31 @@ export default function ProtectPdf() {
 
         {/* Right: Password panel */}
         <div className="lg:col-span-5">
-          <div className="bg-slate-900 rounded-3xl border border-slate-800 p-6 space-y-6 shadow-2xl">
+          <div className="rounded-3xl border p-6 space-y-6 shadow-2xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
             <div className="flex items-center gap-2">
               <Lock className="w-5 h-5 text-red-400" />
-              <h2 className="text-lg font-bold text-white">Password Settings</h2>
+              <h2 className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>Password Settings</h2>
             </div>
 
             {/* Password input */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
                 Password
               </label>
-              <div className="flex items-center bg-slate-950 border border-slate-800 focus-within:border-red-500/60 rounded-xl overflow-hidden transition">
+              <div className="flex items-center border focus-within:border-red-500/60 rounded-xl overflow-hidden transition" style={{ backgroundColor: 'var(--bg-input)', borderColor: 'var(--border)' }}>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
-                  className="flex-1 bg-transparent px-4 py-3 text-white text-sm outline-none placeholder:text-slate-600"
+                  className="flex-1 bg-transparent px-4 py-3 text-sm outline-none"
+                  style={{ color: 'var(--text-primary)' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="px-3 text-slate-500 hover:text-slate-300 cursor-pointer transition"
+                  className="px-3 cursor-pointer transition"
+                  style={{ color: 'var(--text-muted)' }}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -296,22 +299,27 @@ export default function ProtectPdf() {
 
             {/* Confirm Password */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
                 Confirm Password
               </label>
-              <div className={`flex items-center bg-slate-950 border rounded-xl overflow-hidden transition ${
-                confirmPassword && confirmPassword !== password
-                  ? 'border-red-500/60'
-                  : confirmPassword && confirmPassword === password
-                    ? 'border-emerald-500/50'
-                    : 'border-slate-800 focus-within:border-red-500/60'
-              }`}>
+              <div
+                className="flex items-center border rounded-xl overflow-hidden transition"
+                style={{
+                  backgroundColor: 'var(--bg-input)',
+                  borderColor: confirmPassword && confirmPassword !== password
+                    ? 'rgba(239,68,68,0.6)'
+                    : confirmPassword && confirmPassword === password
+                      ? 'rgba(16,185,129,0.5)'
+                      : 'var(--border)',
+                }}
+              >
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Re-enter password"
-                  className="flex-1 bg-transparent px-4 py-3 text-white text-sm outline-none placeholder:text-slate-600"
+                  className="flex-1 bg-transparent px-4 py-3 text-sm outline-none"
+                  style={{ color: 'var(--text-primary)' }}
                 />
                 {confirmPassword && (
                   <div className="px-3">
@@ -337,20 +345,21 @@ export default function ProtectPdf() {
                       className={`h-1 flex-1 rounded-full transition-all ${
                         password.length >= level * 3
                           ? level <= 1 ? 'bg-red-500' : level <= 2 ? 'bg-orange-500' : level <= 3 ? 'bg-yellow-500' : 'bg-emerald-500'
-                          : 'bg-slate-800'
+                          : ''
                       }`}
+                      style={password.length < level * 3 ? { backgroundColor: 'var(--border)' } : {}}
                     />
                   ))}
                 </div>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   {password.length < 4 ? 'Too short' : password.length < 7 ? 'Weak' : password.length < 10 ? 'Medium' : 'Strong'}
                 </p>
               </div>
             )}
 
             {/* Permissions info */}
-            <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-2">
-              <p className="text-xs font-semibold text-slate-300">Applied Restrictions:</p>
+            <div className="rounded-2xl border p-4 space-y-2" style={{ backgroundColor: 'var(--bg-input)', borderColor: 'var(--border)' }}>
+              <p className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>Applied Restrictions:</p>
               <ul className="space-y-1.5">
                 {[
                   { label: 'Password required to open', allowed: false },
@@ -358,7 +367,7 @@ export default function ProtectPdf() {
                   { label: 'Copying text disabled', allowed: false },
                   { label: 'Printing allowed', allowed: true },
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-xs text-slate-400">
+                  <li key={i} className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
                     <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${item.allowed ? 'bg-emerald-500' : 'bg-red-500'}`} />
                     {item.label}
                   </li>
@@ -372,11 +381,12 @@ export default function ProtectPdf() {
               disabled={!file || loading || !password || !confirmPassword || password !== confirmPassword}
               className={`w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-xl text-sm ${
                 !file || !password || !confirmPassword || password !== confirmPassword
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
+                  ? 'cursor-not-allowed'
                   : loading
-                    ? 'bg-red-700 text-white border border-red-600 cursor-not-allowed'
-                    : 'bg-red-600 hover:bg-red-500 text-white border border-red-500 shadow-red-600/20'
+                    ? 'bg-red-700 text-[var(--text-heading)] border border-red-600 cursor-not-allowed'
+                    : 'bg-red-600 hover:bg-red-500 text-[var(--text-heading)] border border-red-500 shadow-red-600/20'
               }`}
+              style={(!file || !password || !confirmPassword || password !== confirmPassword) ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)', borderColor: 'var(--border)' } : undefined}
             >
               {loading ? (
                 <><RefreshCw className="w-4 h-4 animate-spin" /> Protecting... {progress}%</>

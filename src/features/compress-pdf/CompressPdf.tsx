@@ -81,28 +81,21 @@ export default function CompressPdf() {
 
       setProgress(60);
 
-      // Load and save the PDF with pdf-lib. 
-      // pdf-lib's saving algorithm strips metadata, compresses object streams,
-      // and garbage collects unused assets, which typically reduces file size client-side.
       const pdfDoc = await PDFDocument.load(fileBytes);
       
-      // Let's perform a structure clean-up by copying pages to a new document
       const cleanedPdf = await PDFDocument.create();
       const copiedPages = await cleanedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
       copiedPages.forEach((page) => cleanedPdf.addPage(page));
 
       setProgress(85);
 
-      // Save with compression enabled
       const compressedPdfBytes = await cleanedPdf.save({
         useObjectStreams: true
       });
 
       const generatedBlob = new Blob(
         [compressedPdfBytes.slice()],
-        {
-          type: "application/pdf",
-        }
+        { type: "application/pdf" }
       );
       setCompressedBlob(generatedBlob);
       setCompressedSize(generatedBlob.size);
@@ -129,13 +122,13 @@ export default function CompressPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20 text-cyan-400">
           <Minimize2 className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Compress PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">Reduce PDF file size by stripping metadata and optimizing document streams locally.</p>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Compress PDF</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Reduce PDF file size by stripping metadata and optimizing document streams locally.</p>
         </div>
       </div>
 
@@ -144,11 +137,10 @@ export default function CompressPdf() {
         
         {/* Left Column: Options */}
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
+            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
               <Settings className="w-5 h-5 text-violet-400" /> Options
             </h2>
-
 
             {/* Action button */}
             <button
@@ -156,11 +148,12 @@ export default function CompressPdf() {
               disabled={!file || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 !file 
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                  ? 'border border-[var(--border)] cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
               }`}
+              style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
               {loading ? (
                 <>
@@ -183,7 +176,8 @@ export default function CompressPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+              className="flex flex-col items-center justify-center border-2 border-dashed hover:border-violet-500/50 rounded-3xl p-16 text-center cursor-pointer transition group"
+              style={{ borderColor: 'var(--border)' }}
             >
               <input 
                 type="file" 
@@ -192,25 +186,25 @@ export default function CompressPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your PDF here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+              <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>Drag and drop your PDF here</h3>
+              <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
                 Or click to browse. We will strip structural redundancies and optimize output streams.
               </p>
             </div>
           ) : (
             /* Conversion Progress & Output details */
             <div className="space-y-6">
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="border rounded-2xl p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-red-500/15 rounded-xl border border-red-500/20 text-red-400">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">{file.name}</h4>
-                    <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <h4 className="font-semibold truncate max-w-sm sm:max-w-md" style={{ color: 'var(--text-heading)' }}>{file.name}</h4>
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button
@@ -228,12 +222,12 @@ export default function CompressPdf() {
 
               {/* Progress Bar */}
               {loading && (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+                <div className="border rounded-2xl p-6 space-y-3" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Rebuilding page layers...</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Rebuilding page layers...</span>
                     <span className="font-semibold text-violet-400">{progress}%</span>
                   </div>
-                  <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                  <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-base)' }}>
                     <div 
                       className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-300"
                       style={{ width: `${progress}%` }}
@@ -256,14 +250,14 @@ export default function CompressPdf() {
               {/* Success output */}
               {success && compressedBlob && (
                 <div className="space-y-6">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
+                  <div className="border rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                     <div className="flex items-center gap-3">
                       <div className="p-3 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
                         <CheckCircle2 className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white">PDF Compressed Successfully!</h4>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-slate-400">
+                        <h4 className="font-bold" style={{ color: 'var(--text-heading)' }}>PDF Compressed Successfully!</h4>
+                        <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
                           <span className="line-through">{(originalSize / (1024 * 1024)).toFixed(2)} MB</span>
                           <span className="text-emerald-400 font-semibold">{(compressedSize / (1024 * 1024)).toFixed(2)} MB</span>
                           <span className="px-1.5 py-0.2 bg-emerald-500/10 border border-emerald-500/20 rounded text-[10px] text-emerald-400 font-bold">
@@ -274,7 +268,7 @@ export default function CompressPdf() {
                     </div>
                     <button
                       onClick={downloadCompressedPdf}
-                      className="py-2.5 px-5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-cyan-600/10"
+                      className="py-2.5 px-5 bg-cyan-600 hover:bg-cyan-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-cyan-600/10"
                     >
                       <Download className="w-4 h-4" /> Download Compressed PDF
                     </button>

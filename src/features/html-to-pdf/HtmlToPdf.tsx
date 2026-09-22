@@ -22,24 +22,24 @@ function UrlModal({ onAdd, onClose }: { onAdd: (url: string) => void; onClose: (
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
-  <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl">
+  <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--bg-surface)] shadow-2xl">
 
     {/* Header */}
-    <div className="flex items-center justify-between border-b border-slate-800 px-6 py-5">
-      <h2 className="text-lg font-bold text-white">
+    <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-5">
+      <h2 className="text-lg font-bold text-[var(--text-heading)]">
         Add HTML to Convert
       </h2>
 
       <button
         onClick={onClose}
-        className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white cursor-pointer"
+        className="rounded-lg p-2 text-[var(--text-secondary)] transition hover:bg-[var(--bg-hover)] hover:text-[var(--text-heading)] cursor-pointer"
       >
         <X className="h-5 w-5" />
       </button>
     </div>
 
     {/* Tab */}
-    <div className="border-b border-slate-800 px-6 pt-4">
+    <div className="border-b border-[var(--border)] px-6 pt-4">
       <div className="inline-block border-b-2 border-red-500 px-1 pb-3 text-sm font-semibold text-red-400">
         URL
       </div>
@@ -48,13 +48,13 @@ function UrlModal({ onAdd, onClose }: { onAdd: (url: string) => void; onClose: (
     {/* Body */}
     <div className="space-y-5 px-6 py-6">
 
-      <label className="block text-sm font-semibold text-slate-200">
+      <label className="block text-sm font-semibold text-[var(--text-primary)]">
         Website URL
       </label>
 
-      <div className="flex items-center overflow-hidden rounded-xl border border-slate-700 bg-slate-950 transition focus-within:border-red-500">
+      <div className="flex items-center overflow-hidden rounded-xl border border-[var(--border-hover)] bg-[var(--bg-base)] transition focus-within:border-red-500">
 
-        <div className="px-4 text-slate-500">
+        <div className="px-4 text-[var(--text-muted)]">
           <Globe className="h-5 w-5" />
         </div>
 
@@ -68,7 +68,7 @@ function UrlModal({ onAdd, onClose }: { onAdd: (url: string) => void; onClose: (
           }}
           onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           placeholder="https://example.com"
-          className="flex-1 bg-transparent py-3 pr-4 text-sm text-white outline-none placeholder:text-slate-500"
+          className="flex-1 bg-transparent py-3 pr-4 text-sm text-[var(--text-heading)] outline-none placeholder:text-[var(--text-muted)]"
         />
       </div>
 
@@ -88,11 +88,11 @@ function UrlModal({ onAdd, onClose }: { onAdd: (url: string) => void; onClose: (
     </div>
 
     {/* Footer */}
-    <div className="flex justify-end border-t border-slate-800 px-6 py-5">
+    <div className="flex justify-end border-t border-[var(--border)] px-6 py-5">
 
       <button
         onClick={handleAdd}
-        className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500 cursor-pointer shadow-lg shadow-red-600/20"
+        className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-[var(--text-heading)] transition hover:bg-red-500 cursor-pointer shadow-lg shadow-red-600/20"
       >
         Add URL
       </button>
@@ -312,13 +312,13 @@ export default function HtmlToPdf() {
       {showUrlModal && <UrlModal onAdd={loadUrl} onClose={() => setShowUrlModal(false)} />}
 
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
         <div className="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400">
           <FileText className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">HTML to PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">Upload an HTML file, paste code, or enter a URL — convert to PDF.</p>
+          <h1 className="text-3xl font-bold text-[var(--text-heading)]">HTML to PDF</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">Upload an HTML file, paste code, or enter a URL — convert to PDF.</p>
         </div>
       </div>
 
@@ -329,7 +329,7 @@ export default function HtmlToPdf() {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className="flex flex-col items-center justify-center border-2 border-dashed border-slate-700 hover:border-indigo-500/60 hover:bg-slate-900/30 rounded-3xl p-16 text-center cursor-pointer transition min-h-[340px] group"
+            className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--border-hover)] hover:border-indigo-500/60 hover:bg-[var(--bg-surface-60)] rounded-3xl p-16 text-center cursor-pointer transition min-h-[340px] group"
           >
             <input
               ref={fileInputRef}
@@ -338,11 +338,11 @@ export default function HtmlToPdf() {
               className="hidden"
               onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFileLoad(f); }}
             />
-            <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-indigo-400 group-hover:scale-110 transition duration-300 shadow-xl">
+            <div className="p-5 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] text-[var(--text-secondary)] group-hover:text-indigo-400 group-hover:scale-110 transition duration-300 shadow-xl">
               <Upload className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-bold text-white mt-6">Drag & drop your HTML file here</h3>
-            <p className="text-slate-400 text-sm mt-2">Or click to browse <span className="text-indigo-400">.html</span> / <span className="text-indigo-400">.htm</span> files</p>
+            <h3 className="text-xl font-bold text-[var(--text-heading)] mt-6">Drag & drop your HTML file here</h3>
+            <p className="text-[var(--text-secondary)] text-sm mt-2">Or click to browse <span className="text-indigo-400">.html</span> / <span className="text-indigo-400">.htm</span> files</p>
           </div>
 
           {/* Alt options row */}
@@ -350,28 +350,28 @@ export default function HtmlToPdf() {
             {/* Paste code */}
             <button
               onClick={() => { setHtmlCode(' '); setMode('code'); }}
-              className="flex items-center gap-4 bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-indigo-500/50 rounded-2xl p-5 text-left transition cursor-pointer group"
+              className="flex items-center gap-4 bg-[var(--bg-surface)] hover:bg-[var(--bg-hover)] border border-[var(--border-hover)] hover:border-indigo-500/50 rounded-2xl p-5 text-left transition cursor-pointer group"
             >
               <div className="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400 group-hover:scale-105 transition">
                 <Code2 className="w-6 h-6" />
               </div>
               <div>
-                <p className="font-semibold text-white text-sm">Paste HTML Code</p>
-                <p className="text-xs text-slate-400 mt-0.5">Type or paste HTML directly</p>
+                <p className="font-semibold text-[var(--text-heading)] text-sm">Paste HTML Code</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-0.5">Type or paste HTML directly</p>
               </div>
             </button>
 
             {/* URL */}
             <button
               onClick={() => setShowUrlModal(true)}
-              className="flex items-center gap-4 bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-indigo-500/50 rounded-2xl p-5 text-left transition cursor-pointer group"
+              className="flex items-center gap-4 bg-[var(--bg-surface)] hover:bg-[var(--bg-hover)] border border-[var(--border-hover)] hover:border-indigo-500/50 rounded-2xl p-5 text-left transition cursor-pointer group"
             >
               <div className="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400 group-hover:scale-105 transition">
                 <Globe className="w-6 h-6" />
               </div>
               <div>
-                <p className="font-semibold text-white text-sm">From URL</p>
-                <p className="text-xs text-slate-400 mt-0.5">Load any website by its URL</p>
+                <p className="font-semibold text-[var(--text-heading)] text-sm">From URL</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-0.5">Load any website by its URL</p>
               </div>
             </button>
           </div>
@@ -388,7 +388,7 @@ export default function HtmlToPdf() {
       {urlLoading && (
         <div className="flex flex-col items-center justify-center min-h-[300px] gap-4">
           <RefreshCw className="w-10 h-10 text-indigo-400 animate-spin" />
-          <p className="text-slate-400 text-sm">Loading website content…</p>
+          <p className="text-[var(--text-secondary)] text-sm">Loading website content…</p>
         </div>
       )}
 
@@ -398,13 +398,13 @@ export default function HtmlToPdf() {
 
           {/* Left: Editor */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+            <div className="bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] overflow-hidden shadow-xl">
 
               {/* Toolbar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-800 bg-slate-950/60">
+              <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-[var(--border)] bg-[var(--bg-base)]/60">
                 <div className="flex items-center gap-2 min-w-0">
                   <Code2 className="w-4 h-4 text-indigo-400 shrink-0" />
-                  <span className="text-xs text-slate-300 font-medium truncate max-w-[160px]">
+                  <span className="text-xs text-[var(--text-secondary)] font-medium truncate max-w-[160px]">
                     {sourceLabel || 'HTML Code'}
                   </span>
                 </div>
@@ -412,14 +412,14 @@ export default function HtmlToPdf() {
                   <input
                     value={fileName}
                     onChange={(e) => setFileName(e.target.value)}
-                    className="bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white outline-none w-24 focus:border-indigo-500"
+                    className="bg-[var(--bg-hover)] border border-[var(--border-hover)] rounded-lg px-2 py-1 text-xs text-[var(--text-heading)] outline-none w-24 focus:border-indigo-500"
                     placeholder="document"
                   />
-                  <span className="text-xs text-slate-600">.pdf</span>
+                  <span className="text-xs text-[var(--text-muted)]">.pdf</span>
                   <button
                     onClick={reset}
                     title="Reset"
-                    className="text-slate-500 hover:text-red-400 transition cursor-pointer ml-1"
+                    className="text-[var(--text-muted)] hover:text-red-400 transition cursor-pointer ml-1"
                   >
                     <RotateCcw className="w-4 h-4" />
                   </button>
@@ -436,7 +436,7 @@ export default function HtmlToPdf() {
                 }}
                 spellCheck={false}
                 autoFocus
-                className="w-full bg-slate-950 text-green-300 font-mono text-xs px-4 py-4 outline-none resize-none border-0"
+                className="w-full bg-[var(--bg-base)] text-green-300 font-mono text-xs px-4 py-4 outline-none resize-none border-0"
                 style={{ minHeight: '420px', tabSize: 2 }}
                 placeholder="Paste or write HTML here…"
               />
@@ -448,8 +448,8 @@ export default function HtmlToPdf() {
               disabled={loading || !hasContent}
               className={`w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-xl text-sm ${
                 loading || !hasContent
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-white border border-indigo-500 shadow-indigo-600/20'
+                  ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border-hover)] cursor-not-allowed'
+                  : 'bg-indigo-600 hover:bg-indigo-500 text-[var(--text-heading)] border border-indigo-500 shadow-indigo-600/20'
               }`}
             >
               {loading
@@ -461,7 +461,7 @@ export default function HtmlToPdf() {
             {success && pdfBlob && (
               <button
                 onClick={downloadPdf}
-                className="w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-500 shadow-xl shadow-emerald-600/20 transition cursor-pointer text-sm"
+                className="w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] border border-emerald-500 shadow-xl shadow-emerald-600/20 transition cursor-pointer text-sm"
               >
                 <Download className="w-4 h-4" /> Download {fileName || 'document'}.pdf
               </button>
@@ -484,7 +484,7 @@ export default function HtmlToPdf() {
           {/* Right: Preview */}
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm text-slate-400">
+              <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                 <Eye className="w-4 h-4" />
                 <span className="font-medium">Live Preview</span>
               </div>
@@ -493,7 +493,7 @@ export default function HtmlToPdf() {
               )}
             </div>
 
-            <div className="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden" style={{ height: '680px' }}>
+            <div className="bg-[var(--bg-hover)] rounded-2xl border border-[var(--border-hover)] overflow-hidden" style={{ height: '680px' }}>
               <div className="overflow-auto h-full p-3">
                 <div
                   className="mx-auto bg-white shadow-2xl"
@@ -508,7 +508,7 @@ export default function HtmlToPdf() {
                 </div>
               </div>
             </div>
-            <p className="text-xs text-slate-600 text-center">Preview scaled to 73% · PDF output is full A4</p>
+            <p className="text-xs text-[var(--text-muted)] text-center">Preview scaled to 73% · PDF output is full A4</p>
           </div>
         </div>
       )}

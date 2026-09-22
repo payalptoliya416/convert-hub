@@ -15,11 +15,9 @@ import {
   Copy,
   RotateCw,
   Crop,
-  // Droplets,
   Lock,
   ArrowRight,
   Code2,
-  // Sparkles,
   ImageIcon,
   QrCode,
   LockKeyhole,
@@ -214,12 +212,10 @@ const tools: Tool[] = [
     color: 'from-red-500 to-pink-600 shadow-red-500/20',
     category: 'utils'
   },
-    // HTML Viewer
   {
     id: 'html-viewer',
     name: 'HTML Viewer',
-    description:
-      'View and preview HTML files directly in your browser with live rendering.',
+    description: 'View and preview HTML files directly in your browser with live rendering.',
     path: '/html-viewer',
     icon: Code2,
     color: 'from-violet-500 to-indigo-600 shadow-violet-500/20',
@@ -243,44 +239,34 @@ const tools: Tool[] = [
   {
     id: 'remove-background',
     name: 'Remove Background',
-    description:
-      'Remove backgrounds from your images and download transparent PNG images.',
+    description: 'Remove backgrounds from your images and download transparent PNG images.',
     path: '/remove-background',
     icon: ImageIcon,
     color: 'from-pink-500 to-rose-600 shadow-pink-500/20',
     category: 'web-tools',
   },
-
-  // QR Code Generator
   {
     id: 'qr-code-generator',
     name: 'QR Code Generator',
-    description:
-      'Create QR codes for URLs, text, phone numbers, emails, and more.',
+    description: 'Create QR codes for URLs, text, phone numbers, emails, and more.',
     path: '/qr-code-generator',
     icon: QrCode,
     color: 'from-cyan-500 to-blue-600 shadow-cyan-500/20',
     category: 'web-tools',
   },
-
-  // Password Generator
   {
     id: 'password-generator',
     name: 'Password Generator',
-    description:
-      'Generate strong and secure passwords with customizable options.',
+    description: 'Generate strong and secure passwords with customizable options.',
     path: '/password-generator',
     icon: LockKeyhole,
     color: 'from-amber-500 to-orange-600 shadow-amber-500/20',
     category: 'web-tools',
   },
-
-  // JSON Formatter
   {
     id: 'json-formatter',
     name: 'JSON Formatter',
-    description:
-      'Format, beautify, minify, and validate your JSON directly in your browser.',
+    description: 'Format, beautify, minify, and validate your JSON directly in your browser.',
     path: '/json-formatter',
     icon: Braces,
     color: 'from-cyan-500 to-teal-600 shadow-cyan-500/20',
@@ -304,15 +290,14 @@ export default function Dashboard() {
     <>
     <div className="space-y-8">
       {/* Hero Section */}
-      <section className="relative text-center px-4 rounded-3xl overflow-hidden shadow-2xl">
-        {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div> */}
+      <section className="relative text-center px-4 rounded-3xl overflow-hidden">
         <div className="relative max-w-4xl mx-auto space-y-6">
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
-             Explore Our  <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Tool Categories</span>
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight" style={{ color: 'var(--text-heading)' }}>
+            Explore Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Tool Categories</span>
           </h1>
-          <p className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             From PDF manipulation to code formatting, finance calculators to
-            image editing - find the perfect tool for your needs.
+            image editing — find the perfect tool for your needs.
           </p>
 
           {/* Search bar */}
@@ -327,7 +312,6 @@ export default function Dashboard() {
             />
           </div> */}
         </div>
-
       </section>
 
       {/* Category Tabs */}
@@ -336,11 +320,12 @@ export default function Dashboard() {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer ${
+            className="px-5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer border"
+            style={
               activeCategory === cat
-                ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/30'
-                : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
-            }`}
+                ? { backgroundColor: '#7c3aed', color: '#fff', borderColor: 'transparent', boxShadow: '0 4px 14px rgba(124,58,237,0.30)' }
+                : { backgroundColor: 'var(--bg-surface)', color: 'var(--text-secondary)', borderColor: 'var(--border)' }
+            }
           >
             {cat === 'all' && 'All Tools'}
             {cat === 'from-pdf' && 'Convert from PDF'}
@@ -359,11 +344,20 @@ export default function Dashboard() {
             <Link
               key={tool.id}
               to={tool.path}
-              className="group relative flex flex-col justify-between p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700/80 hover:bg-slate-900 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden"
+              className="group relative flex flex-col justify-between p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden"
+              style={{
+                backgroundColor: 'var(--bg-surface-60)',
+                borderColor: 'var(--border-soft)',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--bg-surface)';
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-hover)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--bg-surface-60)';
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-soft)';
+              }}
             >
-              {/* Background gradient on hover */}
-              <div className="absolute -inset-px bg-gradient-to-r opacity-0 group-hover:opacity-100 transition duration-300 -z-10 rounded-2xl blur-lg bg-slate-800/50"></div>
-              
               <div>
                 <div className="flex justify-between items-start mb-4">
                   <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} text-white shadow-lg`}>
@@ -380,11 +374,14 @@ export default function Dashboard() {
                     </span>
                   )}
                 </div>
-                
-                <h3 className="text-xl font-bold text-white group-hover:text-violet-400 transition">
+
+                <h3
+                  className="text-xl font-bold group-hover:text-violet-400 transition"
+                  style={{ color: 'var(--text-heading)' }}
+                >
                   {tool.name}
                 </h3>
-                <p className="text-slate-400 text-sm mt-2 leading-relaxed">
+                <p className="text-sm mt-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {tool.description}
                 </p>
               </div>
@@ -396,13 +393,17 @@ export default function Dashboard() {
           );
         })}
       </div>
-      
+
       {filteredTools.length === 0 && (
-        <div className="text-center py-16 bg-slate-900/40 rounded-2xl border border-slate-800 border-dashed">
-          <p className="text-slate-500">No tools found matching your search term.</p>
+        <div
+          className="text-center py-16 rounded-2xl border border-dashed"
+          style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}
+        >
+          <p style={{ color: 'var(--text-muted)' }}>No tools found matching your search term.</p>
         </div>
       )}
     </div>
+
     <div className="-mx-4">
       <WhyChooseUs />
       <HowItWorks />

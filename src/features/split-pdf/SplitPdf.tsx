@@ -54,7 +54,7 @@ function PageThumb({
       <div className="bg-white rounded-sm shadow overflow-hidden border border-slate-200" style={{ width: 80 }}>
         <canvas ref={canvasRef} style={{ display: "block", width: 80 }} />
       </div>
-      <span className="text-[10px] text-slate-500">{pageNum}</span>
+      <span className="text-[10px] text-[var(--text-muted)]">{pageNum}</span>
     </div>
   );
 }
@@ -74,15 +74,15 @@ function RangeBox({
 
   return (
     <div className="flex flex-col items-center gap-1.5">
-      <p className="text-xs text-slate-400 font-medium">{label}</p>
-      <div className="border border-dashed border-slate-600 rounded-lg p-2.5 bg-slate-900/80 flex items-end justify-center gap-2 w-full">
+      <p className="text-xs text-[var(--text-secondary)] font-medium">{label}</p>
+      <div className="border border-dashed border-slate-600 rounded-lg p-2.5 bg-[var(--bg-surface-60)] flex items-end justify-center gap-2 w-full">
         {showPages.map((n) => (
           <PageThumb key={n} pdfRef={pdfRef} pageNum={n} />
         ))}
       </div>
         {hasMore && (
           <div className="flex flex-col items-center justify-center self-center pb-4 gap-0.5">
-            <span className="text-[9px] text-slate-500 whitespace-nowrap">{pageNums.length} pages</span>
+            <span className="text-[9px] text-[var(--text-muted)] whitespace-nowrap">{pageNums.length} pages</span>
           </div>
         )}
     </div>
@@ -536,13 +536,13 @@ export default function SplitPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
         <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
           <FileBox className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Split PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-3xl font-bold text-[var(--text-heading)]">Split PDF</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">
             Extract, range-split or shrink PDF files based on custom
             requirements.
           </p>
@@ -557,7 +557,7 @@ export default function SplitPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/40 rounded-3xl p-16 text-center cursor-pointer transition min-h-[440px] group"
+              className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--border)] hover:border-violet-500/50 hover:bg-[var(--bg-surface-60)] rounded-3xl p-16 text-center cursor-pointer transition min-h-[440px] group"
             >
               <input
                 type="file"
@@ -566,29 +566,29 @@ export default function SplitPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300 shadow-xl">
+              <div className="p-5 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300 shadow-xl">
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">
+              <h3 className="text-xl font-bold text-[var(--text-heading)] mt-6">
                 Drag and drop your PDF here
               </h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+              <p className="text-[var(--text-secondary)] text-sm mt-2 max-w-xs">
                 Or click to browse from your computer.
               </p>
             </div>
           ) : (
-            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-5 space-y-4 min-h-[440px] flex flex-col">
+            <div className="bg-[var(--bg-surface-60)] border border-[var(--border)] rounded-3xl p-5 space-y-4 min-h-[440px] flex flex-col">
               {/* File header */}
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800 gap-3">
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--border)] gap-3">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="p-2.5 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400 shrink-0">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <h4 className="font-semibold text-white truncate max-w-[180px] sm:max-w-xs text-sm">
+                    <h4 className="font-semibold text-[var(--text-heading)] truncate max-w-[180px] sm:max-w-xs text-sm">
                       {file.name}
                     </h4>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-[var(--text-secondary)] mt-0.5">
                       {originalSize} MB · {totalPages} pages
                     </p>
                   </div>
@@ -602,7 +602,7 @@ export default function SplitPdf() {
               </div>
 
               {/* iLovePDF-style range preview grid */}
-              <div className="flex-1 overflow-y-auto rounded-2xl bg-slate-950/60 border border-slate-800 p-4">
+              <div className="flex-1 overflow-y-auto rounded-2xl bg-[var(--bg-base)]/60 border border-[var(--border)] p-4">
                 {pdfDoc ? (
                   (() => {
                     // Build preview groups based on active tab
@@ -657,7 +657,7 @@ export default function SplitPdf() {
                     );
                   })()
                 ) : (
-                  <div className="flex items-center justify-center h-32 text-slate-500 text-sm">
+                  <div className="flex items-center justify-center h-32 text-[var(--text-muted)] text-sm">
                     Loading preview...
                   </div>
                 )}
@@ -675,22 +675,22 @@ export default function SplitPdf() {
 
         {/* Right Side: Split Panel Design */}
         <div className="lg:col-span-5">
-          <div className="bg-slate-900 rounded-3xl border border-slate-800 p-6 space-y-6 shadow-2xl relative overflow-hidden">
+          <div className="bg-[var(--bg-surface)] rounded-3xl border border-[var(--border)] p-6 space-y-6 shadow-2xl relative overflow-hidden">
             {/* Header Title */}
-            <h2 className="text-2xl font-bold text-white text-center pb-1">
+            <h2 className="text-2xl font-bold text-[var(--text-heading)] text-center pb-1">
               Split
             </h2>
 
             {/* Top Navigation Tabs */}
-            <div className="grid grid-cols-3 border border-slate-800 rounded-2xl bg-slate-950/60 p-1.5 gap-1">
+            <div className="grid grid-cols-3 border border-[var(--border)] rounded-2xl bg-[var(--bg-base)]/60 p-1.5 gap-1">
               {/* TAB 1: Range */}
               <button
                 type="button"
                 onClick={() => setActiveTab("range")}
                 className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
                   activeTab === "range"
-                    ? "bg-slate-800 text-white border border-slate-700/80 shadow-md"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/50"
+                    ? "bg-[var(--bg-hover)] text-[var(--text-heading)] border border-[var(--border)] shadow-md"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-60)]"
                 }`}
               >
                 {activeTab === "range" && (
@@ -698,7 +698,7 @@ export default function SplitPdf() {
                     <Check className="w-2.5 h-2.5 stroke-[3]" />
                   </span>
                 )}
-                <SlidersHorizontal className="w-5 h-5 mb-1 text-slate-400" />
+                <SlidersHorizontal className="w-5 h-5 mb-1 text-[var(--text-secondary)]" />
                 Range
               </button>
 
@@ -708,8 +708,8 @@ export default function SplitPdf() {
                 onClick={() => setActiveTab("pages")}
                 className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
                   activeTab === "pages"
-                    ? "bg-slate-800 text-white border border-slate-700/80 shadow-md"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/50"
+                    ? "bg-[var(--bg-hover)] text-[var(--text-heading)] border border-[var(--border)] shadow-md"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-60)]"
                 }`}
               >
                 {activeTab === "pages" && (
@@ -717,7 +717,7 @@ export default function SplitPdf() {
                     <Check className="w-2.5 h-2.5 stroke-[3]" />
                   </span>
                 )}
-                <LayoutGrid className="w-5 h-5 mb-1 text-slate-400" />
+                <LayoutGrid className="w-5 h-5 mb-1 text-[var(--text-secondary)]" />
                 Pages
               </button>
 
@@ -727,8 +727,8 @@ export default function SplitPdf() {
                 onClick={() => setActiveTab("size")}
                 className={`flex flex-col items-center justify-center py-3.5 px-2 rounded-xl text-xs font-medium transition cursor-pointer relative ${
                   activeTab === "size"
-                    ? "bg-slate-800 text-white border border-slate-700/80 shadow-md"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/50"
+                    ? "bg-[var(--bg-hover)] text-[var(--text-heading)] border border-[var(--border)] shadow-md"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-60)]"
                 }`}
               >
                 {activeTab === "size" && (
@@ -736,7 +736,7 @@ export default function SplitPdf() {
                     <Check className="w-2.5 h-2.5 stroke-[3]" />
                   </span>
                 )}
-                <FileBox className="w-5 h-5 mb-1 text-slate-400" />
+                <FileBox className="w-5 h-5 mb-1 text-[var(--text-secondary)]" />
                 Size
               </button>
             </div>
@@ -746,7 +746,7 @@ export default function SplitPdf() {
               <div className="space-y-6 pt-1">
                 {/* Range Mode Switcher */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-300 block">
+                  <label className="text-xs font-semibold text-[var(--text-secondary)] block">
                     Range mode:
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -756,7 +756,7 @@ export default function SplitPdf() {
                       className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition cursor-pointer ${
                         rangeMode === "custom"
                           ? "border-red-500 text-red-400 bg-red-500/10"
-                          : "border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200"
+                          : "border-[var(--border)] bg-[var(--bg-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                       }`}
                     >
                       Custom
@@ -767,7 +767,7 @@ export default function SplitPdf() {
                       className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition cursor-pointer ${
                         rangeMode === "fixed"
                           ? "border-red-500 text-red-400 bg-red-500/10"
-                          : "border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200"
+                          : "border-[var(--border)] bg-[var(--bg-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                       }`}
                     >
                       Fixed
@@ -780,7 +780,7 @@ export default function SplitPdf() {
                   <div className="space-y-4">
                     {ranges.map((r, idx) => (
                       <div key={idx} className="space-y-2">
-                        <div className="flex items-center justify-between text-xs font-semibold text-slate-300">
+                        <div className="flex items-center justify-between text-xs font-semibold text-[var(--text-secondary)]">
                           <span>Range {idx + 1}</span>
                           {ranges.length > 1 && (
                             <button
@@ -795,8 +795,8 @@ export default function SplitPdf() {
 
                         <div className="grid grid-cols-2 gap-3">
                           {/* From input */}
-                          <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl overflow-hidden focus-within:border-violet-500">
-                            <span className="px-3 text-xs text-slate-400 bg-slate-900/80 py-2.5 border-r border-slate-800 shrink-0">
+                          <div className="flex items-center bg-[var(--bg-base)] border border-[var(--border)] rounded-xl overflow-hidden focus-within:border-violet-500">
+                            <span className="px-3 text-xs text-[var(--text-secondary)] bg-[var(--bg-surface-60)] py-2.5 border-r border-[var(--border)] shrink-0">
                               from page
                             </span>
                             <input
@@ -806,13 +806,13 @@ export default function SplitPdf() {
                               onChange={(e) =>
                                 updateRange(idx, "from", Number(e.target.value))
                               }
-                              className="w-full bg-transparent px-3 text-center text-white text-sm outline-none font-medium"
+                              className="w-full bg-transparent px-3 text-center text-[var(--text-heading)] text-sm outline-none font-medium"
                             />
                           </div>
 
                           {/* To input */}
-                          <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl overflow-hidden focus-within:border-violet-500">
-                            <span className="px-3 text-xs text-slate-400 bg-slate-900/80 py-2.5 border-r border-slate-800 shrink-0">
+                          <div className="flex items-center bg-[var(--bg-base)] border border-[var(--border)] rounded-xl overflow-hidden focus-within:border-violet-500">
+                            <span className="px-3 text-xs text-[var(--text-secondary)] bg-[var(--bg-surface-60)] py-2.5 border-r border-[var(--border)] shrink-0">
                               to
                             </span>
                             <input
@@ -822,7 +822,7 @@ export default function SplitPdf() {
                               onChange={(e) =>
                                 updateRange(idx, "to", Number(e.target.value))
                               }
-                              className="w-full bg-transparent px-3 text-center text-white text-sm outline-none font-medium"
+                              className="w-full bg-transparent px-3 text-center text-[var(--text-heading)] text-sm outline-none font-medium"
                             />
                           </div>
                         </div>
@@ -846,7 +846,7 @@ export default function SplitPdf() {
                 {rangeMode === "fixed" && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-slate-300 block">
+                      <label className="text-xs font-semibold text-[var(--text-secondary)] block">
                         Pages per file:
                       </label>
                       <input
@@ -854,9 +854,9 @@ export default function SplitPdf() {
                         min={1}
                         value={fixedSize}
                         onChange={(e) => setFixedSize(Number(e.target.value))}
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-violet-500 text-white text-sm rounded-xl px-3.5 py-2.5 outline-none transition"
+                        className="w-full bg-[var(--bg-base)] border border-[var(--border)] focus:border-violet-500 text-[var(--text-heading)] text-sm rounded-xl px-3.5 py-2.5 outline-none transition"
                       />
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-[var(--text-muted)]">
                         File chunks will contain this many pages each.
                       </p>
                     </div>
@@ -870,7 +870,7 @@ export default function SplitPdf() {
                     className={`w-5 h-5 rounded-md border flex items-center justify-center transition cursor-pointer ${
                       mergeRanges
                         ? "bg-emerald-500 border-emerald-500 text-slate-950"
-                        : "border-slate-700 bg-slate-950"
+                        : "border-[var(--border-hover)] bg-[var(--bg-base)]"
                     }`}
                   >
                     {mergeRanges && (
@@ -879,7 +879,7 @@ export default function SplitPdf() {
                   </button>
                   <span
                     onClick={() => setMergeRanges(!mergeRanges)}
-                    className="text-xs text-slate-300 cursor-pointer select-none"
+                    className="text-xs text-[var(--text-secondary)] cursor-pointer select-none"
                   >
                     Merge all ranges in one PDF file.
                   </span>
@@ -892,7 +892,7 @@ export default function SplitPdf() {
               <div className="space-y-6 pt-1">
                 {/* Extract Mode Switcher */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-300 block">
+                  <label className="text-xs font-semibold text-[var(--text-secondary)] block">
                     Extract mode:
                   </label>
                   <div className="grid grid-cols-2 gap-3">
@@ -902,7 +902,7 @@ export default function SplitPdf() {
                       className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition cursor-pointer ${
                         extractMode === "all"
                           ? "border-red-500 text-red-400 bg-red-500/10"
-                          : "border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200"
+                          : "border-[var(--border)] bg-[var(--bg-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                       }`}
                     >
                       Extract all pages
@@ -913,7 +913,7 @@ export default function SplitPdf() {
                       className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition cursor-pointer ${
                         extractMode === "select"
                           ? "border-red-500 text-red-400 bg-red-500/10"
-                          : "border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200"
+                          : "border-[var(--border)] bg-[var(--bg-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                       }`}
                     >
                       Select pages
@@ -924,7 +924,7 @@ export default function SplitPdf() {
                 {/* Pages to extract input */}
                 {extractMode === "select" && (
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-slate-300 block">
+                    <label className="text-xs font-semibold text-[var(--text-secondary)] block">
                       Pages to extract:
                     </label>
                     <input
@@ -932,7 +932,7 @@ export default function SplitPdf() {
                       placeholder="example: 1,5-8"
                       value={pagesInput}
                       onChange={(e) => setPagesInput(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 focus:border-violet-500 text-white text-sm rounded-xl px-3.5 py-2.5 outline-none transition placeholder:text-slate-600"
+                      className="w-full bg-[var(--bg-base)] border border-[var(--border)] focus:border-violet-500 text-[var(--text-heading)] text-sm rounded-xl px-3.5 py-2.5 outline-none transition placeholder:text-[var(--text-muted)]"
                     />
                   </div>
                 )}
@@ -945,7 +945,7 @@ export default function SplitPdf() {
                     className={`w-5 h-5 rounded-md border flex items-center justify-center transition cursor-pointer ${
                       mergeExtractedPages
                         ? "bg-emerald-500 border-emerald-500 text-slate-950"
-                        : "border-slate-700 bg-slate-950"
+                        : "border-[var(--border-hover)] bg-[var(--bg-base)]"
                     }`}
                   >
                     {mergeExtractedPages && (
@@ -954,7 +954,7 @@ export default function SplitPdf() {
                   </button>
                   <span
                     onClick={() => setMergeExtractedPages(!mergeExtractedPages)}
-                    className="text-xs text-slate-300 cursor-pointer select-none"
+                    className="text-xs text-[var(--text-secondary)] cursor-pointer select-none"
                   >
                     Merge extracted pages into one PDF file.
                   </span>
@@ -976,15 +976,15 @@ export default function SplitPdf() {
             {activeTab === "size" && (
               <div className="space-y-6 pt-1">
                 {/* Meta info */}
-                <div className="space-y-1 text-xs text-slate-400">
+                <div className="space-y-1 text-xs text-[var(--text-secondary)]">
                   <p>
-                    <span className="text-slate-300 font-medium">
+                    <span className="text-[var(--text-secondary)] font-medium">
                       Original file size:
                     </span>{" "}
                     {originalSize} MB
                   </p>
                   <p>
-                    <span className="text-slate-300 font-medium">
+                    <span className="text-[var(--text-secondary)] font-medium">
                       Total pages:
                     </span>{" "}
                     {totalPages}
@@ -993,7 +993,7 @@ export default function SplitPdf() {
 
                 {/* Size Controls */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-200 block">
+                  <label className="text-xs font-semibold text-[var(--text-primary)] block">
                     Maximum size per file:
                   </label>
                   <div className="flex items-center gap-3">
@@ -1002,18 +1002,18 @@ export default function SplitPdf() {
                       min={1}
                       value={maxSize}
                       onChange={(e) => setMaxSize(Number(e.target.value))}
-                      className="w-28 bg-slate-950 border border-slate-800 focus:border-violet-500 text-white font-medium text-center rounded-xl px-3 py-2 outline-none transition text-sm"
+                      className="w-28 bg-[var(--bg-base)] border border-[var(--border)] focus:border-violet-500 text-[var(--text-heading)] font-medium text-center rounded-xl px-3 py-2 outline-none transition text-sm"
                     />
 
                     {/* Unit Toggle */}
-                    <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-1">
+                    <div className="flex items-center bg-[var(--bg-base)] border border-[var(--border)] rounded-xl p-1">
                       <button
                         type="button"
                         onClick={() => setSizeUnit("KB")}
                         className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
                           sizeUnit === "KB"
-                            ? "bg-slate-800 text-white shadow-sm"
-                            : "text-slate-400 hover:text-slate-200"
+                            ? "bg-[var(--bg-hover)] text-[var(--text-heading)] shadow-sm"
+                            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                         }`}
                       >
                         KB
@@ -1023,8 +1023,8 @@ export default function SplitPdf() {
                         onClick={() => setSizeUnit("MB")}
                         className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
                           sizeUnit === "MB"
-                            ? "bg-slate-800 text-white shadow-sm"
-                            : "text-slate-400 hover:text-slate-200"
+                            ? "bg-[var(--bg-hover)] text-[var(--text-heading)] shadow-sm"
+                            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                         }`}
                       >
                         MB
@@ -1050,7 +1050,7 @@ export default function SplitPdf() {
                     className={`w-5 h-5 rounded-md border flex items-center justify-center transition cursor-pointer ${
                       allowCompression
                         ? "bg-emerald-500 border-emerald-500 text-slate-950"
-                        : "border-slate-700 bg-slate-950"
+                        : "border-[var(--border-hover)] bg-[var(--bg-base)]"
                     }`}
                   >
                     {allowCompression && (
@@ -1059,7 +1059,7 @@ export default function SplitPdf() {
                   </button>
                   <span
                     onClick={() => setAllowCompression(!allowCompression)}
-                    className="text-xs text-slate-300 cursor-pointer select-none"
+                    className="text-xs text-[var(--text-secondary)] cursor-pointer select-none"
                   >
                     Allow compression
                   </span>
@@ -1081,10 +1081,10 @@ export default function SplitPdf() {
                 }
                 className={`w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition cursor-pointer shadow-xl ${
                   !file
-                    ? "bg-red-600/50 text-white/70 border border-red-500/30 cursor-not-allowed opacity-80"
+                    ? "bg-red-600/50 text-[var(--text-heading)]/70 border border-red-500/30 cursor-not-allowed opacity-80"
                     : loading
-                      ? "bg-slate-700 text-white border border-slate-700 cursor-not-allowed"
-                      : "bg-red-600 hover:bg-red-500 text-white border border-red-500 shadow-red-600/20"
+                      ? "bg-slate-700 text-[var(--text-heading)] border border-[var(--border-hover)] cursor-not-allowed"
+                      : "bg-red-600 hover:bg-red-500 text-[var(--text-heading)] border border-red-500 shadow-red-600/20"
                 }`}
               >
                 <span>{loading ? "Processing..." : "Split PDF"}</span>
@@ -1101,7 +1101,7 @@ export default function SplitPdf() {
                 <button
                   type="button"
                   onClick={downloadResult}
-                  className="w-full p-3 rounded-2xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-emerald-600/20 cursor-pointer"
+                  className="w-full p-3 rounded-2xl font-bold text-[var(--text-heading)] bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-emerald-600/20 cursor-pointer"
                 >
                   Download {resultName}
                 </button>

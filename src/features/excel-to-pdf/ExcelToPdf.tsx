@@ -135,26 +135,25 @@ export default function ExcelToPdf() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
           <Table className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Excel to PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">
-            Convert Microsoft Excel (.xlsx) spreadsheets to formatted PDF
-            documents locally.
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Excel to PDF</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+            Convert Microsoft Excel (.xlsx) spreadsheets to formatted PDF documents locally.
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
+            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
               <Settings className="w-5 h-5 text-violet-400" /> Actions
             </h2>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               Exported in landscape A4 with auto-sized columns, word wrap and
               automatic page breaks so cells never overlap.
             </p>
@@ -164,11 +163,12 @@ export default function ExcelToPdf() {
               disabled={!file || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 !file
-                  ? "bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed"
+                  ? "border border-[var(--border)] cursor-not-allowed"
                   : loading
-                    ? "bg-violet-700 text-white border border-violet-600 cursor-not-allowed"
-                    : "bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20"
+                    ? "bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed"
+                    : "bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20"
               }`}
+              style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
               {loading ? (
                 <>
@@ -189,7 +189,8 @@ export default function ExcelToPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+              className="flex flex-col items-center justify-center border-2 border-dashed hover:border-violet-500/50 rounded-3xl p-16 text-center cursor-pointer transition group"
+              style={{ borderColor: 'var(--border)' }}
             >
               <input
                 type="file"
@@ -198,29 +199,28 @@ export default function ExcelToPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">
+              <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>
                 Drag and drop your spreadsheet here
               </h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
-                Or click to browse. We will render cells into a grid structured
-                PDF file.
+              <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
+                Or click to browse. We will render cells into a grid structured PDF file.
               </p>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="border rounded-2xl p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
                     <Table className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">
+                    <h4 className="font-semibold truncate max-w-sm sm:max-w-md" style={{ color: 'var(--text-heading)' }}>
                       {file.name}
                     </h4>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {(file.size / (1024 * 1024)).toFixed(2)} MB
                     </p>
                   </div>
@@ -240,7 +240,7 @@ export default function ExcelToPdf() {
               </div>
 
               {loading && (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center text-sm text-slate-400 space-y-2">
+                <div className="border rounded-2xl p-6 text-center text-sm space-y-2" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}>
                   <RefreshCw className="w-6 h-6 animate-spin mx-auto text-violet-400" />
                   <p>Reading sheets data layout...</p>
                 </div>
@@ -250,9 +250,7 @@ export default function ExcelToPdf() {
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-300">
-                      Conversion Failed
-                    </h4>
+                    <h4 className="font-semibold text-red-300">Conversion Failed</h4>
                     <p className="text-sm mt-1 text-red-400/90">{error}</p>
                   </div>
                 </div>
@@ -260,23 +258,23 @@ export default function ExcelToPdf() {
 
               {success && pdfBlob && (
                 <div className="space-y-6">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
+                  <div className="border rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                     <div className="flex items-center gap-3">
                       <div className="p-3 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
                         <CheckCircle2 className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white">
+                        <h4 className="font-bold" style={{ color: 'var(--text-heading)' }}>
                           PDF Compiled Successfully!
                         </h4>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                           Sheet: {sheetName} · {(pdfBlob.size / 1024).toFixed(1)} KB
                         </p>
                       </div>
                     </div>
                     <button
                       onClick={downloadPdf}
-                      className="py-2.5 px-5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
+                      className="py-2.5 px-5 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
                     >
                       <Download className="w-4 h-4" /> Download PDF Document
                     </button>
@@ -284,25 +282,26 @@ export default function ExcelToPdf() {
 
                   {sheetData.length > 0 && (
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-                        <Eye className="w-3.5 h-3.5" /> Spreadsheet Cell Preview
-                        (First 10 Rows)
+                      <label className="text-xs font-semibold uppercase tracking-wider flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
+                        <Eye className="w-3.5 h-3.5" /> Spreadsheet Cell Preview (First 10 Rows)
                       </label>
-                      <div className="rounded-xl border border-slate-800 bg-slate-950 overflow-x-auto shadow-2xl">
-                        <table className="w-full border-collapse text-left text-xs font-mono text-slate-300">
+                      <div className="rounded-xl border overflow-x-auto shadow-2xl" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-base)' }}>
+                        <table className="w-full border-collapse text-left text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
                           <tbody>
                             {sheetData.slice(0, 10).map((row, idx) => (
                               <tr
                                 key={idx}
-                                className="border-b border-slate-900/60 hover:bg-slate-900/20"
+                                className="border-b hover:bg-[var(--bg-surface-60)]"
+                                style={{ borderColor: 'var(--bg-surface-60)' }}
                               >
-                                <td className="p-3 text-slate-500 border-r border-slate-800 text-center w-10">
+                                <td className="p-3 border-r text-center w-10" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                                   {idx + 1}
                                 </td>
                                 {row.map((cell, cIdx) => (
                                   <td
                                     key={cIdx}
-                                    className="p-3 border-r border-slate-800/80 truncate max-w-[150px]"
+                                    className="p-3 border-r truncate max-w-[150px]"
+                                    style={{ borderColor: 'var(--border-soft)' }}
                                   >
                                     {cell !== undefined ? String(cell) : ""}
                                   </td>

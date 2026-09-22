@@ -1,6 +1,91 @@
 @import "tailwindcss";
 
+/* ============================================================
+   THEME VARIABLES
+   Dark mode is default. Light mode applied via [data-theme="light"]
+   on the <html> element.
 
+   Usage in components:
+     bg-[var(--bg-base)]        → page background
+     bg-[var(--bg-surface)]     → card / panel background
+     bg-[var(--bg-elevated)]    → dropdown / modal background
+     bg-[var(--bg-input)]       → input / textarea background
+     border-[var(--border)]     → default border
+     border-[var(--border-soft)]→ subtle border
+     text-[var(--text-primary)] → headings, strong text
+     text-[var(--text-secondary)]→ body / description text
+     text-[var(--text-muted)]   → placeholders, meta text
+     bg-[var(--nav-bg)]         → sticky header background (with opacity)
+============================================================ */
+
+/* ---------- DARK THEME (default) ---------- */
+:root,
+[data-theme="dark"] {
+  --bg-base:        #020817;   /* slate-950 */
+  --bg-surface:     #0f172a;   /* slate-900 */
+  --bg-surface-60:  rgba(15,23,42,0.60);
+  --bg-elevated:    #0f172a;   /* slate-900 – dropdowns */
+  --bg-input:       #020817;   /* slate-950 */
+  --bg-hover:       #1e293b;   /* slate-800 */
+
+  --border:         #1e293b;   /* slate-800 */
+  --border-soft:    rgba(30,41,59,0.80); /* slate-800/80 */
+  --border-hover:   #334155;   /* slate-700 */
+
+  --text-primary:   #f1f5f9;   /* slate-100 */
+  --text-secondary: #94a3b8;   /* slate-400 */
+  --text-muted:     #64748b;   /* slate-500 */
+  --text-heading:   #ffffff;
+
+  --nav-bg:         rgba(2,8,23,0.75);  /* slate-950/75 */
+  --nav-border:     #0f172a;   /* slate-900 */
+
+  --selection-bg:   rgba(124,58,237,0.30);
+  --selection-text: #ffffff;
+}
+
+/* ---------- LIGHT THEME ---------- */
+[data-theme="light"] {
+  --bg-base:        #f8fafc;   /* slate-50 */
+  --bg-surface:     #ffffff;   /* white */
+  --bg-surface-60:  rgba(255,255,255,0.75);
+  --bg-elevated:    #ffffff;
+  --bg-input:       #f1f5f9;   /* slate-100 */
+  --bg-hover:       #f1f5f9;   /* slate-100 */
+
+  --border:         #e2e8f0;   /* slate-200 */
+  --border-soft:    rgba(226,232,240,0.80);
+  --border-hover:   #cbd5e1;   /* slate-300 */
+
+  --text-primary:   #0f172a;   /* slate-900 */
+  --text-secondary: #475569;   /* slate-600 */
+  --text-muted:     #94a3b8;   /* slate-400 */
+  --text-heading:   #0f172a;   /* slate-900 */
+
+  --nav-bg:         rgba(248,250,252,0.85); /* slate-50/85 */
+  --nav-border:     #e2e8f0;   /* slate-200 */
+
+  --selection-bg:   rgba(124,58,237,0.15);
+  --selection-text: #4c1d95;
+}
+
+/* ============================================================
+   GLOBAL BASE STYLES
+============================================================ */
+html {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
 .custom-scrollbar::-webkit-scrollbar {
   width: 3px;
 }

@@ -107,20 +107,20 @@ const ImageBackgroundRemover: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10 text-white sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--bg-base)] px-4 py-10 text-[var(--text-heading)] sm:px-6 lg:px-8">
       <div className="mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
           <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
             <ImageIcon className="w-8 h-8" />
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold text-white">
+            <h1 className="text-3xl font-bold text-[var(--text-heading)]">
               Image Background Remover
             </h1>
 
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-[var(--text-secondary)] text-sm mt-1">
               Remove backgrounds from your images instantly and download
               transparent PNG images directly in your browser.
             </p>
@@ -139,7 +139,7 @@ const ImageBackgroundRemover: React.FC = () => {
             className={`relative mx-auto rounded-2xl border-2 border-dashed p-10 text-center transition sm:p-16 mt-8 ${
               isDragging
                 ? "border-violet-500 bg-violet-500/10"
-                : "border-slate-700 bg-slate-900/70 hover:border-violet-500/60"
+                : "border-[var(--border-hover)] bg-[var(--bg-surface-60)] hover:border-violet-500/60"
             }`}
           >
             <input
@@ -158,11 +158,11 @@ const ImageBackgroundRemover: React.FC = () => {
                 <Upload className="h-7 w-7" />
               </div>
 
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold text-[var(--text-heading)]">
                 Drop your image here
               </h2>
 
-              <p className="mt-2 text-sm text-slate-400">
+              <p className="mt-2 text-sm text-[var(--text-secondary)]">
                 or click to browse from your computer
               </p>
 
@@ -170,7 +170,7 @@ const ImageBackgroundRemover: React.FC = () => {
                 Choose Image
               </span>
 
-              <p className="mt-4 text-xs text-slate-500">
+              <p className="mt-4 text-xs text-[var(--text-muted)]">
                 Supports JPG, PNG and WebP · Max 15MB
               </p>
             </label>
@@ -190,20 +190,20 @@ const ImageBackgroundRemover: React.FC = () => {
 
         {/* Image Workspace */}
         {file && (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6 mt-8">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-4 sm:p-6 mt-8">
             {/* Top bar */}
-            <div className="mb-6 flex flex-col gap-4 border-b border-slate-800 pb-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mb-6 flex flex-col gap-4 border-b border-[var(--border)] pb-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-semibold text-white">{file.name}</p>
+                <p className="text-sm font-semibold text-[var(--text-heading)]">{file.name}</p>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {(file.size / 1024 / 1024).toFixed(2)} MB
                 </p>
               </div>
 
               <button
                 onClick={reset}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm text-slate-300 transition hover:border-red-500/50 hover:text-red-400 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border-hover)] px-4 py-2 text-sm text-[var(--text-secondary)] transition hover:border-red-500/50 hover:text-red-400 cursor-pointer"
               >
                 <RotateCcw className="h-4 w-4" />
                 Choose Another
@@ -213,13 +213,13 @@ const ImageBackgroundRemover: React.FC = () => {
             {/* Images */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Original */}
-              <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-                <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-                  <span className="text-sm font-semibold text-slate-200">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-base)]">
+                <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+                  <span className="text-sm font-semibold text-[var(--text-primary)]">
                     Original Image
                   </span>
 
-                  <span className="rounded-md bg-slate-800 px-2 py-1 text-xs text-slate-400">
+                  <span className="rounded-md bg-[var(--bg-hover)] px-2 py-1 text-xs text-[var(--text-secondary)]">
                     Before
                   </span>
                 </div>
@@ -234,9 +234,9 @@ const ImageBackgroundRemover: React.FC = () => {
               </div>
 
               {/* Result */}
-              <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-                <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-                  <span className="text-sm font-semibold text-slate-200">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-base)]">
+                <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+                  <span className="text-sm font-semibold text-[var(--text-primary)]">
                     Background Removed
                   </span>
 
@@ -265,15 +265,15 @@ const ImageBackgroundRemover: React.FC = () => {
                     />
                   ) : (
                     <div className="text-center">
-                      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-800">
-                        <ImageIcon className="h-6 w-6 text-slate-500" />
+                      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--bg-hover)]">
+                        <ImageIcon className="h-6 w-6 text-[var(--text-muted)]" />
                       </div>
 
-                      <p className="text-sm font-medium text-slate-400">
+                      <p className="text-sm font-medium text-[var(--text-secondary)]">
                         Your result will appear here
                       </p>
 
-                      <p className="mt-1 text-xs text-slate-600">
+                      <p className="mt-1 text-xs text-[var(--text-muted)]">
                         Transparent background PNG
                       </p>
                     </div>
@@ -288,7 +288,7 @@ const ImageBackgroundRemover: React.FC = () => {
                 <button
                   onClick={removeBg}
                   disabled={isProcessing}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3.5 text-sm font-semibold text-[var(--text-heading)] shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
                 >
                   {isProcessing ? (
                     <>
@@ -306,7 +306,7 @@ const ImageBackgroundRemover: React.FC = () => {
                 <>
                   <button
                     onClick={downloadImage}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3.5 text-sm font-semibold text-[var(--text-heading)] shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
                   >
                     <Download className="h-5 w-5" />
                     Download PNG
@@ -315,7 +315,7 @@ const ImageBackgroundRemover: React.FC = () => {
                   <button
                     onClick={removeBg}
                     disabled={isProcessing}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-7 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-violet-500 hover:text-violet-400"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-hover)] px-7 py-3.5 text-sm font-semibold text-[var(--text-secondary)] transition hover:border-violet-500 hover:text-violet-400"
                   >
                     <RotateCcw className="h-5 w-5" />
                     Process Again

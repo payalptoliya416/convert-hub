@@ -109,20 +109,20 @@ const JsonFormatter: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-slate-950 text-white">
+    <div className="min-h-[calc(100vh-64px)] bg-[var(--bg-base)] text-[var(--text-heading)]">
       <div className="">
         {/* Header */}
-        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
           <div className="shrink-0 rounded-xl border border-cyan-500/20 bg-cyan-500/10 p-3 text-cyan-400">
             <Braces className="h-8 w-8" />
           </div>
 
           <div className="min-w-0">
-            <h1 className="text-2xl font-bold text-white sm:text-3xl">
+            <h1 className="text-2xl font-bold text-[var(--text-heading)] sm:text-3xl">
               JSON Formatter
             </h1>
 
-            <p className="mt-1 text-xs leading-5 text-slate-400 sm:text-sm">
+            <p className="mt-1 text-xs leading-5 text-[var(--text-secondary)] sm:text-sm">
               Format, beautify, minify, and validate your JSON directly in your
               browser.
             </p>
@@ -130,14 +130,14 @@ const JsonFormatter: React.FC = () => {
         </div>
 
         {/* Main Card */}
-        <div className="mt-6 w-full rounded-2xl border border-slate-800 bg-slate-900/70 p-3 shadow-2xl sm:mt-8 sm:p-5">
+        <div className="mt-6 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-3 shadow-2xl sm:mt-8 sm:p-5">
           {/* Toolbar */}
-          <div className="mb-4 flex flex-col gap-4 border-b border-slate-800 pb-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mb-4 flex flex-col gap-4 border-b border-[var(--border)] pb-4 lg:flex-row lg:items-center lg:justify-between">
             {/* Title */}
             <div className="flex items-center gap-2">
               <FileJson className="h-5 w-5 shrink-0 text-violet-400" />
 
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[var(--text-heading)]">
                 JSON Formatter
               </h2>
             </div>
@@ -145,23 +145,23 @@ const JsonFormatter: React.FC = () => {
             {/* Toolbar Actions */}
             <div className="flex flex-wrap items-center gap-2">
               {/* Indent */}
-              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2">
-                <span className="text-xs text-slate-500">Indent</span>
+              <div className="flex items-center gap-2 rounded-lg border border-[var(--border-hover)] bg-[var(--bg-base)] px-3 py-2">
+                <span className="text-xs text-[var(--text-muted)]">Indent</span>
 
                 <select
                   value={indent}
                   onChange={(e) => setIndent(Number(e.target.value))}
-                  className="max-w-[90px] bg-transparent text-xs font-medium text-slate-300 outline-none"
+                  className="max-w-[90px] bg-transparent text-xs font-medium text-[var(--text-secondary)] outline-none"
                 >
-                  <option value={2} className="bg-slate-900">
+                  <option value={2} className="bg-[var(--bg-surface)]">
                     2 Spaces
                   </option>
 
-                  <option value={4} className="bg-slate-900">
+                  <option value={4} className="bg-[var(--bg-surface)]">
                     4 Spaces
                   </option>
 
-                  <option value={8} className="bg-slate-900">
+                  <option value={8} className="bg-[var(--bg-surface)]">
                     8 Spaces
                   </option>
                 </select>
@@ -171,7 +171,7 @@ const JsonFormatter: React.FC = () => {
               <button
                 type="button"
                 onClick={loadSample}
-                className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-violet-500/50 hover:bg-violet-500/10 hover:text-violet-400"
+                className="rounded-lg border border-[var(--border-hover)] px-3 py-2 text-xs font-medium text-[var(--text-secondary)] transition hover:border-violet-500/50 hover:bg-violet-500/10 hover:text-violet-400"
               >
                 Sample JSON
               </button>
@@ -180,7 +180,7 @@ const JsonFormatter: React.FC = () => {
               <button
                 type="button"
                 onClick={clearAll}
-                className="flex items-center gap-1.5 rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium text-slate-400 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
+                className="flex items-center gap-1.5 rounded-lg border border-[var(--border-hover)] px-3 py-2 text-xs font-medium text-[var(--text-secondary)] transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
               >
                 <Trash2 className="h-3.5 w-3.5" />
                 Clear
@@ -191,20 +191,20 @@ const JsonFormatter: React.FC = () => {
           {/* Editors */}
           <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
             {/* ================= INPUT ================= */}
-            <div className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+            <div className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-base)]">
               {/* Input Header */}
-              <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-3 py-3 sm:px-4">
+              <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] px-3 py-3 sm:px-4">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-slate-200">
+                  <p className="text-sm font-semibold text-[var(--text-primary)]">
                     Input JSON
                   </p>
 
-                  <p className="mt-0.5 text-xs text-slate-600">
+                  <p className="mt-0.5 text-xs text-[var(--text-muted)]">
                     Paste or type your JSON
                   </p>
                 </div>
 
-                <span className="ml-2 shrink-0 rounded-md bg-slate-900 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                <span className="ml-2 shrink-0 rounded-md bg-[var(--bg-surface)] px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                   JSON
                 </span>
               </div>
@@ -231,9 +231,9 @@ const JsonFormatter: React.FC = () => {
                 font-mono
                 text-sm
                 leading-6
-                text-slate-300
+                text-[var(--text-secondary)]
                 outline-none
-                placeholder:text-slate-700
+                placeholder:text-[var(--text-muted)]
                 sm:h-[360px]
                 lg:h-[420px]
               "
@@ -241,15 +241,15 @@ const JsonFormatter: React.FC = () => {
             </div>
 
             {/* ================= OUTPUT ================= */}
-            <div className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+            <div className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-base)]">
               {/* Output Header */}
-              <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-3 py-3 sm:px-4">
+              <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] px-3 py-3 sm:px-4">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-slate-200">
+                  <p className="text-sm font-semibold text-[var(--text-primary)]">
                     Formatted JSON
                   </p>
 
-                  <p className="mt-0.5 text-xs text-slate-600">
+                  <p className="mt-0.5 text-xs text-[var(--text-muted)]">
                     Your formatted result
                   </p>
                 </div>
@@ -267,12 +267,12 @@ const JsonFormatter: React.FC = () => {
                   gap-1.5
                   rounded-lg
                   border
-                  border-slate-700
+                  border-[var(--border-hover)]
                   px-2.5
                   py-1.5
                   text-xs
                   font-medium
-                  text-slate-400
+                  text-[var(--text-secondary)]
                   transition
                   hover:border-violet-500/40
                   hover:bg-violet-500/10
@@ -316,7 +316,7 @@ const JsonFormatter: React.FC = () => {
                     font-mono
                     text-sm
                     leading-6
-                    text-slate-300
+                    text-[var(--text-secondary)]
                 "
                   >
                     {output}
@@ -326,7 +326,7 @@ const JsonFormatter: React.FC = () => {
                     <div>
                       <Braces className="mx-auto h-10 w-10 text-slate-800" />
 
-                      <p className="mt-3 text-sm text-slate-600">
+                      <p className="mt-3 text-sm text-[var(--text-muted)]">
                         Formatted JSON will appear here
                       </p>
                     </div>
@@ -372,7 +372,7 @@ const JsonFormatter: React.FC = () => {
               py-3
               text-sm
               font-semibold
-              text-white
+              text-[var(--text-heading)]
               shadow-lg
               shadow-violet-600/20
               transition
@@ -397,17 +397,17 @@ const JsonFormatter: React.FC = () => {
               gap-2
               rounded-xl
               border
-              border-slate-700
-              bg-slate-900
+              border-[var(--border-hover)]
+              bg-[var(--bg-surface)]
               px-5
               py-3
               text-sm
               font-semibold
-              text-slate-300
+              text-[var(--text-secondary)]
               transition
               hover:border-violet-500/40
-              hover:bg-slate-800
-              hover:text-white
+              hover:bg-[var(--bg-hover)]
+              hover:text-[var(--text-heading)]
             "
             >
               <Minimize2 className="h-4 w-4" />

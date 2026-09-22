@@ -226,13 +226,13 @@ export default function WordToPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
           <FileText className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Word to PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">Convert Microsoft Word (.docx) documents to PDF files locally in your browser.</p>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Word to PDF</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Convert Microsoft Word (.docx) documents to PDF files locally in your browser.</p>
         </div>
       </div>
 
@@ -241,11 +241,11 @@ export default function WordToPdf() {
         
         {/* Left Column: Options */}
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
+            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
               <Settings className="w-5 h-5 text-violet-400" /> Actions
             </h2>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               Mammoth.js parses Word structures client-side. Best suited for text documents with headings, lists, and standard styling.
             </p>
 
@@ -255,11 +255,12 @@ export default function WordToPdf() {
               disabled={!file || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 !file 
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                  ? 'cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20'
               }`}
+              style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)', borderColor: 'var(--border)' } : undefined}
             >
               {loading ? (
                 <>
@@ -282,7 +283,7 @@ export default function WordToPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+              className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--border)] hover:border-violet-500/50 hover:bg-[var(--bg-surface-60)] rounded-3xl p-16 text-center cursor-pointer transition group"
             >
               <input 
                 type="file" 
@@ -291,25 +292,25 @@ export default function WordToPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your DOCX file here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+              <h3 className="text-xl font-bold text-[var(--text-heading)] mt-6">Drag and drop your DOCX file here</h3>
+              <p className="text-[var(--text-secondary)] text-sm mt-2 max-w-xs">
                 Or click to browse. We will render document details and format them into a PDF file.
               </p>
             </div>
           ) : (
             /* Conversion Progress & Preview */
             <div className="space-y-6">
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="rounded-2xl border p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-blue-500/15 rounded-xl border border-blue-500/20 text-blue-400">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">{file.name}</h4>
-                    <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <h4 className="font-semibold truncate max-w-sm sm:max-w-md" style={{ color: 'var(--text-heading)' }}>{file.name}</h4>
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button
@@ -328,7 +329,7 @@ export default function WordToPdf() {
 
               {/* Progress */}
               {loading && (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center text-sm text-slate-400 space-y-2">
+                <div className="rounded-2xl border p-6 text-center text-sm space-y-2" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}>
                   <RefreshCw className="w-6 h-6 animate-spin mx-auto text-violet-400" />
                   <p>Parsing DOCX contents...</p>
                 </div>
@@ -348,19 +349,19 @@ export default function WordToPdf() {
               {/* Success Result */}
               {success && pdfBlob && (
                 <div className="space-y-6">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl">
+                  <div className="rounded-2xl border p-6 flex flex-wrap gap-4 items-center justify-between shadow-2xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                     <div className="flex items-center gap-3">
                       <div className="p-3 bg-emerald-500/15 rounded-xl border border-emerald-500/20 text-emerald-400">
                         <CheckCircle2 className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white">PDF Compiled Successfully!</h4>
-                        <p className="text-xs text-slate-400">{(pdfBlob.size / 1024).toFixed(1)} KB</p>
+                        <h4 className="font-bold" style={{ color: 'var(--text-heading)' }}>PDF Compiled Successfully!</h4>
+                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(pdfBlob.size / 1024).toFixed(1)} KB</p>
                       </div>
                     </div>
                     <button
                       onClick={downloadPdf}
-                      className="py-2.5 px-5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-blue-600/10"
+                      className="py-2.5 px-5 bg-blue-600 hover:bg-blue-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-blue-600/10"
                     >
                       <Download className="w-4 h-4" /> Download PDF Document
                     </button>
@@ -369,9 +370,10 @@ export default function WordToPdf() {
                   {/* HTML Preview (Read-only representation) */}
                   {htmlPreview && (
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Document HTML Preview</label>
+                      <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Document HTML Preview</label>
                       <div 
-                        className="rounded-xl border border-slate-800 bg-slate-950 p-6 max-h-96 overflow-y-auto text-sm text-slate-300 space-y-4 prose prose-invert"
+                        className="rounded-xl border p-6 max-h-96 overflow-y-auto text-sm space-y-4 prose prose-invert"
+                        style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-base)', color: 'var(--text-secondary)' }}
                         dangerouslySetInnerHTML={{ __html: htmlPreview }}
                       ></div>
                     </div>

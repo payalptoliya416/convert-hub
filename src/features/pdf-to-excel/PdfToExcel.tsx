@@ -176,13 +176,13 @@ export default function PdfToExcel() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
         <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
           <Table className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">PDF to Excel</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-3xl font-bold text-[var(--text-heading)]">PDF to Excel</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">
             Extract tables and structured coordinate grids from PDF to Excel spreadsheets (.xlsx).
           </p>
         </div>
@@ -190,13 +190,13 @@ export default function PdfToExcel() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] p-6 space-y-6 shadow-xl">
+            <h2 className="text-lg font-bold text-[var(--text-heading)] flex items-center gap-2">
               <Settings className="w-5 h-5 text-violet-400" /> Options
             </h2>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
                 Column Gap Sensitivity
               </label>
               <input
@@ -205,13 +205,13 @@ export default function PdfToExcel() {
                 max="80"
                 value={colGap}
                 onChange={(e) => setColGap(Number(e.target.value))}
-                className="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                className="w-full h-2 bg-[var(--bg-base)] rounded-lg appearance-none cursor-pointer accent-violet-500"
               />
-              <div className="flex justify-between text-xs text-slate-500">
+              <div className="flex justify-between text-xs text-[var(--text-muted)]">
                 <span>Narrow Gaps ({colGap}px)</span>
                 <span>Wide Gaps</span>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed mt-1">
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed mt-1">
                 Lower this if columns are merging together; raise it if words in cells are splitting into separate columns.
               </p>
             </div>
@@ -221,10 +221,10 @@ export default function PdfToExcel() {
               disabled={!file || loading}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 !file
-                  ? "bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed"
+                  ? "bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed"
                   : loading
-                    ? "bg-violet-700 text-white border border-violet-600 cursor-not-allowed"
-                    : "bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20"
+                    ? "bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed"
+                    : "bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20"
               }`}
             >
               {loading ? (
@@ -246,7 +246,7 @@ export default function PdfToExcel() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+              className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--border)] hover:border-violet-500/50 hover:bg-[var(--bg-surface-60)] rounded-3xl p-16 text-center cursor-pointer transition group"
             >
               <input
                 type="file"
@@ -255,24 +255,24 @@ export default function PdfToExcel() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your PDF here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">
+              <h3 className="text-xl font-bold text-[var(--text-heading)] mt-6">Drag and drop your PDF here</h3>
+              <p className="text-[var(--text-secondary)] text-sm mt-2 max-w-xs">
                 Or click to browse. We will detect rows and column gaps based on coordinate spacing.
               </p>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="bg-[var(--bg-surface-60)] border border-[var(--border)] rounded-2xl p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-red-500/15 rounded-xl border border-red-500/20 text-red-400">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">{file.name}</h4>
-                    <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <h4 className="font-semibold text-[var(--text-heading)] truncate max-w-sm sm:max-w-md">{file.name}</h4>
+                    <p className="text-xs text-[var(--text-secondary)]">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button
@@ -289,12 +289,12 @@ export default function PdfToExcel() {
               </div>
 
               {loading && (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+                <div className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl p-6 space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Reconstructing data tables...</span>
+                    <span className="text-[var(--text-secondary)]">Reconstructing data tables...</span>
                     <span className="font-semibold text-violet-400">{progress}%</span>
                   </div>
-                  <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-[var(--bg-base)] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-300"
                       style={{ width: `${progress}%` }}
@@ -315,45 +315,45 @@ export default function PdfToExcel() {
 
               {success && extractedData.length > 0 && (
                 <div className="space-y-6">
-                  <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <div className="flex justify-between items-center border-b border-[var(--border)] pb-4">
+                    <h3 className="text-lg font-bold text-[var(--text-heading)] flex items-center gap-2">
                       <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Excel Sheet Ready
                     </h3>
                     <button
                       onClick={downloadExcel}
-                      className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
+                      className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-600/10"
                     >
                       <Download className="w-4 h-4" /> Download Excel (.xlsx)
                     </button>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+                    <label className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-1">
                       <Eye className="w-3.5 h-3.5" /> Extracted Grid Preview (First 15 Rows)
                     </label>
-                    <div className="rounded-xl border border-slate-800 bg-slate-950 overflow-x-auto shadow-2xl">
-                      <table className="w-full border-collapse text-left text-xs font-mono text-slate-300">
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-base)] overflow-x-auto shadow-2xl">
+                      <table className="w-full border-collapse text-left text-xs font-mono text-[var(--text-secondary)]">
                         <thead>
-                          <tr className="bg-slate-900 border-b border-slate-800">
-                            <th className="p-3 font-semibold text-slate-400 border-r border-slate-800 w-10 text-center">#</th>
-                            <th className="p-3 font-semibold text-slate-400 border-r border-slate-800" colSpan={100}>
+                          <tr className="bg-[var(--bg-surface)] border-b border-[var(--border)]">
+                            <th className="p-3 font-semibold text-[var(--text-secondary)] border-r border-[var(--border)] w-10 text-center">#</th>
+                            <th className="p-3 font-semibold text-[var(--text-secondary)] border-r border-[var(--border)]" colSpan={100}>
                               Extracted Columns
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           {extractedData.slice(0, 15).map((row, idx) => (
-                            <tr key={idx} className="border-b border-slate-900/60 hover:bg-slate-900/20">
-                              <td className="p-3 text-slate-500 border-r border-slate-800 text-center">{idx + 1}</td>
+                            <tr key={idx} className="border-b border-[var(--border)]/60 hover:bg-[var(--bg-surface-60)]">
+                              <td className="p-3 text-[var(--text-muted)] border-r border-[var(--border)] text-center">{idx + 1}</td>
                               {row.length === 0 ? (
-                                <td className="p-3 text-slate-600 italic border-r border-slate-800 bg-slate-900/10" colSpan={100}>
+                                <td className="p-3 text-[var(--text-muted)] italic border-r border-[var(--border)] bg-[var(--bg-surface-60)]" colSpan={100}>
                                   [Page Boundary / Empty Line]
                                 </td>
                               ) : (
                                 row.map((cell, cIdx) => (
                                   <td
                                     key={cIdx}
-                                    className="p-3 border-r border-slate-800/80 truncate max-w-[200px]"
+                                    className="p-3 border-r border-[var(--border-soft)] truncate max-w-[200px]"
                                     title={cell}
                                   >
                                     {cell}

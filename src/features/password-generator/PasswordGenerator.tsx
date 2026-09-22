@@ -179,20 +179,20 @@ const PasswordGenerator: React.FC = () => {
   const strength = getStrength();
 
   return (
-    <div className="min-h-screen bg-slate-950 py-10 text-white">
+    <div className="min-h-screen bg-[var(--bg-base)] py-10 text-[var(--text-heading)]">
       <div className="">
         {/* Header */}
-        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
           <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
             <LockKeyhole className="w-8 h-8" />
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold text-white">
+            <h1 className="text-3xl font-bold text-[var(--text-heading)]">
               Password Generator
             </h1>
 
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-[var(--text-secondary)] text-sm mt-1">
               Generate strong and secure passwords instantly with customizable
               options.
             </p>
@@ -200,16 +200,16 @@ const PasswordGenerator: React.FC = () => {
         </div>
 
         {/* Main Card */}
-        <div className="mx-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-7 mt-8">
+        <div className="mx-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5 sm:p-7 mt-8">
           {/* Generated Password */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-white">
+            <label className="mb-2 block text-sm font-semibold text-[var(--text-heading)]">
               Generated Password
             </label>
 
-            <div className="flex min-h-[58px] items-center gap-2 rounded-xl border border-slate-700 bg-slate-950 p-2">
+            <div className="flex min-h-[58px] items-center gap-2 rounded-xl border border-[var(--border-hover)] bg-[var(--bg-base)] p-2">
               <div className="min-w-0 flex-1 overflow-x-auto px-3 py-2">
-                <span className="whitespace-nowrap font-mono text-sm text-slate-200 sm:text-base">
+                <span className="whitespace-nowrap font-mono text-sm text-[var(--text-primary)] sm:text-base">
                   {password
                     ? showPassword
                       ? password
@@ -224,7 +224,7 @@ const PasswordGenerator: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[var(--text-secondary)] transition hover:bg-[var(--bg-hover)] hover:text-[var(--text-heading)]"
                     title={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? (
@@ -238,7 +238,7 @@ const PasswordGenerator: React.FC = () => {
                   <button
                     type="button"
                     onClick={copyPassword}
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-white transition hover:bg-violet-500"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-[var(--text-heading)] transition hover:bg-violet-500"
                     title="Copy password"
                   >
                     {copied ? (
@@ -256,7 +256,7 @@ const PasswordGenerator: React.FC = () => {
           {password && (
             <div className="mt-5">
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-400">
+                <span className="text-xs font-medium text-[var(--text-secondary)]">
                   Password Strength
                 </span>
 
@@ -265,7 +265,7 @@ const PasswordGenerator: React.FC = () => {
                 </span>
               </div>
 
-              <div className="h-2 overflow-hidden rounded-full bg-slate-800">
+              <div className="h-2 overflow-hidden rounded-full bg-[var(--bg-hover)]">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-violet-600 to-indigo-500 transition-all duration-300"
                   style={{ width: strength.width }}
@@ -277,7 +277,7 @@ const PasswordGenerator: React.FC = () => {
           {/* Password Length */}
           <div className="mt-8">
             <div className="mb-3 flex items-center justify-between">
-              <label className="text-sm font-semibold text-white">
+              <label className="text-sm font-semibold text-[var(--text-heading)]">
                 Password Length
               </label>
 
@@ -310,7 +310,7 @@ const PasswordGenerator: React.FC = () => {
               className="w-full cursor-pointer accent-violet-500"
             />
 
-            <div className="mt-2 flex justify-between text-xs text-slate-600">
+            <div className="mt-2 flex justify-between text-xs text-[var(--text-muted)]">
               <span>8</span>
               <span>64</span>
             </div>
@@ -318,18 +318,18 @@ const PasswordGenerator: React.FC = () => {
 
           {/* Password Options */}
          <div className="mt-8">
-  <h2 className="mb-4 text-sm font-semibold text-white">
+  <h2 className="mb-4 text-sm font-semibold text-[var(--text-heading)]">
     Password Options
   </h2>
 
   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
     {/* Uppercase */}
-    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-4 transition hover:border-[var(--border-hover)]">
       <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-slate-200">
+        <p className="truncate text-sm font-medium text-[var(--text-primary)]">
           Uppercase Letters
         </p>
-        <p className="mt-1 text-xs text-slate-600">A-Z</p>
+        <p className="mt-1 text-xs text-[var(--text-muted)]">A-Z</p>
       </div>
 
       <input
@@ -359,12 +359,12 @@ const PasswordGenerator: React.FC = () => {
     </label>
 
     {/* Lowercase */}
-    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-4 transition hover:border-[var(--border-hover)]">
       <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-slate-200">
+        <p className="truncate text-sm font-medium text-[var(--text-primary)]">
           Lowercase Letters
         </p>
-        <p className="mt-1 text-xs text-slate-600">a-z</p>
+        <p className="mt-1 text-xs text-[var(--text-muted)]">a-z</p>
       </div>
 
       <input
@@ -394,12 +394,12 @@ const PasswordGenerator: React.FC = () => {
     </label>
 
     {/* Numbers */}
-    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-4 transition hover:border-[var(--border-hover)]">
       <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-slate-200">
+        <p className="truncate text-sm font-medium text-[var(--text-primary)]">
           Numbers
         </p>
-        <p className="mt-1 text-xs text-slate-600">0-9</p>
+        <p className="mt-1 text-xs text-[var(--text-muted)]">0-9</p>
       </div>
 
       <input
@@ -429,12 +429,12 @@ const PasswordGenerator: React.FC = () => {
     </label>
 
     {/* Symbols */}
-    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-slate-700">
+    <label className="flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-4 transition hover:border-[var(--border-hover)]">
       <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-slate-200">
+        <p className="truncate text-sm font-medium text-[var(--text-primary)]">
           Symbols
         </p>
-        <p className="mt-1 text-xs text-slate-600">!@#$%^&*</p>
+        <p className="mt-1 text-xs text-[var(--text-muted)]">!@#$%^&*</p>
       </div>
 
       <input
@@ -470,7 +470,7 @@ const PasswordGenerator: React.FC = () => {
             <button
               type="button"
               onClick={() => generatePassword()}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-[var(--text-heading)] shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500"
             >
               <RefreshCcw className="h-5 w-5" />
               Generate Password
@@ -479,7 +479,7 @@ const PasswordGenerator: React.FC = () => {
             <button
               type="button"
               onClick={resetGenerator}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-6 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-hover)] px-6 py-3.5 text-sm font-semibold text-[var(--text-secondary)] transition hover:border-slate-600 hover:text-[var(--text-heading)]"
             >
               <RefreshCcw className="h-4 w-4" />
               Reset

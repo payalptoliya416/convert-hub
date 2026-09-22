@@ -44,7 +44,6 @@ export default function JpgToPdf() {
   };
 
   const handleDragOver = (e: React.DragEvent) => e.preventDefault();
-
   const triggerFileSelect = () => fileInputRef.current?.click();
 
   const convertToPdf = async () => {
@@ -61,18 +60,12 @@ export default function JpgToPdf() {
         i.src = URL.createObjectURL(file);
       });
 
-      // Convert px to mm approx (96dpi)
       const pxToMm = (px: number) => (px * 25.4) / 96;
       const imgWmm = pxToMm(img.naturalWidth);
       const imgHmm = pxToMm(img.naturalHeight);
-
-      // Use custom page size equal to image size for best quality
       const orientation = img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait';
       const doc = new jsPDF({ unit: 'mm', format: [imgWmm, imgHmm], orientation });
-
-      // Draw image filling the page
       doc.addImage(img, 'JPEG', 0, 0, imgWmm, imgHmm);
-
       const blob = doc.output('blob');
       setPdfBlob(blob);
       setSuccess(true);
@@ -92,34 +85,34 @@ export default function JpgToPdf() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-400">
           <FileImage className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">JPG to PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">Quickly convert a JPG (or PNG) image to a single-page PDF.</p>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>JPG to PDF</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Quickly convert a JPG (or PNG) image to a single-page PDF.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white">Options</h2>
-            <p className="text-xs text-slate-400">Upload a JPG/PNG file and convert to a single PDF page sized to the image.</p>
+          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
+            <h2 className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>Options</h2>
+            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>Upload a JPG/PNG file and convert to a single PDF page sized to the image.</p>
 
             <button
               onClick={convertToPdf}
               disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${!file ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : loading ? 'bg-violet-700 text-white' : 'bg-violet-600 hover:bg-violet-500 text-white'}`}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-[var(--text-heading)]' : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)]'}`}
+              style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
               {loading ? <><RefreshCw className="w-5 h-5 animate-spin" /> Converting...</> : <><Download className="w-5 h-5" /> Convert</>}
             </button>
 
             {success && pdfBlob && (
-              <button onClick={downloadPdf} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download PDF</button>
+              <button onClick={downloadPdf} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg font-semibold">Download PDF</button>
             )}
-
           </div>
         </div>
 
@@ -128,14 +121,15 @@ export default function JpgToPdf() {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={triggerFileSelect}
-            className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group"
+            className="flex flex-col items-center justify-center border-2 border-dashed hover:border-violet-500/50 rounded-3xl p-16 text-center cursor-pointer transition group"
+            style={{ borderColor: 'var(--border)' }}
           >
             <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
-            <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 transition duration-300">
+            <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-violet-400 transition duration-300" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
               <Upload className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-bold text-white mt-6">Drop a JPG/PNG here</h3>
-            <p className="text-slate-400 text-sm mt-2 max-w-xs">Or click to browse. The output PDF will match the image size and orientation.</p>
+            <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>Drop a JPG/PNG here</h3>
+            <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>Or click to browse. The output PDF will match the image size and orientation.</p>
           </div>
 
           {error && (
@@ -149,14 +143,14 @@ export default function JpgToPdf() {
           )}
 
           {file && (
-            <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+            <div className="border rounded-2xl p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
               <div className="flex items-center gap-3">
-                <div className="w-14 h-14 rounded-lg bg-slate-950 border border-slate-800 overflow-hidden flex items-center justify-center shrink-0">
+                <div className="w-14 h-14 rounded-lg border overflow-hidden flex items-center justify-center shrink-0" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
                   {previewUrl && <img src={previewUrl} alt="preview" className="object-cover w-full h-full" />}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white">{file.name}</h4>
-                  <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                  <h4 className="font-semibold" style={{ color: 'var(--text-heading)' }}>{file.name}</h4>
+                  <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                 </div>
               </div>
               <div>

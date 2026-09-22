@@ -316,7 +316,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
   return (
     <>
-    <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+    <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
   {/* Icon */}
   <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
     <Code2 className="w-8 h-8" />
@@ -324,29 +324,29 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
   {/* Title & Description */}
   <div>
-    <h1 className="text-3xl font-bold text-white">
+    <h1 className="text-3xl font-bold text-[var(--text-heading)]">
       HTML Viewer
     </h1>
 
-    <p className="text-slate-400 text-sm mt-1">
+    <p className="text-[var(--text-secondary)] text-sm mt-1">
       View and preview HTML files directly in your browser with live rendering.
     </p>
   </div>
 </div>
     <div
-      className={`flex flex-col overflow-hidden rounded-xl border border-slate-700/60 bg-slate-900 shadow-xl shadow-black/20 ${
+      className={`flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] shadow-xl shadow-black/20 ${
         isFullscreen
           ? "fixed inset-0 z-50 rounded-none h-screen"
           : "h-[calc(100vh-6rem)] min-h-[550px]"
       } ${className}`}
     >
       {/* Header */}
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-700/60 bg-slate-900/95 px-4 py-2.5">
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] bg-[var(--bg-surface-60)] px-4 py-2.5">
         <div className="flex min-w-0 items-center gap-2">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-violet-500/15 text-violet-400">
             <Code2 className="h-4 w-4" />
           </span>
-          <span className="truncate text-sm font-semibold text-slate-100">
+          <span className="truncate text-sm font-semibold text-[var(--text-primary)]">
             {fileName || "HTML Viewer"}
           </span>
         </div>
@@ -354,7 +354,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
         {hasContent && (
           <div className="flex flex-wrap items-center gap-1.5">
             {/* View Mode */}
-            <div className="flex rounded-lg bg-slate-800 p-0.5">
+            <div className="flex rounded-lg bg-[var(--bg-hover)] p-0.5">
               <ModeButton
                 active={mode === "preview"}
                 onClick={() => setMode("preview")}
@@ -378,7 +378,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             </div>
 
             {/* Device presets */}
-            <div className="hidden items-center gap-0.5 rounded-lg bg-slate-800 p-1 sm:flex">
+            <div className="hidden items-center gap-0.5 rounded-lg bg-[var(--bg-hover)] p-1 sm:flex">
               <DeviceButton
                 active={device === "responsive"}
                 onClick={() => setDevice("responsive")}
@@ -410,7 +410,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             </div>
 
             {/* Zoom Controls */}
-            <div className="flex items-center gap-0.5 rounded-lg bg-slate-800 px-1 py-1">
+            <div className="flex items-center gap-0.5 rounded-lg bg-[var(--bg-hover)] px-1 py-1">
               <IconButton
                 onClick={() => setZoomIndex((i) => Math.max(i - 1, 0))}
                 title="Zoom out"
@@ -418,7 +418,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
               >
                 <ZoomOut className="h-3.5 w-3.5" />
               </IconButton>
-              <span className="w-11 select-none text-center text-xs font-medium text-slate-300">
+              <span className="w-11 select-none text-center text-xs font-medium text-[var(--text-secondary)]">
                 {zoom}%
               </span>
               <IconButton
@@ -473,7 +473,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
       {/* Mobile tabs */}
       {hasContent && isMobile && mode === "split" && (
-        <div className="flex shrink-0 border-b border-slate-700/60 bg-slate-900">
+        <div className="flex shrink-0 border-b border-[var(--border)] bg-[var(--bg-surface)]">
           {(["source", "preview"] as const).map((tab) => (
             <button
               key={tab}
@@ -482,7 +482,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
               className={`flex-1 py-2 text-xs font-medium capitalize transition ${
                 mobileTab === tab
                   ? "border-b-2 border-violet-500 text-violet-400"
-                  : "text-slate-500 hover:text-slate-300"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
               }`}
             >
               {tab}
@@ -492,7 +492,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
       )}
 
       {/* Main Body */}
-      <div className="relative min-h-0 flex-1 overflow-hidden bg-slate-950">
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-[var(--bg-base)]">
         {!hasContent ? (
           <div
             onDragOver={(e) => {
@@ -505,17 +505,17 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             className={`flex h-full min-h-[280px] cursor-pointer flex-col items-center justify-center gap-3 border-2 border-dashed p-8 text-center transition ${
               isDraggingFile
                 ? "border-violet-500 bg-violet-500/5"
-                : "border-slate-700 hover:border-slate-600 hover:bg-slate-900/50"
+                : "border-[var(--border-hover)] hover:border-slate-600 hover:bg-[var(--bg-surface-60)]"
             }`}
           >
             <div className="rounded-full bg-violet-500/15 p-3">
               <Upload className="h-6 w-6 text-violet-400" />
             </div>
             <div>
-              <p className="text-sm font-medium text-slate-200">
+              <p className="text-sm font-medium text-[var(--text-primary)]">
                 Drop an HTML file here, or click to browse
               </p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Supports .html and .htm files
               </p>
             </div>
@@ -525,7 +525,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
                 e.stopPropagation();
                 handleSample();
               }}
-              className="mt-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:border-violet-500/50 hover:text-violet-400 cursor-pointer"
+              className="mt-2 rounded-lg border border-[var(--border-hover)] bg-[var(--bg-surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] transition hover:border-violet-500/50 hover:text-violet-400 cursor-pointer"
             >
               Load Sample
             </button>
@@ -553,9 +553,9 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             {/* Source Editor Pane */}
             {showSourcePane && (
               <div
-                className={`flex min-h-0 flex-col bg-slate-950 ${
+                className={`flex min-h-0 flex-col bg-[var(--bg-base)] ${
                   effectiveSplit
-                    ? "shrink-0 border-r border-slate-700/60"
+                    ? "shrink-0 border-r border-[var(--border)]"
                     : "h-full"
                 } ${
                   mode === "split" && isMobile && mobileTab !== "source"
@@ -566,22 +566,22 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
                   effectiveSplit ? { width: `${splitPercent}%` } : undefined
                 }
               >
-                <div className="flex shrink-0 items-center justify-between border-b border-slate-800 bg-slate-900/70 px-3 py-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-surface-60)] px-3 py-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                     Source Code
                   </span>
                   <div className="flex items-center gap-1">
                     <button
                       type="button"
                       onClick={handleFormat}
-                      className="rounded-md px-2 py-1 text-[11px] font-medium text-slate-400 transition hover:bg-slate-800 hover:text-violet-400"
+                      className="rounded-md px-2 py-1 text-[11px] font-medium text-[var(--text-secondary)] transition hover:bg-[var(--bg-hover)] hover:text-violet-400"
                     >
                       Format
                     </button>
                     <button
                       type="button"
                       onClick={handleSample}
-                      className="rounded-md px-2 py-1 text-[11px] font-medium text-slate-400 transition hover:bg-slate-800 hover:text-violet-400"
+                      className="rounded-md px-2 py-1 text-[11px] font-medium text-[var(--text-secondary)] transition hover:bg-[var(--bg-hover)] hover:text-violet-400"
                     >
                       Sample
                     </button>
@@ -590,7 +590,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
                 <div className="relative min-h-0 flex-1 overflow-hidden">
                   <div
-                    className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 overflow-hidden border-r border-slate-800 bg-slate-950 py-4 text-right font-mono text-[12px] leading-relaxed text-slate-600 select-none"
+                    className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 overflow-hidden border-r border-[var(--border)] bg-[var(--bg-base)] py-4 text-right font-mono text-[12px] leading-relaxed text-[var(--text-muted)] select-none"
                     style={{ transform: `translateY(-${editorScrollTop}px)` }}
                   >
                     {html.split("\n").map((_, index) => (
@@ -609,7 +609,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
                       setEditorScrollTop(e.currentTarget.scrollTop)
                     }
                     spellCheck={false}
-                    className="h-full w-full resize-none overflow-auto bg-slate-950 py-4 pl-14 pr-4 font-mono text-[13px] leading-relaxed text-slate-100 outline-none placeholder:text-slate-600"
+                    className="h-full w-full resize-none overflow-auto bg-[var(--bg-base)] py-4 pl-14 pr-4 font-mono text-[13px] leading-relaxed text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)]"
                     style={{ tabSize: 2 }}
                     placeholder="<!-- Edit your HTML here -->"
                   />
@@ -623,12 +623,12 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
                 role="separator"
                 aria-label="Resize editor and preview"
                 onPointerDown={() => setIsResizing(true)}
-                className={`group relative z-10 flex w-2 shrink-0 cursor-col-resize items-center justify-center bg-slate-900 transition ${
+                className={`group relative z-10 flex w-2 shrink-0 cursor-col-resize items-center justify-center bg-[var(--bg-surface)] transition ${
                   isResizing ? "bg-violet-500/30" : ""
                 }`}
               >
                 <div
-                  className={`flex h-12 w-4 items-center justify-center rounded-sm border border-slate-700 bg-slate-900 text-slate-500 shadow-sm transition group-hover:border-violet-500 group-hover:text-violet-400 ${
+                  className={`flex h-12 w-4 items-center justify-center rounded-sm border border-[var(--border-hover)] bg-[var(--bg-surface)] text-[var(--text-muted)] shadow-sm transition group-hover:border-violet-500 group-hover:text-violet-400 ${
                     isResizing ? "border-violet-500 text-violet-400" : ""
                   }`}
                 >
@@ -640,7 +640,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
             {/* Preview Pane */}
 {showPreviewPane && (
   <div
-    className={`relative min-h-0 flex-1 overflow-auto bg-slate-900/60 p-4 ${
+    className={`relative min-h-0 flex-1 overflow-auto bg-[var(--bg-surface-60)] p-4 ${
       mode === "split" && isMobile && mobileTab !== "preview"
         ? "hidden"
         : ""
@@ -662,7 +662,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
           transformOrigin: "center center",
         }}
       >
-        <div className="overflow-hidden rounded-lg border border-slate-700/80 bg-white shadow-2xl">
+        <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-2xl">
           <iframe
             key={previewHtml}
             srcDoc={previewHtml}
@@ -687,14 +687,14 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
       {/* Footer */}
       {hasContent && (
-        <div className="flex shrink-0 items-center justify-between border-t border-slate-700/60 bg-slate-900/90 px-4 py-1.5">
-          <span className="text-[11px] text-slate-400">
+        <div className="flex shrink-0 items-center justify-between border-t border-[var(--border)] bg-[var(--bg-surface-60)] px-4 py-1.5">
+          <span className="text-[11px] text-[var(--text-secondary)]">
             {html.length.toLocaleString()} characters
           </span>
           <button
             type="button"
             onClick={handleClearFile}
-            className="text-[11px] font-medium text-slate-400 transition hover:text-rose-400"
+            className="text-[11px] font-medium text-[var(--text-secondary)] transition hover:text-rose-400"
           >
             Clear &amp; upload another file
           </button>
@@ -754,8 +754,8 @@ function ModeButton({
       onClick={onClick}
       className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition cursor-pointer ${
         active
-          ? "bg-violet-600 text-white shadow-sm"
-          : "text-slate-400 hover:text-slate-200"
+          ? "bg-violet-600 text-[var(--text-heading)] shadow-sm"
+          : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       }`}
     >
       {icon}
@@ -782,8 +782,8 @@ function DeviceButton({
       title={title}
       className={`rounded-md px-2 py-1 text-xs transition  cursor-pointer ${
         active
-          ? "bg-violet-600 text-white"
-          : "text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+          ? "bg-violet-600 text-[var(--text-heading)]"
+          : "text-[var(--text-secondary)] hover:bg-slate-700 hover:text-[var(--text-primary)]"
       }`}
     >
       {children}
@@ -813,7 +813,7 @@ function IconButton({
       className={`rounded-lg p-1.5 transition disabled:cursor-not-allowed disabled:opacity-30 cursor-pointer ${
         accent
           ? "text-violet-400 hover:bg-violet-500/15 hover:text-violet-300"
-          : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+          : "text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]"
       }`}
     >
       {children}

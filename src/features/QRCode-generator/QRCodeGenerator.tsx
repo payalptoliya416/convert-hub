@@ -76,18 +76,18 @@ const QRCodeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 py-7 text-white">
+    <div className="min-h-screen bg-[var(--bg-base)] py-7 text-[var(--text-heading)]">
       <div className="mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
           <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
             <QrCode className="w-8 h-8" />
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold text-white">QR Code Generator</h1>
+            <h1 className="text-3xl font-bold text-[var(--text-heading)]">QR Code Generator</h1>
 
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-[var(--text-secondary)] text-sm mt-1">
               Create QR codes for URLs, text, phone numbers, emails, and more.
             </p>
           </div>
@@ -96,10 +96,10 @@ const QRCodeGenerator: React.FC = () => {
         {/* Main Content */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_420px] mt-8">
           {/* Left - Settings */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-7">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5 sm:p-7">
             {/* Input */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-white">
+              <label className="mb-2 block text-sm font-semibold text-[var(--text-heading)]">
                 Enter text or URL
               </label>
 
@@ -112,10 +112,10 @@ const QRCodeGenerator: React.FC = () => {
                 placeholder="Enter a URL, text, phone number, email..."
                 maxLength={2000}
                 rows={7}
-                className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10"
+                className="w-full resize-none rounded-xl border border-[var(--border-hover)] bg-[var(--bg-base)] px-4 py-3 text-sm text-[var(--text-heading)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10"
               />
 
-              <div className="mt-2 text-right text-xs text-slate-600">
+              <div className="mt-2 text-right text-xs text-[var(--text-muted)]">
                 {text.length}/2000
               </div>
             </div>
@@ -124,7 +124,7 @@ const QRCodeGenerator: React.FC = () => {
             {/* Size */}
             <div className="mt-7">
               <div className="mb-3 flex items-center justify-between">
-                <label className="text-sm font-semibold text-white">
+                <label className="text-sm font-semibold text-[var(--text-heading)]">
                   QR Code Size
                 </label>
 
@@ -141,7 +141,7 @@ const QRCodeGenerator: React.FC = () => {
                 className="w-full accent-violet-500"
               />
 
-              <div className="mt-2 flex justify-between text-xs text-slate-600">
+              <div className="mt-2 flex justify-between text-xs text-[var(--text-muted)]">
                 <span>200px</span>
                 <span>500px</span>
               </div>
@@ -150,11 +150,11 @@ const QRCodeGenerator: React.FC = () => {
             <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
               {/* QR Color */}
               <div>
-                <label className="mb-3 block text-sm font-semibold text-white">
+                <label className="mb-3 block text-sm font-semibold text-[var(--text-heading)]">
                   QR Color
                 </label>
 
-                <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950 p-3">
+                <div className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-3">
                   <input
                     type="color"
                     value={foreground}
@@ -162,17 +162,17 @@ const QRCodeGenerator: React.FC = () => {
                     className="h-10 w-10 cursor-pointer rounded-lg border-0 bg-transparent"
                   />
 
-                  <span className="text-sm text-slate-400">{foreground}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">{foreground}</span>
                 </div>
               </div>
 
               {/* Background */}
               <div>
-                <label className="mb-3 block text-sm font-semibold text-white">
+                <label className="mb-3 block text-sm font-semibold text-[var(--text-heading)]">
                   Background
                 </label>
 
-                <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950 p-3">
+                <div className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-3">
                   <input
                     type="color"
                     value={background}
@@ -180,7 +180,7 @@ const QRCodeGenerator: React.FC = () => {
                     className="h-10 w-10 cursor-pointer rounded-lg border-0 bg-transparent"
                   />
 
-                  <span className="text-sm text-slate-400">{background}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">{background}</span>
                 </div>
               </div>
             </div>
@@ -191,7 +191,7 @@ const QRCodeGenerator: React.FC = () => {
                 type="button"
                 onClick={generateQRCode}
                 disabled={!text.trim()}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3.5 text-sm font-semibold text-[var(--text-heading)] shadow-lg shadow-violet-600/20 transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
               >
                 <QrCode className="h-5 w-5" />
                 Generate QR Code
@@ -200,7 +200,7 @@ const QRCodeGenerator: React.FC = () => {
               <button
                 type="button"
                 onClick={clearAll}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-5 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-hover)] px-5 py-3.5 text-sm font-semibold text-[var(--text-secondary)] transition hover:border-slate-600 hover:text-[var(--text-heading)] cursor-pointer"
               >
                 <RefreshCcw className="h-4 w-4" />
                 Clear
@@ -209,14 +209,14 @@ const QRCodeGenerator: React.FC = () => {
           </div>
 
           {/* Right - Preview */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-7">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5 sm:p-7">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-white">
+                <h2 className="text-sm font-semibold text-[var(--text-heading)]">
                   QR Code Preview
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   Your QR code appears here
                 </p>
               </div>
@@ -229,7 +229,7 @@ const QRCodeGenerator: React.FC = () => {
             </div>
 
             {/* Preview */}
-            <div className="flex min-h-[380px] items-center justify-center rounded-xl border border-slate-800 bg-slate-950 p-5">
+            <div className="flex min-h-[380px] items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-base)] p-5">
               {qrCode ? (
                 <div className="rounded-xl bg-white p-1 shadow-xl">
                   <img
@@ -240,15 +240,15 @@ const QRCodeGenerator: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-800">
-                    <QrCode className="h-8 w-8 text-slate-600" />
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--bg-hover)]">
+                    <QrCode className="h-8 w-8 text-[var(--text-muted)]" />
                   </div>
 
-                  <p className="text-sm font-medium text-slate-400">
+                  <p className="text-sm font-medium text-[var(--text-secondary)]">
                     No QR code yet
                   </p>
 
-                  <p className="mt-2 max-w-xs text-xs leading-5 text-slate-600">
+                  <p className="mt-2 max-w-xs text-xs leading-5 text-[var(--text-muted)]">
                     Enter some text or a URL and click Generate QR Code.
                   </p>
                 </div>
@@ -261,7 +261,7 @@ const QRCodeGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={downloadQRCode}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-500"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-[var(--text-heading)] transition hover:bg-violet-500"
                 >
                   <Download className="h-4 w-4" />
                   Download
@@ -270,7 +270,7 @@ const QRCodeGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={copyText}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-violet-500/50 hover:text-violet-400"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-hover)] px-4 py-3 text-sm font-semibold text-[var(--text-secondary)] transition hover:border-violet-500/50 hover:text-violet-400"
                 >
                   {copied ? (
                     <>

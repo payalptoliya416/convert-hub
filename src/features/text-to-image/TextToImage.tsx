@@ -138,22 +138,22 @@ export default function TextToImage() {
   };
 
   return (
-    <div className="mx-auto py-8 text-slate-100">
+    <div className="mx-auto py-8 text-[var(--text-primary)]">
       {/* Header */}
-      <div className="mb-6 flex items-start gap-3 border-b border-slate-800 pb-6">
+      <div className="mb-6 flex items-start gap-3 border-b border-[var(--border)] pb-6">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-500/15 text-violet-400">
           <Sparkles className="h-5 w-5" />
         </span>
         <div>
-          <h1 className="text-2xl font-bold text-white">Text to Image</h1>
-          <p className="text-sm text-slate-400">Turn your words into stunning AI-generated images — free.</p>
+          <h1 className="text-2xl font-bold text-[var(--text-heading)]">Text to Image</h1>
+          <p className="text-sm text-[var(--text-secondary)]">Turn your words into stunning AI-generated images — free.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left: controls */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
-          <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-200">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5">
+          <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
             <Sparkles className="h-4 w-4 text-violet-400" />
             Describe your image
           </div>
@@ -163,15 +163,15 @@ export default function TextToImage() {
             onChange={(e) => setPrompt(e.target.value.slice(0, MAX_CHARS))}
             placeholder="e.g. A beautiful sunset over glowing mountains with purple sky..."
             rows={5}
-            className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 p-3 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-violet-500"
+            className="w-full resize-none rounded-xl border border-[var(--border-hover)] bg-[var(--bg-base)] p-3 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-violet-500"
           />
-          <div className="mt-1 text-right text-xs text-slate-500">
+          <div className="mt-1 text-right text-xs text-[var(--text-muted)]">
             {prompt.length}/{MAX_CHARS}
           </div>
 
           {/* Art style */}
           <div className="mt-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Art Style</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Art Style</p>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {ART_STYLES.map((style, i) => (
                 <button
@@ -179,8 +179,8 @@ export default function TextToImage() {
                   onClick={() => setStyleIndex(i)}
                   className={`rounded-lg border px-2 py-2 text-xs font-medium transition ${
                     i === styleIndex
-                      ? "border-violet-500 bg-violet-600 text-white"
-                      : "border-slate-700 bg-slate-800/60 text-slate-300 hover:border-slate-600"
+                      ? "border-violet-500 bg-violet-600 text-[var(--text-heading)]"
+                      : "border-[var(--border-hover)] bg-[var(--bg-hover)]/60 text-[var(--text-secondary)] hover:border-slate-600"
                   }`}
                 >
                   {style.label}
@@ -191,7 +191,7 @@ export default function TextToImage() {
 
           {/* Aspect ratio */}
           <div className="mt-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Aspect Ratio</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Aspect Ratio</p>
             <div className="flex flex-wrap gap-2">
               {ASPECT_RATIOS.map((ratio, i) => (
                 <button
@@ -199,8 +199,8 @@ export default function TextToImage() {
                   onClick={() => setRatioIndex(i)}
                   className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
                     i === ratioIndex
-                      ? "border-violet-500 bg-violet-600 text-white"
-                      : "border-slate-700 bg-slate-800/60 text-slate-300 hover:border-slate-600"
+                      ? "border-violet-500 bg-violet-600 text-[var(--text-heading)]"
+                      : "border-[var(--border-hover)] bg-[var(--bg-hover)]/60 text-[var(--text-secondary)] hover:border-slate-600"
                   }`}
                 >
                   {ratio.label}
@@ -213,40 +213,40 @@ export default function TextToImage() {
           <div className="mt-4">
             <button
               onClick={() => setShowAdvanced((v) => !v)}
-              className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-200"
+              className="flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             >
               <ChevronDown className={`h-3.5 w-3.5 transition-transform ${showAdvanced ? "rotate-180" : ""}`} />
               Advanced Options
             </button>
 
             {showAdvanced && (
-              <div className="mt-3 space-y-3 rounded-xl border border-slate-800 bg-slate-950/60 p-3">
+              <div className="mt-3 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)]/60 p-3">
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-400">Seed</label>
+                  <label className="mb-1 block text-xs font-medium text-[var(--text-secondary)]">Seed</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="number"
                       value={seed}
                       onChange={(e) => setSeed(Number(e.target.value) || 0)}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-xs text-slate-100 outline-none focus:border-violet-500"
+                      className="w-full rounded-lg border border-[var(--border-hover)] bg-[var(--bg-surface)] px-2.5 py-1.5 text-xs text-[var(--text-primary)] outline-none focus:border-violet-500"
                     />
                     <button
                       onClick={randomizeSeed}
                       title="Randomize seed"
-                      className="rounded-lg border border-slate-700 p-1.5 text-slate-400 hover:border-slate-600 hover:text-slate-200"
+                      className="rounded-lg border border-[var(--border-hover)] p-1.5 text-[var(--text-secondary)] hover:border-slate-600 hover:text-[var(--text-primary)]"
                     >
                       <Dices className="h-3.5 w-3.5" />
                     </button>
                   </div>
-                  <p className="mt-1 text-[10px] text-slate-500">Same seed + prompt = same image. Change it for variations.</p>
+                  <p className="mt-1 text-[10px] text-[var(--text-muted)]">Same seed + prompt = same image. Change it for variations.</p>
                 </div>
 
-                <label className="flex items-center gap-2 text-xs text-slate-300">
+                <label className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
                   <input
                     type="checkbox"
                     checked={enhance}
                     onChange={(e) => setEnhance(e.target.checked)}
-                    className="h-3.5 w-3.5 rounded border-slate-600 bg-slate-900 accent-violet-600"
+                    className="h-3.5 w-3.5 rounded border-slate-600 bg-[var(--bg-surface)] accent-violet-600"
                   />
                   Enhance prompt (sharper detail, may change style slightly)
                 </label>
@@ -264,7 +264,7 @@ export default function TextToImage() {
           <button
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-semibold text-white transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-semibold text-[var(--text-heading)] transition hover:from-violet-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isGenerating ? (
               <>
@@ -281,9 +281,9 @@ export default function TextToImage() {
         </div>
 
         {/* Right: preview */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-surface-60)] p-5">
           <div className="mb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm font-semibold text-slate-200">
+            <div className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
               <ImageIcon className="h-4 w-4 text-violet-400" />
               Preview
             </div>
@@ -291,14 +291,14 @@ export default function TextToImage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleRegenerate}
-                  className="flex items-center gap-1 rounded-lg border border-slate-700 px-2.5 py-1 text-xs font-medium text-slate-300 hover:border-slate-600"
+                  className="flex items-center gap-1 rounded-lg border border-[var(--border-hover)] px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)] hover:border-slate-600"
                 >
                   <RefreshCw className="h-3.5 w-3.5" />
                   Regenerate
                 </button>
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-emerald-500"
+                  className="flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-medium text-[var(--text-heading)] hover:bg-emerald-500"
                 >
                   <Download className="h-3.5 w-3.5" />
                   Download
@@ -307,21 +307,21 @@ export default function TextToImage() {
             )}
           </div>
 
-          <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+          <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-base)]">
             {isGenerating ? (
               <div className="flex flex-col items-center gap-3 text-center">
                 <Loader2 className="h-8 w-8 animate-spin text-violet-400" />
-                <p className="text-sm text-slate-400">Creating your image...</p>
+                <p className="text-sm text-[var(--text-secondary)]">Creating your image...</p>
               </div>
             ) : imageUrl ? (
               <img src={imageUrl} alt={prompt} className="h-full w-full object-contain" />
             ) : (
               <div className="flex flex-col items-center gap-3 px-6 text-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-800 text-slate-500">
+                <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--bg-hover)] text-[var(--text-muted)]">
                   <ImageIcon className="h-6 w-6" />
                 </span>
-                <p className="text-sm font-medium text-slate-300">Your image will appear here</p>
-                <p className="text-xs text-slate-500">
+                <p className="text-sm font-medium text-[var(--text-secondary)]">Your image will appear here</p>
+                <p className="text-xs text-[var(--text-muted)]">
                   Enter a description, choose a style and click Generate Image.
                 </p>
               </div>

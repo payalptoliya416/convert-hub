@@ -326,13 +326,13 @@ export default function CropPdf() {
   return (
     <div className="mx-auto space-y-8">
       {/* Top Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
         <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20 text-amber-400">
           <Crop className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Crop PDF</h1>
-          <p className="text-slate-400 text-sm mt-1">Select and crop custom areas visually with your mouse cursor.</p>
+          <h1 className="text-3xl font-bold text-[var(--text-heading)]">Crop PDF</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">Select and crop custom areas visually with your mouse cursor.</p>
         </div>
       </div>
 
@@ -340,9 +340,9 @@ export default function CropPdf() {
         
         {/* Left Options Panel (Dark Theme) */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] p-6 space-y-6 shadow-xl">
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
+              <h2 className="text-lg font-bold text-[var(--text-heading)] flex items-center gap-2">
                 <Settings className="w-5 h-5 text-violet-400" /> Options
               </h2>
               {file && (
@@ -357,9 +357,9 @@ export default function CropPdf() {
 
             {/* Scope Selection */}
             <div className="space-y-3">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Apply Crop To:</label>
+              <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Apply Crop To:</label>
               <div className="space-y-2">
-                <label className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label className="flex items-center gap-3 p-3 bg-[var(--bg-base)] border border-[var(--border)] rounded-xl cursor-pointer hover:border-[var(--border-hover)] transition">
                   <input
                     type="radio"
                     name="scope"
@@ -368,9 +368,9 @@ export default function CropPdf() {
                     onChange={() => setCropScope('all')}
                     className="accent-violet-500 w-4 h-4"
                   />
-                  <span className="text-sm font-medium text-slate-200">All pages</span>
+                  <span className="text-sm font-medium text-[var(--text-primary)]">All pages</span>
                 </label>
-                <label className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-slate-700 transition">
+                <label className="flex items-center gap-3 p-3 bg-[var(--bg-base)] border border-[var(--border)] rounded-xl cursor-pointer hover:border-[var(--border-hover)] transition">
                   <input
                     type="radio"
                     name="scope"
@@ -379,7 +379,7 @@ export default function CropPdf() {
                     onChange={() => setCropScope('current')}
                     className="accent-violet-500 w-4 h-4"
                   />
-                  <span className="text-sm font-medium text-slate-200">Current page ({currentPage})</span>
+                  <span className="text-sm font-medium text-[var(--text-primary)]">Current page ({currentPage})</span>
                 </label>
               </div>
             </div>
@@ -390,10 +390,10 @@ export default function CropPdf() {
               disabled={!file || loading || !cropArea}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
                 !file || !cropArea
-                  ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                  ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed'
                   : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20 active:scale-[0.98]'
+                    ? 'bg-violet-700 text-[var(--text-heading)] border border-violet-600 cursor-not-allowed'
+                    : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] border border-violet-500 shadow-violet-600/20 active:scale-[0.98]'
               }`}
             >
               {loading ? (
@@ -416,7 +416,7 @@ export default function CropPdf() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group min-h-[400px]"
+              className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--border)] hover:border-violet-500/50 hover:bg-[var(--bg-surface-60)] rounded-3xl p-16 text-center cursor-pointer transition group min-h-[400px]"
             >
               <input 
                 type="file" 
@@ -425,23 +425,23 @@ export default function CropPdf() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border)] text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your PDF here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">Or click to browse and select a file to crop.</p>
+              <h3 className="text-xl font-bold text-[var(--text-heading)] mt-6">Drag and drop your PDF here</h3>
+              <p className="text-[var(--text-secondary)] text-sm mt-2 max-w-xs">Or click to browse and select a file to crop.</p>
             </div>
           ) : (
             <div className="space-y-6">
               {/* File details banner */}
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="bg-[var(--bg-surface-60)] border border-[var(--border)] rounded-2xl p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-red-500/15 rounded-xl border border-red-500/20 text-red-400">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-xs sm:max-w-md">{file.name}</h4>
-                    <p className="text-xs text-slate-400">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <h4 className="font-semibold text-[var(--text-heading)] truncate max-w-xs sm:max-w-md">{file.name}</h4>
+                    <p className="text-xs text-[var(--text-secondary)]">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button
@@ -480,22 +480,22 @@ export default function CropPdf() {
                   </div>
                   <button
                     onClick={downloadCropped}
-                    className="w-full py-3 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-violet-600/10"
+                    className="w-full py-3 bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)] rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-violet-600/10"
                   >
                     <Download className="w-4 h-4" /> Download Cropped PDF
                   </button>
                 </div>
               )}
               {/* Visual Crop Viewer Box */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center overflow-x-auto">
-                <p className="text-xs text-slate-400 mb-4 font-medium">
+              <div className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl p-6 flex flex-col items-center justify-center overflow-x-auto">
+                <p className="text-xs text-[var(--text-secondary)] mb-4 font-medium">
                   💡 Click & drag to draw a box, or drag inside/corners of the selection box to adjust.
                 </p>
 
                 {/* Canvas & Selection Wrapper */}
                 <div
                   ref={containerRef}
-                  className="relative select-none border border-slate-700 bg-slate-950 shadow-2xl cursor-crosshair overflow-hidden"
+                  className="relative select-none border border-[var(--border-hover)] bg-[var(--bg-base)] shadow-2xl cursor-crosshair overflow-hidden"
                   onMouseDown={(e) => handleMouseDown(e, 'drawing')}
                 >
                   <canvas ref={canvasRef} className="block pointer-events-none" />
@@ -535,11 +535,11 @@ export default function CropPdf() {
 
                 {/* Page Navigation */}
                 {totalPages > 1 && (
-                  <div className="mt-6 flex items-center gap-4 bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-xs font-medium text-slate-300">
+                  <div className="mt-6 flex items-center gap-4 bg-[var(--bg-base)] border border-[var(--border)] px-4 py-2 rounded-xl text-xs font-medium text-[var(--text-secondary)]">
                     <button
                       disabled={currentPage <= 1}
                       onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-                      className="p-1 hover:bg-slate-800 rounded disabled:opacity-30 disabled:hover:bg-transparent"
+                      className="p-1 hover:bg-[var(--bg-hover)] rounded disabled:opacity-30 disabled:hover:bg-transparent"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -547,7 +547,7 @@ export default function CropPdf() {
                     <button
                       disabled={currentPage >= totalPages}
                       onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-                      className="p-1 hover:bg-slate-800 rounded disabled:opacity-30 disabled:hover:bg-transparent"
+                      className="p-1 hover:bg-[var(--bg-hover)] rounded disabled:opacity-30 disabled:hover:bg-transparent"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>

@@ -31,50 +31,67 @@ const steps = [
 const HowItWorks: React.FC = () => {
   return (
     <section className="w-full px-4 pb-10 sm:pb-14 lg:pb-16">
-      <div className="mx-auto max-w-7xl rounded-3xl border border-slate-800 bg-slate-900/60 px-4 py-10 sm:py-12 lg:py-14">
+      <div
+        className="mx-auto max-w-7xl rounded-3xl border px-4 py-10 sm:py-12 lg:py-14"
+        style={{
+          backgroundColor: 'var(--bg-surface-60)',
+          borderColor: 'var(--border)',
+        }}
+      >
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center space-y-6">
-         <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
-           How <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">Converthub?</span> {""}Works
+          <h1
+            className="text-3xl md:text-5xl font-black tracking-tight"
+            style={{ color: 'var(--text-heading)' }}
+          >
+            How{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">
+              Converthub?
+            </span>{" "}
+            Works
           </h1>
-
-      <p className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Simple, fast, and secure. Get your work done in just three easy
-            steps.
+          <p
+            className="text-base sm:text-lg max-w-3xl mx-auto leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Simple, fast, and secure. Get your work done in just three easy steps.
           </p>
         </div>
 
         {/* Steps */}
         <div className="relative mt-10 grid grid-cols-1 gap-10 sm:mt-12 lg:grid-cols-3 lg:gap-8">
           {/* Connecting line - Desktop */}
-          <div className="absolute left-[16.66%] right-[16.66%] top-10 hidden h-px bg-slate-700 lg:block" />
+          <div
+            className="absolute left-[16.66%] right-[16.66%] top-10 hidden h-px lg:block"
+            style={{ backgroundColor: 'var(--border)' }}
+          />
 
           {steps.map((step) => {
             const Icon = step.icon;
-
             return (
               <div
                 key={step.number}
                 className="relative z-10 flex flex-col items-center text-center"
               >
-                {/* Step Circle */}
                 <div
                   className={`flex h-18 w-18 items-center justify-center rounded-full bg-gradient-to-br ${step.color} shadow-lg`}
                 >
                   <div className="flex h-full w-full flex-col items-center justify-center">
                     <Icon className="mb-0.5 h-5 w-5 text-white/90" />
-                    <span className="text-xl font-bold text-white">
-                      {step.number}
-                    </span>
+                    <span className="text-xl font-bold text-white">{step.number}</span>
                   </div>
                 </div>
 
-                {/* Content */}
-                <h3 className="mt-6 text-lg font-semibold text-white sm:text-xl">
+                <h3
+                  className="mt-6 text-lg font-semibold sm:text-xl"
+                  style={{ color: 'var(--text-heading)' }}
+                >
                   {step.title}
                 </h3>
-
-                <p className="mt-3 max-w-sm text-sm leading-7 text-slate-400 sm:text-base">
+                <p
+                  className="mt-3 max-w-sm text-sm leading-7 sm:text-base"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   {step.description}
                 </p>
               </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
-import { Upload,     RefreshCw, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
+import { Upload, RefreshCw, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 
 export default function ExtractPages() {
   const [file, setFile] = useState<File | null>(null);
@@ -88,19 +88,13 @@ export default function ExtractPages() {
       copied.forEach(p => newPdf.addPage(p));
 
       const bytes = await newPdf.save();
-
-// Convert Uint8Array -> ArrayBuffer (TypeScript compatible)
-                const arrayBuffer = bytes.buffer.slice(
-                bytes.byteOffset,
-                bytes.byteOffset + bytes.byteLength
-                ) as ArrayBuffer;
-
-                const blob = new Blob([arrayBuffer], {
-                type: 'application/pdf',
-                });
-
-                setOutBlob(blob);
-                setSuccess(true);
+      const arrayBuffer = bytes.buffer.slice(
+        bytes.byteOffset,
+        bytes.byteOffset + bytes.byteLength
+      ) as ArrayBuffer;
+      const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+      setOutBlob(blob);
+      setSuccess(true);
     } catch (err: any) {
       console.error(err);
       setError(err?.message || 'Failed to extract pages');
@@ -116,57 +110,74 @@ export default function ExtractPages() {
 
   return (
     <div className="mx-auto space-y-8">
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-400">
           <FileText className="w-8 h-8" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Extract pages</h1>
-          <p className="text-slate-400 text-sm mt-1">Extract specific pages from a PDF into a new document.</p>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>Extract pages</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Extract specific pages from a PDF into a new document.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-6 shadow-xl">
-            <h2 className="text-lg font-bold text-white">Options</h2>
+          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
+            <h2 className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>Options</h2>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pages to extract</label>
-              <input value={extractInput} onChange={(e) => setExtractInput(e.target.value)} placeholder="example: 1,5-8" className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-sm text-white" />
-              <p className="text-xs text-slate-500">Enter comma-separated pages and ranges (1-indexed). Total pages: {totalPages || '—'}</p>
+              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Pages to extract</label>
+              <input
+                value={extractInput}
+                onChange={(e) => setExtractInput(e.target.value)}
+                placeholder="example: 1,5-8"
+                className="w-full border rounded px-3 py-2 text-sm outline-none"
+                style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
+              />
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Enter comma-separated pages and ranges (1-indexed). Total pages: {totalPages || '—'}</p>
             </div>
 
-            <button onClick={extractPages} disabled={!file || loading} className={`w-full py-3 rounded-xl font-bold ${!file ? 'bg-slate-800 text-slate-500' : loading ? 'bg-violet-700 text-white' : 'bg-violet-600 hover:bg-violet-500 text-white'}`}>
+            <button
+              onClick={extractPages}
+              disabled={!file || loading}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-[var(--text-heading)] cursor-not-allowed' : 'bg-violet-600 hover:bg-violet-500 text-[var(--text-heading)]'}`}
+              style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
+            >
               {loading ? <><RefreshCw className="w-5 h-5 animate-spin" /> Extracting...</> : <>Extract Pages</>}
             </button>
 
             {outBlob && (
-              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download Extracted PDF</button>
+              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-heading)] rounded-lg font-semibold">Download Extracted PDF</button>
             )}
           </div>
         </div>
 
         <div className="md:col-span-2 space-y-6">
           {!file ? (
-            <div onDragOver={handleDragOver} onDrop={handleDrop} onClick={triggerFileSelect} className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/10 rounded-3xl p-16 text-center cursor-pointer transition group">
+            <div
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={triggerFileSelect}
+              className="flex flex-col items-center justify-center border-2 border-dashed hover:border-violet-500/50 rounded-3xl p-16 text-center cursor-pointer transition group"
+              style={{ borderColor: 'var(--border)' }}
+            >
               <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
-              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 group-hover:text-violet-400 group-hover:scale-110 transition duration-300">
+              <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
                 <Upload className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-bold text-white mt-6">Drag and drop your PDF here</h3>
-              <p className="text-slate-400 text-sm mt-2 max-w-xs">Or click to browse. Enter pages and click Extract Pages when ready.</p>
+              <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>Drag and drop your PDF here</h3>
+              <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>Or click to browse. Enter pages and click Extract Pages when ready.</p>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <div className="border rounded-2xl p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-red-500/15 rounded-xl border border-red-500/20 text-red-400">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white truncate max-w-sm sm:max-w-md">{file.name}</h4>
-                    <p className="text-xs text-slate-400">{totalPages} pages • {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <h4 className="font-semibold truncate max-w-sm sm:max-w-md" style={{ color: 'var(--text-heading)' }}>{file.name}</h4>
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{totalPages} pages • {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button onClick={() => { setFile(null); setTotalPages(0); setExtractInput(''); setOutBlob(null); setSuccess(false); setError(null); }} className="text-xs font-semibold text-red-400 hover:text-red-300">Remove</button>
