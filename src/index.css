@@ -42,7 +42,11 @@
 
   --selection-bg:   rgba(124,58,237,0.30);
   --selection-text: #ffffff;
-   --bg-elevated:    #ffffff;
+  --bg-elevated:    #ffffff;
+
+  /* Search highlight */
+  --search-highlight-bg:   rgba(139,92,246,0.30);  /* violet-500/30 */
+  --search-highlight-text: #ddd6fe;                /* violet-200 */
 }
 
 /* ---------- LIGHT THEME ---------- */
@@ -68,6 +72,10 @@
 
   --selection-bg:   rgba(124,58,237,0.15);
   --selection-text: #4c1d95;
+
+  /* Search highlight */
+  --search-highlight-bg:   rgba(139,92,246,0.15);  /* violet-500/15 */
+  --search-highlight-text: #6d28d9;                /* violet-700 */
 }
 
 /* ============================================================

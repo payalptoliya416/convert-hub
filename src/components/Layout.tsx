@@ -94,6 +94,7 @@ export default function Layout({ children }: LayoutProps) {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setDropdownOpen(false);
+        setSearchQuery('');
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -163,7 +164,7 @@ export default function Layout({ children }: LayoutProps) {
 
               {dropdownOpen && (
                 <>
-                  <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)}></div>
+                  <div className="fixed inset-0 z-10" onClick={() => { setDropdownOpen(false); setSearchQuery(''); }}></div>
 
                   <div
                     className="custom-scrollbar absolute right-0 mt-3 w-80 max-h-[70vh] rounded-2xl border shadow-2xl z-20 flex flex-col overflow-hidden"
@@ -260,7 +261,7 @@ export default function Layout({ children }: LayoutProps) {
                                 <span dangerouslySetInnerHTML={{
                                   __html: tool.name.replace(
                                     new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
-                                    '<mark class="bg-violet-500/30 text-violet-300 rounded px-0.5">$1</mark>'
+                                    '<mark class="bg-violet-500/20 text-violet-600 dark:text-violet-300 rounded px-0.5" style="background-color:var(--search-highlight-bg,rgba(139,92,246,0.25));color:var(--search-highlight-text,#7c3aed)">$1</mark>'
                                   )
                                 }} />
                               ) : tool.name}
