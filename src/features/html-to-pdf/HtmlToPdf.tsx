@@ -313,7 +313,8 @@ export default function HtmlToPdf() {
 
       {/* Header */}
       <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
-        <div className="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400">
+        <div className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
           <FileText className="w-8 h-8" />
         </div>
         <div>

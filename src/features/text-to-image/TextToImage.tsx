@@ -204,7 +204,8 @@ export default function TextToImage() {
         className="flex items-start sm:items-center gap-4 border-b pb-6"
         style={{ borderColor: "var(--border)" }}
       >
-        <div className="rounded-xl border border-violet-500/20 bg-violet-500/10 p-3 text-violet-500">
+        <div className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
           <Sparkles className="h-8 w-8" />
         </div>
         <div>

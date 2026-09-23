@@ -195,8 +195,8 @@ export default function PdfToWord() {
       style={{ borderColor: "var(--border)" }}
     >
       <div
-        className="p-3 rounded-xl border text-blue-400"
-        style={{ backgroundColor: "var(--bg-hover)", borderColor: "var(--border)" }}
+        className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}
       >
         <FileText className="w-8 h-8" />
       </div>

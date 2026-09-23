@@ -80,7 +80,8 @@ const QRCodeGenerator: React.FC = () => {
       <div className="mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
-          <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+          <div className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
             <QrCode className="w-8 h-8" />
           </div>
 

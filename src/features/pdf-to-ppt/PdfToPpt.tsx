@@ -192,7 +192,8 @@ export default function PdfToPpt() {
       className="flex items-center gap-4 border-b pb-5"
       style={{ borderColor: "var(--border)" }}
     >
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 text-orange-400">
+      <div  className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
         <Presentation className="h-6 w-6" />
       </div>
 

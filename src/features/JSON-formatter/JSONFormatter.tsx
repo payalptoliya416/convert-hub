@@ -113,7 +113,8 @@ const JsonFormatter: React.FC = () => {
       <div className="">
         {/* Header */}
         <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
-          <div className="shrink-0 rounded-xl border border-cyan-500/20 bg-cyan-500/10 p-3 text-cyan-400">
+          <div className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
             <Braces className="h-8 w-8" />
           </div>
 

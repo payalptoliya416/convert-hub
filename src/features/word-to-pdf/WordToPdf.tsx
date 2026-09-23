@@ -227,7 +227,8 @@ export default function WordToPdf() {
     <div className="mx-auto space-y-8">
       {/* Header */}
       <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
-        <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
+        <div className="p-3 rounded-xl border text-[#8B5CF6]"
+        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
           <FileText className="w-8 h-8" />
         </div>
         <div>
