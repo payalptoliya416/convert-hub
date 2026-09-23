@@ -49,7 +49,10 @@
   --hero-text-color:    #94a3b8;
 
   /* TrustedStats dark overlay */
-  --trusted-dark-overlay: rgba(2,8,23,0.78);
+  --trusted-dark-overlay: linear-gradient(135deg, rgba(2,8,23,0.92) 0%, rgba(9,9,37,0.90) 40%, rgba(15,5,30,0.92) 70%, rgba(2,10,20,0.92) 100%);
+
+  /* Section card bg for dark mode */
+  --section-card-bg: rgba(15,23,42,0.95);
 
   /* Search highlight */
   --search-highlight-bg:   rgba(139,92,246,0.30);  /* violet-500/30 */
@@ -87,6 +90,7 @@
 
   /* TrustedStats light — no overlay needed */
   --trusted-dark-overlay: transparent;
+  --section-card-bg: #ffffff;
 
   /* Search highlight */
   --search-highlight-bg:   rgba(139,92,246,0.15);  /* violet-500/15 */
