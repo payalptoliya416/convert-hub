@@ -20,7 +20,6 @@ import {
   Braces,
   Sparkles,
 } from "lucide-react";
-import footerBottomImg from "../assets/footer-bottom.png";
 
 interface Tool {
   name: string;
@@ -145,35 +144,28 @@ const FooterFile: React.FC = () => {
       {/* Top gradient line */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
 
-      {/* ── Content ── */}
-      <div className="relative mx-auto max-w-[1400px] px-6">
+      {/* Content — sits above the image via z-10 */}
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6">
 
         {/* Main grid */}
-        <div className="grid grid-cols-1 gap-10 py-14
-                        sm:grid-cols-2
-                        lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]
-                        lg:gap-10 lg:py-16">
+        <div className="grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] lg:gap-10 lg:py-16">
 
           {/* Brand column */}
           <div className="flex flex-col gap-5 lg:pr-6">
-            {/* Logo */}
             <Link to="/" className="group inline-flex items-center gap-3 w-fit">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-500 text-white shadow-lg shadow-violet-600/25 transition-transform duration-300 group-hover:scale-105">
                 <Merge className="h-5 w-5 rotate-45" />
               </div>
-              <span className="text-xl font-extrabold tracking-tight"
-                style={{ color: "var(--text-heading)" }}>
+              <span className="text-xl font-extrabold tracking-tight" style={{ color: "var(--text-heading)" }}>
                 Convert<span className="text-violet-500">Hub</span>
               </span>
             </Link>
 
-            <p className="text-sm leading-relaxed max-w-[260px]"
-              style={{ color: "var(--text-secondary)" }}>
+            <p className="text-sm leading-relaxed max-w-[260px]" style={{ color: "var(--text-secondary)" }}>
               Fast, secure, and private online tools for converting, editing, and managing
               your files directly in your browser.
             </p>
 
-            {/* Social icons */}
             <div className="flex items-center gap-2 flex-wrap">
               {socialLinks.map(({ Ico, href, label }) => (
                 <a
@@ -181,11 +173,7 @@ const FooterFile: React.FC = () => {
                   href={href}
                   aria-label={label}
                   className="flex h-9 w-9 items-center justify-center rounded-xl border transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/50 hover:text-violet-400"
-                  style={{
-                    backgroundColor: "var(--bg-surface)",
-                    borderColor: "var(--border)",
-                    color: "var(--text-muted)",
-                  }}
+                  style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)", color: "var(--text-muted)" }}
                 >
                   <Ico />
                 </a>
@@ -203,29 +191,14 @@ const FooterFile: React.FC = () => {
         <div className="h-px w-full" style={{ backgroundColor: "var(--border-soft)" }} />
 
         {/* Bottom bar */}
-        <div className="relative flex flex-col items-center justify-between gap-4 py-6 sm:flex-row sm:gap-0">
-
-          {/* footer-bottom image — left side, behind copyright text */}
-          <div className="absolute left-0 bottom-0 w-[340px] pointer-events-none select-none"
-               style={{ opacity: 0.9 }}>
-            <img
-              src={footerBottomImg}
-              alt=""
-              draggable={false}
-              className="w-full h-auto object-contain"
-            />
-          </div>
-
-          <p className="relative text-sm order-2 sm:order-1 z-10"
-            style={{ color: "var(--text-muted)" }}>
+        <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row sm:gap-0">
+          <p className="text-sm order-2 sm:order-1" style={{ color: "var(--text-muted)" }}>
             © {new Date().getFullYear()}{" "}
-            <span className="font-semibold" style={{ color: "var(--text-secondary)" }}>
-              ConvertHub
-            </span>
+            <span className="font-semibold" style={{ color: "var(--text-secondary)" }}>ConvertHub</span>
             . All rights reserved.
           </p>
 
-          <div className="relative flex items-center gap-6 order-1 sm:order-2 z-10">
+          <div className="flex items-center gap-6 order-1 sm:order-2">
             {["Privacy", "Terms", "Contact"].map((item) => (
               <a
                 key={item}
