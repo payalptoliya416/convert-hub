@@ -742,7 +742,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      <div className="-mx-4">
+      <div className="-mx-6">
         <WhyChooseUs />
         <HowItWorks />
         <TrustedStats />
