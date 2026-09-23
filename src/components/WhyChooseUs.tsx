@@ -60,7 +60,7 @@ const WhyChooseUs: React.FC = () => {
               src={whyChooseImg}
               alt="Why choose ConvertHub"
               className="w-full max-w-[500px] h-auto object-contain"
-              style={{ filter: "drop-shadow(0 20px 48px rgba(124,58,237,0.22))" }}
+              style={{ filter: "drop-shadow(0 20px 48px rgba(124,58,237,0.22))" , opacity : "var(--opacity-custm)"}}
             />
           </div>
 

@@ -379,9 +379,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* ─────────────────────────
-        RIGHT IMAGE
-    ───────────────────────── */}
             <div className="w-full lg:w-[50%] flex justify-center lg:justify-end items-center mt-8 lg:mt-0">
               <div className="relative w-full max-w-[520px] xl:max-w-[620px]">
                 {/* Image glow */}
@@ -396,17 +393,8 @@ export default function Dashboard() {
                 <img
                   src={heroImg}
                   alt="File tools illustration"
-                  className="
-                  relative
-                  z-10
-                  w-full
-                  h-auto
-                  object-contain
-                  drop-shadow-2xl
-                "
-                  style={{
-                    filter: "drop-shadow(0 20px 40px rgba(251, 250, 251, 0.02))",
-                  }}
+                  className="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
+                  style={{filter: "drop-shadow(0 20px 40px rgba(251, 250, 251, 0.02))", opacity : "var(--opacity-custm)"}}
                 />
               </div>
             </div>

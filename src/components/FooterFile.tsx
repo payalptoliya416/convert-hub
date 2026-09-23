@@ -192,7 +192,7 @@ const FooterFile: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row sm:gap-0">
-          <p className="text-sm order-2 sm:order-1" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm order-2 sm:order-1" style={{ color: "var(--text-footer)" }}>
             © {new Date().getFullYear()}{" "}
             <span className="font-semibold" style={{ color: "var(--text-secondary)" }}>ConvertHub</span>
             . All rights reserved.
@@ -204,7 +204,7 @@ const FooterFile: React.FC = () => {
                 key={item}
                 href="#"
                 className="text-sm transition hover:text-violet-400"
-                style={{ color: "var(--text-muted)" }}
+                style={{ color: "var(--text-footer)" }}
               >
                 {item}
               </a>

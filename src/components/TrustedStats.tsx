@@ -163,7 +163,7 @@ const TrustedStats: React.FC = () => {
               src={worldwideImg}
               alt="Trusted worldwide illustration"
               className="w-full h-auto object-contain"
-              style={{ filter: "drop-shadow(0 20px 40px rgba(124,58,237,0.18))" }}
+              style={{ filter: "drop-shadow(0 20px 40px rgba(124,58,237,0.18))", opacity : "var(--opacity-custm)" }}
             />
           </div>
 

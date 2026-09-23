@@ -35,7 +35,7 @@
   --text-primary:   #f1f5f9;   /* slate-100 */
   --text-secondary: #94a3b8;   /* slate-400 */
   --text-muted:     #64748b;   /* slate-500 */
-  --text-footer:     #64748b;   /* slate-500 */
+  --text-footer:     #d4e6f8;  
   --text-heading:   #ffffff;
 
   --nav-bg:         rgba(2,8,23,0.75);  /* slate-950/75 */
@@ -58,6 +58,7 @@
   /* Search highlight */
   --search-highlight-bg:   rgba(139,92,246,0.30);  /* violet-500/30 */
   --search-highlight-text: #ddd6fe;                /* violet-200 */
+  --opacity-custm : 80%;
 }
 
 /* ---------- LIGHT THEME ---------- */
@@ -97,6 +98,7 @@
   /* Search highlight */
   --search-highlight-bg:   rgba(139,92,246,0.15);  /* violet-500/15 */
   --search-highlight-text: #6d28d9;                /* violet-700 */
+  --opacity-custm : 100%;
 }
 
 /* ============================================================
