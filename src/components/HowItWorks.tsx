@@ -1,7 +1,5 @@
 import React from "react";
 import { MousePointerClick, Upload, Download } from "lucide-react";
-import convert1 from "../assets/convert-1.png";
-import convert2 from "../assets/convert-2.png";
 
 const steps = [
   {
@@ -61,16 +59,6 @@ const HowItWorks: React.FC = () => {
         {/* ── Row: left image + steps + right image ── */}
         <div className="flex items-center">
 
-          {/* Left image — large, overflows vertically */}
-          <div className="hidden lg:block shrink-0 w-[240px] xl:w-[300px] self-end">
-            <img
-              src={convert1}
-              alt="Select tool"
-              className="w-full h-auto object-contain"
-              style={{ filter: "drop-shadow(0 16px 32px rgba(124,58,237,0.22))" }}
-            />
-          </div>
-
           {/* Steps center */}
           <div className="flex-1 relative px-4 lg:px-8 py-6">
 
@@ -113,7 +101,7 @@ const HowItWorks: React.FC = () => {
                     {/* Circle */}
                     <div className="relative">
                       <div
-                        className={`w-[80px] h-[80px] rounded-full bg-gradient-to-br ${step.gradient} flex flex-col items-center justify-center`}
+                        className={`w-[70px] md:w-[80px] h-[70px] md:h-[80px] rounded-full bg-gradient-to-br ${step.gradient} flex flex-col items-center justify-center`}
                         style={{ boxShadow: `0 8px 24px ${step.shadowColor}` }}
                       >
                         <Icon className="w-7 h-7 text-white" />
@@ -144,17 +132,6 @@ const HowItWorks: React.FC = () => {
               })}
             </div>
           </div>
-
-          {/* Right image — large, overflows vertically */}
-          <div className="hidden lg:block shrink-0 w-[240px] xl:w-[300px] self-end">
-            <img
-              src={convert2}
-              alt="Download results"
-              className="w-full h-auto object-contain"
-              style={{ filter: "drop-shadow(0 16px 32px rgba(16,185,129,0.22))" }}
-            />
-          </div>
-
         </div>
       </div>
     </section>

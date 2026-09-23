@@ -194,7 +194,7 @@ export default function Dashboard() {
             <div className="w-full lg:w-[50%] text-center lg:text-left">
               {/* Badge */}
               <div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-semibold"
+                className="inline-flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 rounded-full border text-xs sm:text-sm font-semibold"
                 style={{
                   backgroundColor: "rgba(124,58,237,0.08)",
                   borderColor: "rgba(124,58,237,0.25)",
@@ -245,7 +245,7 @@ export default function Dashboard() {
                 className="relative max-w-[470px] mx-auto lg:mx-0 mt-7"
               >
                 <Search
-                  className="absolute left-4 top-[27px] -translate-y-1/2 w-5 h-5 pointer-events-none z-10"
+                  className="absolute left-4 top-[23px] md:top-[27px] -translate-y-1/2 w-5 h-5 pointer-events-none z-10"
                   style={{ color: "var(--text-muted)" }}
                 />
 
@@ -270,11 +270,11 @@ export default function Dashboard() {
                       setSearchTerm("");
                     }
                   }}
-                  className="w-full h-[54px] pl-12 pr-14 rounded-2xl border text-sm outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+                  className="w-full h-[46px] md:h-[54px] pl-12 pr-14 rounded-2xl border text-sm outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
                   style={{
-                    backgroundColor: "rgba(255,255,255,0.75)",
+                    backgroundColor: "var(--bg-surface)",
                     borderColor: "rgba(124,58,237,0.20)",
-                    color: "#1e1b4b",
+                    color: "var(--text-primary)",
                     backdropFilter: "blur(8px)",
                   }}
                 />
@@ -282,7 +282,7 @@ export default function Dashboard() {
                 <button
                   type="button"
                   aria-label="Search"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl flex items-center justify-center text-white transition hover:scale-105"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center text-white transition hover:scale-105"
                   style={{
                     background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
                   }}
@@ -441,7 +441,7 @@ export default function Dashboard() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="px-10 py-2 rounded-full text-lg font-semibold transition cursor-pointer border"
+                className="px-3 md:px-5 lg:px-10 py-1.5 md:py-2 rounded-full text-sm md:text-base lg:text-lg font-semibold transition cursor-pointer border"
                 style={
                   activeCategory === cat
                     ? {
@@ -502,7 +502,7 @@ export default function Dashboard() {
                     src={tool.cardImg}
                     alt=""
                     draggable={false}
-                    className="absolute bottom-0 right-0 w-[95px] h-[95px] object-contain pointer-events-none transition-all duration-300"
+                    className="absolute bottom-0 right-0 w-[80px] md:w-[95px] h-[80px] md:h-[95px] object-contain pointer-events-none transition-all duration-300"
                     style={{
                       opacity: 0.45,
                       filter: "blur(0.8px)",
@@ -517,10 +517,10 @@ export default function Dashboard() {
                 {/* Top row: iOS-style icon + arrow circle */}
                 <div className="flex items-start justify-between">
                   <div
-                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white shadow-lg`}
+                    className={`w-12 md:w-14 h-12 md:h-14 rounded-lg md:rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white shadow-lg`}
                     style={{ boxShadow: `0 6px 20px ${tool.cardGlow}` }}
                   >
-                    <Icon className="w-7 h-7" />
+                    <Icon className="w-5 md:w-7 h-5 md:h-7" />
                   </div>
                 </div>
 

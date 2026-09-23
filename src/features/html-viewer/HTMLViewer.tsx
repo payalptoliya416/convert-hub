@@ -337,7 +337,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
       className={`flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] shadow-xl shadow-black/20 mt-7 ${
         isFullscreen
           ? "fixed inset-0 z-50 rounded-none h-screen"
-          : "h-[calc(100vh-6rem)] min-h-[550px]"
+          : "h-[calc(100vh-8rem)] min-h-[450px]"
       } ${className}`}
     >
       {/* Header */}

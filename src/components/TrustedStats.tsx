@@ -66,13 +66,17 @@ const TrustedStats: React.FC = () => {
     <section ref={sectionRef} className="w-full px-6 pb-10 sm:pb-14 lg:pb-16">
       <div
         className="relative mx-auto max-w-[1400px] rounded-3xl overflow-hidden"
-        style={{
-          background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
-        }}
       >
-        {/* Dark mode overlay */}
+        {/* Lavender gradient base — light mode only */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
+          }}
+        />
+        {/* Dark mode overlay — covers lavender with dark bg */}
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
           style={{ background: "var(--trusted-dark-overlay, transparent)" }}
         />
 
@@ -83,7 +87,7 @@ const TrustedStats: React.FC = () => {
           style={{ background: "radial-gradient(circle, #fbcfe8, transparent)" }} />
 
         {/* ── Content ── */}
-        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 px-8 py-12 sm:py-14 lg:py-16 lg:px-12">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 px-4 py-12 sm:py-14 lg:py-16 lg:px-12">
 
           {/* LEFT — text + stats */}
           <div className="flex-1 w-full">
@@ -121,7 +125,7 @@ const TrustedStats: React.FC = () => {
                   className="flex flex-col items-center text-center"
                 >
                   {/* Visual */}
-                  <div className="relative w-[170px] h-[125px]">
+                  <div className="relative w-[100px] md:w-[170px] h-[100px] md:h-[125px]">
 
                     {/* Main pedestal */}
                     <div
@@ -191,7 +195,7 @@ const TrustedStats: React.FC = () => {
                     <div
                       className="absolute z-10 top-0 left-1/2
                                 -translate-x-1/2
-                                w-[76px] h-[76px]
+                                w-[65px] md:w-[76px] h-[65px] md:h-[76px]
                                 rounded-full
                                 flex items-center justify-center"
                       style={{
@@ -207,7 +211,7 @@ const TrustedStats: React.FC = () => {
                       }}
                     >
                       <Icon
-                        className="w-9 h-9 text-white"
+                        className="w-6 md:w-9 h-6 md:h-9 text-white"
                         strokeWidth={1.8}
                       />
                     </div>

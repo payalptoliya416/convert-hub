@@ -618,7 +618,7 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow max-w-[1400px] w-full mx-auto px-6 py-7 relative">
+      <main className="flex-grow max-w-[1400px] w-full mx-auto px-6 py-7 relative overflow-x-hidden">
         {children}
         {/* Bottom decorative gradient blobs */}
         <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-0">

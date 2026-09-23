@@ -185,209 +185,343 @@ export default function PdfToPpt() {
     fileInputRef.current?.click();
   };
 
-  return (
-    <div className="mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
-        <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20 text-orange-400">
-          <Presentation className="w-8 h-8" />
-        </div>
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>PDF to PowerPoint</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Convert your PDF pages into fully formatted PowerPoint presentation slides.</p>
-        </div>
+ return (
+  <div className="mx-auto space-y-6">
+    {/* Header */}
+    <div
+      className="flex items-center gap-4 border-b pb-5"
+      style={{ borderColor: "var(--border)" }}
+    >
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 text-orange-400">
+        <Presentation className="h-6 w-6" />
       </div>
 
-      {/* Main Panel */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        {/* Left Column: Options */}
-        <div className="md:col-span-1 space-y-6">
-          <div className="rounded-2xl border p-6 space-y-6 shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
-            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
-              <Settings className="w-5 h-5 text-violet-400" /> Options
-            </h2>
+      <div className="min-w-0">
+        <h1
+          className="text-2xl font-bold sm:text-3xl"
+          style={{ color: "var(--text-heading)" }}
+        >
+          PDF to PowerPoint
+        </h1>
 
-            {/* Slide Layout style */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
-                <Layout className="w-3.5 h-3.5" /> Slide Layout
-              </label>
-              <div className="grid grid-cols-1 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setLayoutMode('original')}
-                  className={`py-2.5 px-4 rounded-lg text-sm font-semibold transition border text-left cursor-pointer flex justify-between items-center ${
-                    layoutMode === 'original'
-                      ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-heading)]'
-                  }`}
-                  style={layoutMode !== 'original' ? { backgroundColor: 'var(--bg-input)' } : {}}
-                >
-                  <span>Match PDF Size</span>
-                  <span className="text-xs opacity-80">(Recommended)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLayoutMode('fit')}
-                  className={`py-2.5 px-4 rounded-lg text-sm font-semibold transition border text-left cursor-pointer flex justify-between items-center ${
-                    layoutMode === 'fit'
-                      ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-heading)]'
-                  }`}
-                >
-                  <span>Fit 16:9 Slides</span>
-                  <span className="text-xs opacity-80">(Standard PPTX)</span>
-                </button>
-              </div>
-            </div>
+        <p
+          className="mt-1 text-sm"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          Convert your PDF pages into fully formatted PowerPoint presentation
+          slides.
+        </p>
+      </div>
+    </div>
 
-            {/* Action button */}
+    {/* Main */}
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+      {/* Options */}
+      <div
+        className="rounded-2xl border p-5"
+        style={{
+          backgroundColor: "var(--bg-surface)",
+          borderColor: "var(--border)",
+        }}
+      >
+        <div className="mb-5 flex items-center gap-2">
+          <Settings className="h-5 w-5 text-violet-400" />
+
+          <h2
+            className="text-base font-bold"
+            style={{ color: "var(--text-heading)" }}
+          >
+            Options
+          </h2>
+        </div>
+
+        {/* Slide Layout */}
+        <div className="space-y-3">
+          <label
+            className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            <Layout className="h-3.5 w-3.5" />
+            Slide Layout
+          </label>
+
+          <div className="space-y-2">
             <button
-              onClick={convertPdfToPpt}
-              disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
-                !file 
-                  ? 'bg-[var(--bg-hover)] text-[var(--text-muted)] border border-[var(--border)] cursor-not-allowed'
-                  : loading
-                    ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+              type="button"
+              onClick={() => setLayoutMode("original")}
+              className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition cursor-pointer ${
+                layoutMode === "original"
+                  ? "border-violet-500 bg-violet-600 text-white"
+                  : "border-[var(--border)] text-[var(--text-secondary)] hover:border-violet-500/40 hover:text-[var(--text-heading)]"
               }`}
+              style={
+                layoutMode !== "original"
+                  ? { backgroundColor: "var(--bg-input)" }
+                  : {}
+              }
             >
-              {loading ? (
-                <>
-                  <RefreshCw className="w-5 h-5 animate-spin" /> Rendering Pages...
-                </>
-              ) : (
-                <>
-                  <Presentation className="w-5 h-5" /> Load PDF Pages
-                </>
-              )}
+              <span className="text-sm font-semibold">Match PDF Size</span>
+              <span className="text-[11px] opacity-75">
+                (Recommended)
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setLayoutMode("fit")}
+              className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition cursor-pointer ${
+                layoutMode === "fit"
+                  ? "border-violet-500 bg-violet-600 text-white"
+                  : "border-[var(--border)] text-[var(--text-secondary)] hover:border-violet-500/40 hover:text-[var(--text-heading)]"
+              }`}
+              style={
+                layoutMode !== "fit"
+                  ? { backgroundColor: "var(--bg-input)" }
+                  : {}
+              }
+            >
+              <span className="text-sm font-semibold">
+                Fit 16:9 Slides
+              </span>
+
+              <span className="text-[11px] opacity-75">
+                (Standard PPTX)
+              </span>
             </button>
           </div>
         </div>
 
-        {/* Right Column: Upload & Output */}
-        <div className="md:col-span-2 space-y-6">
-          {!file ? (
-            /* Upload Zone */
-            <div 
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-              onClick={triggerFileSelect}
-              className="flex flex-col items-center justify-center border-2 border-dashed hover:border-violet-500/50 rounded-3xl p-16 text-center cursor-pointer transition group"
-            style={{ borderColor: 'var(--border)' }}
-            >
-              <input 
-                type="file" 
-                accept=".pdf" 
-                className="hidden" 
-                ref={fileInputRef}
-                onChange={handleFileChange}
-              />
-              <div className="p-5 rounded-2xl border text-[var(--text-secondary)] group-hover:text-violet-400 group-hover:scale-110 transition duration-300" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
-                <Upload className="w-10 h-10" />
-              </div>
-              <h3 className="text-xl font-bold mt-6" style={{ color: 'var(--text-heading)' }}>Drag and drop your PDF here</h3>
-              <p className="text-sm mt-2 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
-                Or click to browse. We will render pages as high-fidelity images and pack them into slides.
-              </p>
-            </div>
+        {/* Convert */}
+        <button
+          onClick={convertPdfToPpt}
+          disabled={!file || loading}
+          className={`mt-5 flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold transition cursor-pointer ${
+            !file
+              ? "cursor-not-allowed border-[var(--border)] bg-[var(--bg-hover)] text-[var(--text-muted)]"
+              : loading
+                ? "cursor-not-allowed border-violet-600 bg-violet-700 text-white"
+                : "border-violet-500 bg-violet-600 text-white shadow-lg shadow-violet-600/10 hover:bg-violet-500"
+          }`}
+        >
+          {loading ? (
+            <>
+              <RefreshCw className="h-4 w-4 animate-spin" />
+              Rendering Pages...
+            </>
           ) : (
-            /* Conversion Progress & Slide Export */
-            <div className="space-y-6">
-              <div className="rounded-2xl border p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-surface-60)', borderColor: 'var(--border)' }}>
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 bg-red-500/15 rounded-xl border border-red-500/20 text-red-400">
-                    <FileText className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold truncate max-w-sm sm:max-w-md" style={{ color: 'var(--text-heading)' }}>{file.name}</h4>
-                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
-                  </div>
+            <>
+              <Presentation className="h-4 w-4" />
+              Load PDF Pages
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Upload / Output */}
+      <div className="lg:col-span-2">
+        {!file ? (
+          <div
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={triggerFileSelect}
+            className="group flex min-h-[300px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition hover:border-violet-500/50"
+            style={{ borderColor: "var(--border)" }}
+          >
+            <input
+              type="file"
+              accept=".pdf"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+
+            <div
+              className="flex h-16 w-16 items-center justify-center rounded-2xl border transition duration-300 group-hover:scale-105 group-hover:text-violet-400"
+              style={{
+                backgroundColor: "var(--bg-surface)",
+                borderColor: "var(--border)",
+                color: "var(--text-secondary)",
+              }}
+            >
+              <Upload className="h-7 w-7" />
+            </div>
+
+            <h3
+              className="mt-5 text-lg font-bold"
+              style={{ color: "var(--text-heading)" }}
+            >
+              Drag and drop your PDF here
+            </h3>
+
+            <p
+              className="mt-2 max-w-md text-sm leading-6"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Or click to browse. We will render pages as high-fidelity
+              images and pack them into slides.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {/* Selected File */}
+            <div
+              className="flex items-center justify-between gap-4 rounded-2xl border p-4"
+              style={{
+                backgroundColor: "var(--bg-surface)",
+                borderColor: "var(--border)",
+              }}
+            >
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-red-500/20 bg-red-500/10 text-red-400">
+                  <FileText className="h-5 w-5" />
                 </div>
-                <button
-                  onClick={() => {
-                    setFile(null);
-                    setPages([]);
-                    setSuccess(false);
-                    setError(null);
-                  }}
-                  className="text-xs font-semibold text-red-400 hover:text-red-300 cursor-pointer"
-                >
-                  Remove
-                </button>
+
+                <div className="min-w-0">
+                  <h4
+                    className="truncate text-sm font-semibold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
+                    {file.name}
+                  </h4>
+
+                  <p
+                    className="mt-0.5 text-xs"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    {(file.size / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                </div>
               </div>
 
-              {/* Progress Bar */}
-              {loading && (
-                <div className="rounded-2xl border p-6 space-y-3" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
-                  <div className="flex justify-between text-sm">
-                    <span style={{ color: 'var(--text-secondary)' }}>Processing page graphics...</span>
-                    <span className="font-semibold text-violet-400">{progress}%</span>
-                  </div>
-                  <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-base)' }}>
-                    <div 
-                      className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-300"
-                      style={{ width: `${progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-              )}
-
-              {/* Error messages */}
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 flex items-start gap-3 text-red-400">
-                  <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-semibold text-red-400">Conversion Failed</h4>
-                    <p className="text-sm mt-1 text-red-400/90">{error}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Success output */}
-              {success && pages.length > 0 && (
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center border-b pb-4" style={{ borderColor: 'var(--border)' }}>
-                    <h3 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Slides Rendered ({pages.length})
-                    </h3>
-                    <button
-                      onClick={downloadPptx}
-                      className="py-2 px-4 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-lg shadow-orange-600/10"
-                    >
-                      <Download className="w-4 h-4" /> Download PowerPoint (.pptx)
-                    </button>
-                  </div>
-
-                  {/* Slide Carousel Preview */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {pages.map((p) => (
-                      <div 
-                        key={p.pageNumber} 
-                        className="rounded-xl overflow-hidden shadow border"
-                        style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}
-                      >
-                        <div className="aspect-[16/9] overflow-hidden flex items-center justify-center p-2" style={{ backgroundColor: 'var(--bg-base)' }}>
-                          <img 
-                            src={p.dataUrl} 
-                            alt={`Slide ${p.pageNumber}`} 
-                            className="max-h-full max-w-full object-contain"
-                          />
-                        </div>
-                        <div className="p-2.5 border-t text-xs text-center font-semibold" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}>
-                          Slide {p.pageNumber}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <button
+                onClick={() => {
+                  setFile(null);
+                  setPages([]);
+                  setSuccess(false);
+                  setError(null);
+                }}
+                className="shrink-0 text-xs font-semibold text-red-400 transition hover:text-red-300 cursor-pointer"
+              >
+                Remove
+              </button>
             </div>
-          )}
-        </div>
+
+            {/* Progress */}
+            {loading && (
+              <div
+                className="rounded-2xl border p-5"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  borderColor: "var(--border)",
+                }}
+              >
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span style={{ color: "var(--text-secondary)" }}>
+                    Processing page graphics...
+                  </span>
+
+                  <span className="font-semibold text-violet-400">
+                    {progress}%
+                  </span>
+                </div>
+
+                <div
+                  className="h-2 overflow-hidden rounded-full"
+                  style={{ backgroundColor: "var(--bg-base)" }}
+                >
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Error */}
+            {error && (
+              <div className="flex items-start gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-red-400">
+                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+
+                <div>
+                  <h4 className="text-sm font-semibold">
+                    Conversion Failed
+                  </h4>
+
+                  <p className="mt-1 text-sm text-red-400/80">
+                    {error}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Success */}
+            {success && pages.length > 0 && (
+              <div
+                className="rounded-2xl border p-5"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  borderColor: "var(--border)",
+                }}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4" style={{ borderColor: "var(--border)" }}>
+                  <h3
+                    className="flex items-center gap-2 text-base font-bold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
+                    <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                    Slides Rendered ({pages.length})
+                  </h3>
+
+                  <button
+                    onClick={downloadPptx}
+                    className="flex items-center gap-2 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-500 cursor-pointer"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download PowerPoint (.pptx)
+                  </button>
+                </div>
+
+                {/* Preview */}
+                <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                  {pages.map((p) => (
+                    <div
+                      key={p.pageNumber}
+                      className="overflow-hidden rounded-xl border"
+                      style={{
+                        backgroundColor: "var(--bg-surface)",
+                        borderColor: "var(--border)",
+                      }}
+                    >
+                      <div
+                        className="flex aspect-[16/9] items-center justify-center overflow-hidden p-2"
+                        style={{ backgroundColor: "var(--bg-base)" }}
+                      >
+                        <img
+                          src={p.dataUrl}
+                          alt={`Slide ${p.pageNumber}`}
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      </div>
+
+                      <div
+                        className="border-t px-3 py-2 text-center text-xs font-semibold"
+                        style={{
+                          backgroundColor: "var(--bg-surface)",
+                          borderColor: "var(--border)",
+                          color: "var(--text-secondary)",
+                        }}
+                      >
+                        Slide {p.pageNumber}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 }

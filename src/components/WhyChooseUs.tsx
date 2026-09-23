@@ -65,7 +65,7 @@ const WhyChooseUs: React.FC = () => {
           </div>
 
           {/* ── RIGHT: Content ── */}
-          <div className="w-full lg:w-[54%] px-8 pb-10 lg:pl-4 lg:pr-12 lg:py-14">
+          <div className="w-full lg:w-[54%] px-4 lg:px-12 pb-10 lg:pl-4 lg:pr-12 lg:py-14">
 
             {/* Heading */}
             <h2
