@@ -69,30 +69,30 @@ interface Tool {
 }
 
 const tools: Tool[] = [
-  { id: "pdf-to-word", name: "PDF to Word", description: "Convert PDF files to editable DOCX documents with high layout preservation.", path: "/pdf-to-word", icon: FileText, color: "from-blue-500 to-indigo-600", cardGlow: "rgba(99,102,241,0.13)", cardImg: imgPdfToWord, category: "from-pdf" },
-  { id: "pdf-to-ppt", name: "PDF to PowerPoint", description: "Convert your PDF pages into slides for PPTX presentations perfectly.", path: "/pdf-to-ppt", icon: Presentation, color: "from-orange-500 to-red-600", cardGlow: "rgba(249,115,22,0.13)", cardImg: imgPdfToPpt, category: "from-pdf" },
-  { id: "pdf-to-excel", name: "PDF to Excel", description: "Extract tabular data from PDF files to clean Excel spreadsheet sheets.", path: "/pdf-to-excel", icon: Table, color: "from-emerald-500 to-teal-600", cardGlow: "rgba(16,185,129,0.13)", cardImg: imgPdfToExcel, category: "from-pdf" },
-  { id: "pdf-to-image", name: "PDF to Image", description: "Extract pages from a PDF document as high-resolution PNG or JPG images.", path: "/pdf-to-image", icon: Image, color: "from-purple-500 to-pink-600", cardGlow: "rgba(168,85,247,0.13)", cardImg: imgPdfToImage, category: "from-pdf" },
-  { id: "image-to-pdf", name: "Image to PDF", description: "Convert JPG, PNG, WebP images to a single PDF document in seconds.", path: "/image-to-pdf", icon: FileImage, color: "from-rose-500 to-pink-600", cardGlow: "rgba(244,63,94,0.13)", cardImg: imgImageToPdf, category: "to-pdf" },
-  { id: "jpg-to-pdf", name: "JPG to PDF", description: "Quickly convert a single JPG or PNG image to a PDF page sized to the image.", path: "/jpg-to-pdf", icon: FileImage, color: "from-rose-400 to-pink-500", cardGlow: "rgba(251,113,133,0.13)", cardImg: imgJpgToPdf, category: "to-pdf" },
-  { id: "html-to-pdf", name: "HTML to PDF", description: "Convert HTML content or rich text into a downloadable PDF.", path: "/html-to-pdf", icon: FileText, color: "from-indigo-500 to-violet-600", cardGlow: "rgba(99,102,241,0.13)", cardImg: imgHtmlToPdf, category: "to-pdf" },
-  { id: "word-to-pdf", name: "Word to PDF", description: "Convert Microsoft Word DOCX files into PDF documents easily.", path: "/word-to-pdf", icon: FileText, color: "from-blue-600 to-sky-500", cardGlow: "rgba(14,165,233,0.13)", cardImg: imgWordToPdf, category: "to-pdf" },
-  { id: "ppt-to-pdf", name: "PowerPoint to PDF", description: "Convert presentation slides (.pptx) into clean PDF documents.", path: "/ppt-to-pdf", icon: Presentation, color: "from-orange-600 to-amber-500", cardGlow: "rgba(245,158,11,0.13)", cardImg: imgPptToPdf, category: "to-pdf" },
-  { id: "excel-to-pdf", name: "Excel to PDF", description: "Convert Excel files (.xlsx) to formatted PDF documents.", path: "/excel-to-pdf", icon: Table, color: "from-emerald-600 to-green-500", cardGlow: "rgba(16,185,129,0.13)", cardImg: imgExcelToPdf, category: "to-pdf" },
-  { id: "merge-pdf", name: "Merge PDF", description: "Combine multiple PDF files into a single document in your preferred order.", path: "/merge-pdf", icon: Merge, color: "from-violet-500 to-purple-600", cardGlow: "rgba(139,92,246,0.13)", cardImg: imgMergePdf, category: "utils", badge: "Popular" },
-  { id: "compress-pdf", name: "Compress PDF", description: "Reduce PDF file size without sacrificing readability or image quality.", path: "/compress-pdf", icon: Minimize2, color: "from-cyan-500 to-blue-600", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgCompressPdf, category: "utils" },
-  { id: "split-pdf", name: "Split PDF", description: "Extract specific pages from PDF into a new document.", path: "/split-pdf", icon: Copy, color: "from-purple-500 to-indigo-600", cardGlow: "rgba(139,92,246,0.13)", cardImg: imgSplitPdf, category: "utils" },
-  { id: "rotate-pdf", name: "Rotate PDF", description: "Rotate all pages of your PDF document by 90°, 180°, or 270°.", path: "/rotate-pdf", icon: RotateCw, color: "from-cyan-500 to-teal-600", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgRotatePdf, category: "utils" },
-  { id: "crop-pdf", name: "Crop PDF", description: "Remove margins from PDF pages by cropping from all sides.", path: "/crop-pdf", icon: Crop, color: "from-amber-500 to-orange-600", cardGlow: "rgba(245,158,11,0.13)", cardImg: imgCropPdf, category: "utils" },
-  { id: "remove-pages", name: "Remove pages", description: "Remove specific pages from a PDF and download the result.", path: "/remove-pages", icon: FileText, color: "from-red-500 to-rose-600", cardGlow: "rgba(239,68,68,0.13)", cardImg: imgRemovePages, category: "utils" },
-  { id: "extract-pages", name: "Extract pages", description: "Extract specific pages from a PDF into a new document.", path: "/extract-pages", icon: FileText, color: "from-emerald-500 to-teal-600", cardGlow: "rgba(16,185,129,0.13)", cardImg: imgExtractPages, category: "utils" },
-  { id: "protect-pdf", name: "Protect PDF", description: "Add password protection to encrypt your PDF documents.", path: "/protect-pdf", icon: Lock, color: "from-red-500 to-pink-600", cardGlow: "rgba(244,63,94,0.13)", cardImg: imgProtectPdf, category: "utils" },
-  { id: "html-viewer", name: "HTML Viewer", description: "View and preview HTML files directly in your browser with live rendering.", path: "/html-viewer", icon: Code2, color: "from-violet-500 to-indigo-600", cardGlow: "rgba(139,92,246,0.13)", cardImg: imgHtmlViewer, category: "web-tools" },
-  { id: "text-to-image", name: "Text to Image", description: "Turn your text description into a beautiful AI-generated image directly in your browser.", path: "/text-to-image", icon: Sparkles, color: "from-fuchsia-500 to-violet-600", cardGlow: "rgba(217,70,239,0.13)", cardImg: imgTextToImage, category: "web-tools" },
-  { id: "ai-background-remover", name: "AI Background Remover", description: "Remove backgrounds from your images and download transparent PNG images.", path: "/ai-background-remover", icon: ImageIcon, color: "from-pink-500 to-rose-600", cardGlow: "rgba(236,72,153,0.13)", cardImg: imgBgRemover, category: "web-tools" },
-  { id: "qr-code-generator", name: "QR Code Generator", description: "Create QR codes for URLs, text, phone numbers, emails, and more.", path: "/qr-code-generator", icon: QrCode, color: "from-cyan-500 to-blue-600", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgQrCode, category: "web-tools" },
-  { id: "password-generator", name: "Password Generator", description: "Generate strong and secure passwords with customizable options.", path: "/password-generator", icon: LockKeyhole, color: "from-amber-500 to-orange-600", cardGlow: "rgba(245,158,11,0.13)", cardImg: imgPasswordGen, category: "web-tools" },
-  { id: "json-formatter", name: "JSON Formatter", description: "Format, beautify, minify, and validate your JSON directly in your browser.", path: "/json-formatter", icon: Braces, color: "from-cyan-500 to-teal-600", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgJsonFormatter, category: "web-tools" },
+  { id: "pdf-to-word", name: "PDF to Word", description: "Convert PDF files to editable DOCX documents with high layout preservation.", path: "/pdf-to-word", icon: FileText, color: "from-blue-400 to-indigo-500", cardGlow: "rgba(99,102,241,0.13)", cardImg: imgPdfToWord, category: "from-pdf" },
+  { id: "pdf-to-ppt", name: "PDF to PowerPoint", description: "Convert your PDF pages into slides for PPTX presentations perfectly.", path: "/pdf-to-ppt", icon: Presentation, color: "from-orange-400 to-red-500", cardGlow: "rgba(249,115,22,0.13)", cardImg: imgPdfToPpt, category: "from-pdf" },
+  { id: "pdf-to-excel", name: "PDF to Excel", description: "Extract tabular data from PDF files to clean Excel spreadsheet sheets.", path: "/pdf-to-excel", icon: Table, color: "from-emerald-400 to-teal-500", cardGlow: "rgba(16,185,129,0.13)", cardImg: imgPdfToExcel, category: "from-pdf" },
+  { id: "pdf-to-image", name: "PDF to Image", description: "Extract pages from a PDF document as high-resolution PNG or JPG images.", path: "/pdf-to-image", icon: Image, color: "from-purple-400 to-pink-500", cardGlow: "rgba(168,85,247,0.13)", cardImg: imgPdfToImage, category: "from-pdf" },
+  { id: "image-to-pdf", name: "Image to PDF", description: "Convert JPG, PNG, WebP images to a single PDF document in seconds.", path: "/image-to-pdf", icon: FileImage, color: "from-rose-400 to-pink-500", cardGlow: "rgba(244,63,94,0.13)", cardImg: imgImageToPdf, category: "to-pdf" },
+  { id: "jpg-to-pdf", name: "JPG to PDF", description: "Quickly convert a single JPG or PNG image to a PDF page sized to the image.", path: "/jpg-to-pdf", icon: FileImage, color: "from-rose-400 to-pink-400", cardGlow: "rgba(251,113,133,0.13)", cardImg: imgJpgToPdf, category: "to-pdf" },
+  { id: "html-to-pdf", name: "HTML to PDF", description: "Convert HTML content or rich text into a downloadable PDF.", path: "/html-to-pdf", icon: FileText, color: "from-indigo-400 to-violet-500", cardGlow: "rgba(99,102,241,0.13)", cardImg: imgHtmlToPdf, category: "to-pdf" },
+  { id: "word-to-pdf", name: "Word to PDF", description: "Convert Microsoft Word DOCX files into PDF documents easily.", path: "/word-to-pdf", icon: FileText, color: "from-blue-500 to-sky-400", cardGlow: "rgba(14,165,233,0.13)", cardImg: imgWordToPdf, category: "to-pdf" },
+  { id: "ppt-to-pdf", name: "PowerPoint to PDF", description: "Convert presentation slides (.pptx) into clean PDF documents.", path: "/ppt-to-pdf", icon: Presentation, color: "from-orange-500 to-amber-400", cardGlow: "rgba(245,158,11,0.13)", cardImg: imgPptToPdf, category: "to-pdf" },
+  { id: "excel-to-pdf", name: "Excel to PDF", description: "Convert Excel files (.xlsx) to formatted PDF documents.", path: "/excel-to-pdf", icon: Table, color: "from-emerald-500 to-green-400", cardGlow: "rgba(16,185,129,0.13)", cardImg: imgExcelToPdf, category: "to-pdf" },
+  { id: "merge-pdf", name: "Merge PDF", description: "Combine multiple PDF files into a single document in your preferred order.", path: "/merge-pdf", icon: Merge, color: "from-violet-400 to-purple-500", cardGlow: "rgba(139,92,246,0.13)", cardImg: imgMergePdf, category: "utils", badge: "Popular" },
+  { id: "compress-pdf", name: "Compress PDF", description: "Reduce PDF file size without sacrificing readability or image quality.", path: "/compress-pdf", icon: Minimize2, color: "from-cyan-400 to-blue-500", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgCompressPdf, category: "utils" },
+  { id: "split-pdf", name: "Split PDF", description: "Extract specific pages from PDF into a new document.", path: "/split-pdf", icon: Copy, color: "from-purple-400 to-indigo-500", cardGlow: "rgba(139,92,246,0.13)", cardImg: imgSplitPdf, category: "utils" },
+  { id: "rotate-pdf", name: "Rotate PDF", description: "Rotate all pages of your PDF document by 90°, 180°, or 270°.", path: "/rotate-pdf", icon: RotateCw, color: "from-cyan-400 to-teal-500", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgRotatePdf, category: "utils" },
+  { id: "crop-pdf", name: "Crop PDF", description: "Remove margins from PDF pages by cropping from all sides.", path: "/crop-pdf", icon: Crop, color: "from-amber-400 to-orange-500", cardGlow: "rgba(245,158,11,0.13)", cardImg: imgCropPdf, category: "utils" },
+  { id: "remove-pages", name: "Remove pages", description: "Remove specific pages from a PDF and download the result.", path: "/remove-pages", icon: FileText, color: "from-red-400 to-rose-500", cardGlow: "rgba(239,68,68,0.13)", cardImg: imgRemovePages, category: "utils" },
+  { id: "extract-pages", name: "Extract pages", description: "Extract specific pages from a PDF into a new document.", path: "/extract-pages", icon: FileText, color: "from-emerald-400 to-teal-500", cardGlow: "rgba(16,185,129,0.13)", cardImg: imgExtractPages, category: "utils" },
+  { id: "protect-pdf", name: "Protect PDF", description: "Add password protection to encrypt your PDF documents.", path: "/protect-pdf", icon: Lock, color: "from-red-400 to-pink-500", cardGlow: "rgba(244,63,94,0.13)", cardImg: imgProtectPdf, category: "utils" },
+  { id: "html-viewer", name: "HTML Viewer", description: "View and preview HTML files directly in your browser with live rendering.", path: "/html-viewer", icon: Code2, color: "from-violet-400 to-indigo-500", cardGlow: "rgba(139,92,246,0.13)", cardImg: imgHtmlViewer, category: "web-tools" },
+  { id: "text-to-image", name: "Text to Image", description: "Turn your text description into a beautiful AI-generated image directly in your browser.", path: "/text-to-image", icon: Sparkles, color: "from-fuchsia-400 to-violet-500", cardGlow: "rgba(217,70,239,0.13)", cardImg: imgTextToImage, category: "web-tools" },
+  { id: "ai-background-remover", name: "AI Background Remover", description: "Remove backgrounds from your images and download transparent PNG images.", path: "/ai-background-remover", icon: ImageIcon, color: "from-pink-400 to-rose-500", cardGlow: "rgba(236,72,153,0.13)", cardImg: imgBgRemover, category: "web-tools" },
+  { id: "qr-code-generator", name: "QR Code Generator", description: "Create QR codes for URLs, text, phone numbers, emails, and more.", path: "/qr-code-generator", icon: QrCode, color: "from-cyan-400 to-blue-500", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgQrCode, category: "web-tools" },
+  { id: "password-generator", name: "Password Generator", description: "Generate strong and secure passwords with customizable options.", path: "/password-generator", icon: LockKeyhole, color: "from-amber-400 to-orange-500", cardGlow: "rgba(245,158,11,0.13)", cardImg: imgPasswordGen, category: "web-tools" },
+  { id: "json-formatter", name: "JSON Formatter", description: "Format, beautify, minify, and validate your JSON directly in your browser.", path: "/json-formatter", icon: Braces, color: "from-cyan-400 to-teal-500", cardGlow: "rgba(6,182,212,0.13)", cardImg: imgJsonFormatter, category: "web-tools" },
 ];
 
 export default function Dashboard() {
@@ -405,7 +405,7 @@ export default function Dashboard() {
                   drop-shadow-2xl
                 "
                   style={{
-                    filter: "drop-shadow(0 20px 40px rgba(124,58,237,0.22))",
+                    filter: "drop-shadow(0 20px 40px rgba(251, 250, 251, 0.02))",
                   }}
                 />
               </div>
@@ -483,7 +483,7 @@ export default function Dashboard() {
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 36px ${tool.cardGlow}`;
+                  // (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 36px ${tool.cardGlow}`;
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = "var(--border-soft)";
@@ -491,13 +491,13 @@ export default function Dashboard() {
                 }}
               >
                 {/* Subtle card bg tint */}
-                <div
+                {/* <div
                   className="absolute inset-0 pointer-events-none opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-300"
                   style={{ background: `radial-gradient(ellipse at 80% 90%, ${tool.cardGlow.replace("0.13","1")} 0%, transparent 65%)` }}
-                />
+                /> */}
 
                 {/* Bottom-right: tool image — blurred & faded */}
-                {tool.cardImg ? (
+                {/* {tool.cardImg ? (
                   <img
                     src={tool.cardImg}
                     alt=""
@@ -512,13 +512,15 @@ export default function Dashboard() {
                   <div className="absolute bottom-2 right-2 pointer-events-none opacity-[0.08] group-hover:opacity-[0.14] transition-opacity duration-300">
                     <Icon className="w-16 h-16" />
                   </div>
-                )}
+                )} */}
 
                 {/* Top row: iOS-style icon + arrow circle */}
                 <div className="flex items-start justify-between">
                   <div
-                    className={`w-12 md:w-14 h-12 md:h-14 rounded-lg md:rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white shadow-lg`}
-                    style={{ boxShadow: `0 6px 20px ${tool.cardGlow}` }}
+                    className={`w-12 md:w-14 h-12 md:h-14 rounded-lg md:rounded-2xl flex items-center justify-center text-white shadow-lg`}
+                    //  boxShadow: `0 6px 20px ${tool.cardGlow}`,
+                    style={{backgroundColor: "rgba(139, 92, 246, 0.10)",
+                   color: "#8B5CF6", }}
                   >
                     <Icon className="w-5 md:w-7 h-5 md:h-7" />
                   </div>

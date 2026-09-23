@@ -620,33 +620,6 @@ export default function Layout({ children }: LayoutProps) {
       {/* Main Content */}
       <main className="flex-grow max-w-[1400px] w-full mx-auto px-6 py-7 relative overflow-x-hidden">
         {children}
-        {/* Bottom decorative gradient blobs */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-0">
-          {/* Left blob — violet/purple */}
-          <div
-            className="absolute bottom-0 left-[-80px] w-[420px] h-[220px] rounded-full blur-[70px] opacity-25"
-            style={{
-              background:
-                "radial-gradient(ellipse, #7c3aed 0%, #4f46e5 50%, transparent 75%)",
-            }}
-          />
-          {/* Center blob — pink */}
-          <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[180px] rounded-full blur-[80px] opacity-15"
-            style={{
-              background:
-                "radial-gradient(ellipse, #ec4899 0%, #a855f7 55%, transparent 75%)",
-            }}
-          />
-          {/* Right blob — indigo/blue */}
-          <div
-            className="absolute bottom-0 right-[-60px] w-[380px] h-[200px] rounded-full blur-[65px] opacity-20"
-            style={{
-              background:
-                "radial-gradient(ellipse, #6366f1 0%, #0ea5e9 55%, transparent 75%)",
-            }}
-          />
-        </div>
       </main>
     </div>
   );

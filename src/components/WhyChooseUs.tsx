@@ -42,16 +42,16 @@ const WhyChooseUs: React.FC = () => {
     <section className="w-full py-10 sm:py-14 lg:py-16 px-6">
       <div
         className="mx-auto max-w-[1400px] rounded-3xl overflow-hidden relative"
-        style={{
-          background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
-        }}
+        // style={{
+        //   background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
+        // }}
       >
         {/* Dark mode overlay */}
-        <div
+        {/* <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{ background: "var(--trusted-dark-overlay, transparent)" }}
         />
-      
+       */}
         <div className="relative z-10 flex flex-col lg:flex-row items-center">
 
           {/* ── LEFT: Illustration ── */}

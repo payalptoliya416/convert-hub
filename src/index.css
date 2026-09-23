@@ -35,6 +35,7 @@
   --text-primary:   #f1f5f9;   /* slate-100 */
   --text-secondary: #94a3b8;   /* slate-400 */
   --text-muted:     #64748b;   /* slate-500 */
+  --text-footer:     #64748b;   /* slate-500 */
   --text-heading:   #ffffff;
 
   --nav-bg:         rgba(2,8,23,0.75);  /* slate-950/75 */
@@ -75,6 +76,7 @@
   --text-primary:   #0f172a;   /* slate-900 */
   --text-secondary: #334155;   /* slate-700 – darker for readability */
   --text-muted:     #64748b;   /* slate-500 */
+    --text-footer:     #080c11;
   --text-heading:   #0f172a;   /* slate-900 */
 
   --nav-bg:         rgba(255,255,255,0.90);

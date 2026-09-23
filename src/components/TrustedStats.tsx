@@ -68,23 +68,23 @@ const TrustedStats: React.FC = () => {
         className="relative mx-auto max-w-[1400px] rounded-3xl overflow-hidden"
       >
         {/* Lavender gradient base — light mode only */}
-        <div
+        {/* <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
             background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
           }}
-        />
+        /> */}
         {/* Dark mode overlay — covers lavender with dark bg */}
-        <div
+        {/* <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{ background: "var(--trusted-dark-overlay, transparent)" }}
-        />
+        /> */}
 
         {/* Decorative blobs */}
-        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full blur-[80px] opacity-40 pointer-events-none"
+        {/* <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full blur-[80px] opacity-40 pointer-events-none"
           style={{ background: "radial-gradient(circle, #c4b5fd, transparent)" }} />
         <div className="absolute -bottom-16 right-[30%] w-64 h-64 rounded-full blur-[70px] opacity-30 pointer-events-none"
-          style={{ background: "radial-gradient(circle, #fbcfe8, transparent)" }} />
+          style={{ background: "radial-gradient(circle, #fbcfe8, transparent)" }} /> */}
 
         {/* ── Content ── */}
         <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 px-4 py-12 sm:py-14 lg:py-16 lg:px-12">
@@ -115,133 +115,46 @@ const TrustedStats: React.FC = () => {
             </p>
 
             {/* Stats row — circle icon with teardrop blob */}
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10">
-            {stats.map((stat, i) => {
-              const Icon = stat.icon;
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-8">
+  {stats.map((stat, i) => {
+    const Icon = stat.icon;
 
-              return (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center text-center"
-                >
-                  {/* Visual */}
-                  <div className="relative w-[100px] md:w-[170px] h-[100px] md:h-[125px]">
+    return (
+      <div
+        key={stat.label}
+        className="flex flex-col items-center text-center"
+      >
+        {/* Icon */}
+        <div
+          className="w-16 h-16 rounded-2xl flex items-center justify-center"
+          style={{
+            backgroundColor: `${stat.color}12`,
+            color: stat.color,
+          }}
+        >
+          <Icon className="w-7 h-7" strokeWidth={2} />
+        </div>
 
-                    {/* Main pedestal */}
-                    <div
-                      className="absolute left-1/2 -translate-x-1/2 bottom-0
-                                w-[150px] h-[62px]
-                                rounded-[50%]
-                                overflow-hidden"
-                      style={{
-                        background: `linear-gradient(
-                          180deg,
-                          ${stat.color}30 0%,
-                          ${stat.color}18 45%,
-                          ${stat.color}08 100%
-                        )`,
-                        border: `1px solid ${stat.color}30`,
-                        boxShadow: `
-                          inset 0 2px 8px ${stat.color}18,
-                          0 12px 25px ${stat.color}12
-                        `,
-                      }}
-                    >
-                      {/* Top platform */}
-                      <div
-                        className="absolute left-1/2 -translate-x-1/2 -top-[2px]
-                                  w-[150px] h-[38px]
-                                  rounded-[50%]"
-                        style={{
-                          background: `linear-gradient(
-                            180deg,
-                            ${stat.color}35,
-                            ${stat.color}18
-                          )`,
-                          border: `1px solid ${stat.color}35`,
-                          boxShadow: `
-                            inset 0 2px 5px rgba(255,255,255,0.25),
-                            0 4px 12px ${stat.color}15
-                          `,
-                        }}
-                      />
+        {/* Number */}
+        <div
+          className="mt-4 text-3xl sm:text-4xl font-bold leading-none"
+          style={{ color: stat.color }}
+        >
+          {counts[i]}
+          {stat.suffix}
+        </div>
 
-                      {/* Inner highlight */}
-                      <div
-                        className="absolute left-1/2 -translate-x-1/2 top-2
-                                  w-[105px] h-[20px] rounded-[50%] opacity-40"
-                        style={{
-                          background: `radial-gradient(
-                            ellipse,
-                            ${stat.color}55 0%,
-                            transparent 70%
-                          )`,
-                        }}
-                      />
-                    </div>
-
-                    {/* Soft floor glow */}
-                    <div
-                      className="absolute bottom-[-8px] left-1/2
-                                -translate-x-1/2
-                                w-[125px] h-[25px]
-                                rounded-full blur-xl opacity-20"
-                      style={{
-                        backgroundColor: stat.color,
-                      }}
-                    />
-
-                    {/* Floating icon */}
-                    <div
-                      className="absolute z-10 top-0 left-1/2
-                                -translate-x-1/2
-                                w-[65px] md:w-[76px] h-[65px] md:h-[76px]
-                                rounded-full
-                                flex items-center justify-center"
-                      style={{
-                        background: `linear-gradient(
-                          145deg,
-                          ${stat.color} 0%,
-                          ${stat.color}e6 100%
-                        )`,
-                        boxShadow: `
-                          0 10px 20px ${stat.color}40,
-                          inset 0 2px 3px rgba(255,255,255,0.3)
-                        `,
-                      }}
-                    >
-                      <Icon
-                        className="w-6 md:w-9 h-6 md:h-9 text-white"
-                        strokeWidth={1.8}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Number */}
-                  <div
-                    className="text-3xl sm:text-4xl font-black
-                              tracking-tight leading-none mt-3"
-                    style={{
-                      color: stat.color,
-                    }}
-                  >
-                    {counts[i]}
-                    {stat.suffix}
-                  </div>
-
-                  {/* Label */}
-                  <div
-                    className="mt-2 text-sm font-medium"
-                    style={{
-                      color: "var(--text-secondary)",
-                    }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        {/* Label */}
+        <div
+          className="mt-2 text-sm"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          {stat.label}
+        </div>
+      </div>
+    );
+  })}
+</div>
           </div>
 
           {/* RIGHT — illustration */}

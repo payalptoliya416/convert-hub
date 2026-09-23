@@ -46,7 +46,7 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ title, tools }) => (
             <Link
               to={tool.path}
               className="group flex items-center gap-2 text-sm transition-all duration-200 hover:translate-x-1"
-              style={{ color: "var(--text-secondary)" }}
+              style={{ color: "var(--text-footer)" }}
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#a78bfa"}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"}
             >
@@ -161,7 +161,7 @@ const FooterFile: React.FC = () => {
               </span>
             </Link>
 
-            <p className="text-sm leading-relaxed max-w-[260px]" style={{ color: "var(--text-secondary)" }}>
+            <p className="text-sm leading-relaxed max-w-[260px]" style={{ color: "var(--text-footer)" }}>
               Fast, secure, and private online tools for converting, editing, and managing
               your files directly in your browser.
             </p>
