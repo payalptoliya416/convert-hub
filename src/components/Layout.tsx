@@ -181,15 +181,26 @@ export default function Layout({ children }: LayoutProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const { theme, toggleTheme } = useTheme();
 
-  // Scroll to top on every route change
+  // Track scroll position to add background on home page
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll to top on every route change + reset scrolled state
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    setScrolled(false);
   }, [location.pathname]);
 
   // Lock body scroll when mobile drawer is open
@@ -230,12 +241,16 @@ export default function Layout({ children }: LayoutProps) {
     >
       {/* Navbar */}
       <header
-        className="sticky top-0 z-50 backdrop-blur-md border-b"
+        className="sticky top-0 z-50 backdrop-blur-md border-b transition-colors duration-300"
         style={{
           backgroundColor:
-            location.pathname === "/" ? "transparent" : "var(--nav-bg)",
+            location.pathname === "/" && !scrolled
+              ? "transparent"
+              : "var(--nav-bg)",
           borderColor:
-            location.pathname === "/" ? "transparent" : "var(--nav-border)",
+            location.pathname === "/" && !scrolled
+              ? "transparent"
+              : "var(--nav-border)",
         }}
       >
         <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
