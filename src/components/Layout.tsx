@@ -116,8 +116,8 @@ export default function Layout({ children }: LayoutProps) {
       <header
         className="sticky top-0 z-50 backdrop-blur-md border-b"
         style={{
-          backgroundColor: 'var(--nav-bg)',
-          borderColor: 'var(--nav-border)',
+          backgroundColor: location.pathname === '/' ? 'transparent' : 'var(--nav-bg)',
+          borderColor: location.pathname === '/' ? 'transparent' : 'var(--nav-border)',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">

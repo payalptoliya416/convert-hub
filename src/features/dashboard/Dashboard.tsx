@@ -313,48 +313,78 @@ export default function Dashboard() {
     ? tools.filter(
         (t) =>
           t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          t.description.toLowerCase().includes(searchTerm.toLowerCase())
+          t.description.toLowerCase().includes(searchTerm.toLowerCase()),
       )
     : [];
 
   // Grid shows ALL tools filtered only by category tab (never by search)
   const gridTools = tools.filter(
-    (tool) => activeCategory === "all" || tool.category === activeCategory
+    (tool) => activeCategory === "all" || tool.category === activeCategory,
   );
 
   return (
     <>
       <div className="space-y-8">
-        {/* ── Hero Banner ── */}
-        <section className="relative rounded-3xl">
-
-          {/* Clip blobs inside their own layer so dropdown is never cut */}
-          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none -z-10">
-            {/* Background */}
+        {/* ── Hero Banner — full-bleed, bleeds into navbar ── */}
+        <section className="relative -mx-6 -mt-7">
+          {/* Full-width gradient background — bleeds behind navbar via negative margin */}
+          <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+            {/* Base lavender/white gradient — light mode */}
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(124,58,237,0.10) 0%, rgba(236,72,153,0.06) 55%, rgba(251,191,36,0.04) 100%)",
-                backgroundColor: "var(--bg-surface)",
+                  "linear-gradient(160deg, #ede9fe 0%, #f5f3ff 25%, #fdf4ff 50%, #fce7f3 75%, #eff6ff 100%)",
               }}
             />
-            {/* Soft decorative glow */}
+
+            {/* Dark mode overlay — darkens the light gradient in dark theme */}
             <div
-              className="absolute -top-24 -left-24 w-80 h-80 rounded-full blur-3xl opacity-20"
-              style={{ background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)" }}
+              className="absolute inset-0"
+              style={{
+                background: "var(--hero-dark-overlay, transparent)",
+              }}
             />
+
+            {/* Blob — top-left purple */}
             <div
-              className="absolute -bottom-24 -right-20 w-80 h-80 rounded-full blur-3xl opacity-15"
-              style={{ background: "radial-gradient(circle, #ec4899 0%, transparent 70%)" }}
+              className="absolute -top-20 -left-20 w-[480px] h-[480px] rounded-full blur-[80px] opacity-60"
+              style={{
+                background:
+                  "radial-gradient(circle, #c4b5fd 0%, #a78bfa 40%, transparent 70%)",
+              }}
+            />
+            {/* Blob — top-right pink/rose */}
+            <div
+              className="absolute -top-10 right-[15%] w-[360px] h-[360px] rounded-full blur-[70px] opacity-50"
+              style={{
+                background:
+                  "radial-gradient(circle, #fbcfe8 0%, #f9a8d4 45%, transparent 70%)",
+              }}
+            />
+            {/* Blob — bottom-left teal/green (image 2 style) */}
+            <div
+              className="absolute bottom-0 -left-10 w-[300px] h-[300px] rounded-full blur-[70px] opacity-40"
+              style={{
+                background:
+                  "radial-gradient(circle, #99f6e4 0%, #5eead4 50%, transparent 70%)",
+              }}
+            />
+            {/* Blob — bottom-right yellow/amber */}
+            <div
+              className="absolute bottom-[-20px] right-[5%] w-[260px] h-[260px] rounded-full blur-[60px] opacity-35"
+              style={{
+                background:
+                  "radial-gradient(circle, #fde68a 0%, #fbbf24 50%, transparent 70%)",
+              }}
             />
           </div>
 
-          <div className="relative flex flex-col lg:flex-row items-center px-7 py-7">
+          <div className="relative flex flex-col lg:flex-row items-center px-6 pt-8 pb-10 max-w-[1400px] mx-auto lg:pt-10 lg:pb-14">
             {/* ─────────────────────────
         LEFT CONTENT
     ───────────────────────── */}
-            <div className="w-full lg:w-[52%] text-center lg:text-left">
+            <div className="w-full lg:w-[50%] text-center lg:text-left">
               {/* Badge */}
               <div
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-semibold"
@@ -375,19 +405,8 @@ export default function Dashboard() {
 
               {/* Heading */}
               <h1
-                className="
-          mt-6
-          text-[38px]
-          sm:text-[44px]
-          md:text-[50px]
-          xl:text-[56px]
-          font-black
-          tracking-tight
-          leading-[1.05]
-        "
-                style={{
-                  color: "var(--text-heading)",
-                }}
+                className="mt-6 text-[38px] sm:text-[44px] md:text-[50px] xl:text-[56px] font-black tracking-tight leading-[1.05]"
+                style={{ color: "var(--hero-heading-color)" }}
               >
                 All Your File Tools
                 <br />
@@ -404,27 +423,20 @@ export default function Dashboard() {
 
               {/* Description */}
               <p
-                className="
-          mt-5
-          max-w-[520px]
-          mx-auto
-          lg:mx-0
-          text-[15px]
-          md:text-base
-          leading-7
-        "
-                style={{
-                  color: "var(--text-secondary)",
-                }}
+                className="mt-5 max-w-[520px] mx-auto lg:mx-0 text-[15px] md:text-base leading-7"
+                style={{ color: "var(--hero-text-color)" }}
               >
                 Convert, edit, generate and manage your files — fast, secure and{" "}
-                <strong style={{ color: "var(--text-primary)" }}>
+                <strong style={{ color: "var(--hero-heading-color)" }}>
                   completely free.
                 </strong>
               </p>
 
               {/* Search with dropdown */}
-              <div ref={searchRef} className="relative max-w-[470px] mx-auto lg:mx-0 mt-7">
+              <div
+                ref={searchRef}
+                className="relative max-w-[470px] mx-auto lg:mx-0 mt-7"
+              >
                 <Search
                   className="absolute left-4 top-[27px] -translate-y-1/2 w-5 h-5 pointer-events-none z-10"
                   style={{ color: "var(--text-muted)" }}
@@ -441,18 +453,22 @@ export default function Dashboard() {
                   }}
                   onFocus={() => searchTerm && setSearchOpen(true)}
                   onKeyDown={(e) => {
-                    if (e.key === "Escape") { setSearchOpen(false); setSearchTerm(""); }
+                    if (e.key === "Escape") {
+                      setSearchOpen(false);
+                      setSearchTerm("");
+                    }
                     if (e.key === "Enter" && searchResults.length === 1) {
                       navigate(searchResults[0].path);
                       setSearchOpen(false);
                       setSearchTerm("");
                     }
                   }}
-                  className="w-full h-[54px] pl-12 pr-14 rounded-2xl border text-sm outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10"
+                  className="w-full h-[54px] pl-12 pr-14 rounded-2xl border text-sm outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
                   style={{
-                    backgroundColor: "var(--bg-input)",
-                    borderColor: "var(--border)",
-                    color: "var(--text-primary)",
+                    backgroundColor: "rgba(255,255,255,0.75)",
+                    borderColor: "rgba(124,58,237,0.20)",
+                    color: "#1e1b4b",
+                    backdropFilter: "blur(8px)",
                   }}
                 />
 
@@ -460,7 +476,9 @@ export default function Dashboard() {
                   type="button"
                   aria-label="Search"
                   className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl flex items-center justify-center text-white transition hover:scale-105"
-                  style={{ background: "linear-gradient(135deg, #7c3aed, #6d28d9)" }}
+                  style={{
+                    background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
+                  }}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -481,25 +499,45 @@ export default function Dashboard() {
                           <Link
                             key={tool.id}
                             to={tool.path}
-                            onClick={() => { setSearchOpen(false); setSearchTerm(""); }}
+                            onClick={() => {
+                              setSearchOpen(false);
+                              setSearchTerm("");
+                            }}
                             className="flex items-center gap-3 px-4 py-3 transition-colors"
                             style={{ color: "var(--text-primary)" }}
-                            onMouseEnter={e => (e.currentTarget as HTMLElement).style.backgroundColor = "var(--bg-hover)"}
-                            onMouseLeave={e => (e.currentTarget as HTMLElement).style.backgroundColor = "transparent"}
+                            onMouseEnter={(e) =>
+                              ((
+                                e.currentTarget as HTMLElement
+                              ).style.backgroundColor = "var(--bg-hover)")
+                            }
+                            onMouseLeave={(e) =>
+                              ((
+                                e.currentTarget as HTMLElement
+                              ).style.backgroundColor = "transparent")
+                            }
                           >
-                            <div className={`shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white`}>
+                            <div
+                              className={`shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white`}
+                            >
                               <Icon className="w-4 h-4" />
                             </div>
                             <div className="min-w-0">
-                              <div className="text-sm font-semibold truncate"
+                              <div
+                                className="text-sm font-semibold truncate"
                                 dangerouslySetInnerHTML={{
                                   __html: tool.name.replace(
-                                    new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"),
-                                    '<mark style="background:rgba(124,58,237,0.20);color:#a78bfa;border-radius:3px;padding:0 2px">$1</mark>'
+                                    new RegExp(
+                                      `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+                                      "gi",
+                                    ),
+                                    '<mark style="background:var(--search-highlight-bg,rgba(139,92,246,0.25));color:var(--search-highlight-text,#7c3aed);border-radius:3px;padding:0 2px">$1</mark>',
                                   ),
                                 }}
                               />
-                              <div className="text-xs truncate mt-0.5" style={{ color: "var(--text-muted)" }}>
+                              <div
+                                className="text-xs truncate mt-0.5"
+                                style={{ color: "var(--text-muted)" }}
+                              >
                                 {tool.description}
                               </div>
                             </div>
@@ -512,52 +550,33 @@ export default function Dashboard() {
                 )}
 
                 {/* No results message */}
-                {searchOpen && searchTerm.trim() && searchResults.length === 0 && (
-                  <div
-                    className="absolute left-0 right-0 top-[58px] z-50 rounded-2xl border shadow-2xl px-4 py-5 text-sm text-center"
-                    style={{
-                      backgroundColor: "var(--bg-elevated, var(--bg-surface))",
-                      borderColor: "var(--border)",
-                      color: "var(--text-muted)",
-                    }}
-                  >
-                    No tools found for "<strong style={{ color: "var(--text-primary)" }}>{searchTerm}</strong>"
-                  </div>
-                )}
-              </div>
-
-              {/* Stats */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-x-7 gap-y-4 mt-7">
-                {[
-                  { value: "100+", label: "Free Tools", color: "#f97316" },
-                  { value: "1M+", label: "Happy Users", color: "#06b6d4" },
-                  { value: "10M+", label: "Files Processed", color: "#8b5cf6" },
-                  { value: "24/7", label: "Available", color: "#10b981" },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center lg:text-left">
+                {searchOpen &&
+                  searchTerm.trim() &&
+                  searchResults.length === 0 && (
                     <div
-                      className="text-xl md:text-2xl font-black"
-                      style={{ color: stat.color }}
+                      className="absolute left-0 right-0 top-[58px] z-50 rounded-2xl border shadow-2xl px-4 py-5 text-sm text-center"
+                      style={{
+                        backgroundColor:
+                          "var(--bg-elevated, var(--bg-surface))",
+                        borderColor: "var(--border)",
+                        color: "var(--text-muted)",
+                      }}
                     >
-                      {stat.value}
+                      No tools found for "
+                      <strong style={{ color: "var(--text-primary)" }}>
+                        {searchTerm}
+                      </strong>
+                      "
                     </div>
-
-                    <div
-                      className="text-[11px] mt-0.5 font-medium"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
+                  )}
               </div>
             </div>
 
             {/* ─────────────────────────
         RIGHT IMAGE
     ───────────────────────── */}
-            <div className="w-full lg:w-[48%] flex justify-center lg:justify-end items-center mt-8 lg:mt-0">
-              <div className="relative w-full max-w-[520px] xl:max-w-[560px]">
+            <div className="w-full lg:w-[50%] flex justify-center lg:justify-end items-center mt-8 lg:mt-0">
+              <div className="relative w-full max-w-[520px] xl:max-w-[620px]">
                 {/* Image glow */}
                 <div
                   className="absolute inset-6 rounded-full blur-3xl opacity-25 pointer-events-none"
@@ -571,13 +590,13 @@ export default function Dashboard() {
                   src={heroImg}
                   alt="File tools illustration"
                   className="
-        relative
-        z-10
-        w-full
-        h-auto
-        object-contain
-        drop-shadow-2xl
-      "
+                  relative
+                  z-10
+                  w-full
+                  h-auto
+                  object-contain
+                  drop-shadow-2xl
+                "
                   style={{
                     filter: "drop-shadow(0 20px 40px rgba(124,58,237,0.22))",
                   }}
@@ -588,7 +607,7 @@ export default function Dashboard() {
         </section>
 
         {/* Section heading */}
-        <div className="text-center space-y-1">
+        {/* <div className="text-center space-y-1">
           <h2
             className="text-2xl md:text-3xl font-black tracking-tight"
             style={{ color: "var(--text-heading)" }}
@@ -606,7 +625,7 @@ export default function Dashboard() {
           <p className="text-sm" style={{ color: "var(--text-muted)" }}>
             Find the perfect tool for every job
           </p>
-        </div>
+        </div> */}
 
         {/* Category Tabs */}
         <div className="flex flex-wrap gap-2 justify-center pb-2">
@@ -615,7 +634,7 @@ export default function Dashboard() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="px-5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer border"
+                className="px-10 py-2 rounded-full text-lg font-semibold transition cursor-pointer border"
                 style={
                   activeCategory === cat
                     ? {

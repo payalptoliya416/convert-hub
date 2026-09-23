@@ -43,6 +43,11 @@
   --selection-bg:   rgba(124,58,237,0.30);
   --selection-text: #ffffff;
 
+  /* Hero section — dark overlay covers the light lavender base */
+  --hero-dark-overlay: rgba(2,8,23,0.82);
+  --hero-heading-color: #ffffff;
+  --hero-text-color:    #94a3b8;
+
   /* Search highlight */
   --search-highlight-bg:   rgba(139,92,246,0.30);  /* violet-500/30 */
   --search-highlight-text: #ddd6fe;                /* violet-200 */
@@ -71,6 +76,11 @@
 
   --selection-bg:   rgba(124,58,237,0.15);
   --selection-text: #4c1d95;
+
+  /* Hero section — light mode shows lavender directly, no overlay */
+  --hero-dark-overlay: transparent;
+  --hero-heading-color: #1e1b4b;
+  --hero-text-color:    #374151;
 
   /* Search highlight */
   --search-highlight-bg:   rgba(139,92,246,0.15);  /* violet-500/15 */
