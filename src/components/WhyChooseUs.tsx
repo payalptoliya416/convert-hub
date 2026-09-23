@@ -41,19 +41,11 @@ const WhyChooseUs: React.FC = () => {
   return (
     <section className="w-full py-10 sm:py-14 lg:py-16 px-6">
       <div
-      <div
         className="mx-auto max-w-[1400px] rounded-3xl overflow-hidden relative"
         style={{
-          background: "var(--section-card-bg, linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%))",
+          background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
         }}
       >
-        {/* Lavender gradient layer — only visible in light mode */}
-        <div
-          className="absolute inset-0 pointer-events-none z-0"
-          style={{
-            background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
-          }}
-        />
         {/* Dark mode overlay */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
