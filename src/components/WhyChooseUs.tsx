@@ -8,7 +8,7 @@ const features = [
     title: "100% Free Tools",
     description: "No registration. No hidden charges. Ever.",
     iconBg: "bg-emerald-500",
-    glowColor: "rgba(16,185,129,0.35)",
+    glowColor: "rgba(16,185,129,0.0.09)",
     circleBg: "rgba(16,185,129,0.12)",
   },
   {
@@ -16,7 +16,7 @@ const features = [
     title: "Secure & Private",
     description: "Your files are processed securely and deleted automatically.",
     iconBg: "bg-blue-500",
-    glowColor: "rgba(59,130,246,0.35)",
+    glowColor: "rgba(59,130,246,0.0.09)",
     circleBg: "rgba(59,130,246,0.12)",
   },
   {
@@ -24,7 +24,7 @@ const features = [
     title: "Lightning Fast",
     description: "Get your work done in seconds, not minutes.",
     iconBg: "bg-violet-500",
-    glowColor: "rgba(139,92,246,0.35)",
+    glowColor: "rgba(139,92,246,0.0.09)",
     circleBg: "rgba(139,92,246,0.12)",
   },
   {
@@ -32,7 +32,7 @@ const features = [
     title: "Works Everywhere",
     description: "On any device — desktop, mobile, or tablet.",
     iconBg: "bg-rose-500",
-    glowColor: "rgba(244,63,94,0.35)",
+    glowColor: "rgba(244,63,94,0.0.09)",
     circleBg: "rgba(244,63,94,0.12)",
   },
 ];
@@ -65,7 +65,7 @@ const WhyChooseUs: React.FC = () => {
           </div>
 
           {/* ── RIGHT: Content ── */}
-          <div className="w-full lg:w-[54%] px-4 lg:px-12 pb-10 lg:pl-4 lg:pr-12 lg:py-14">
+          <div className="w-full lg:w-[54%] px-4 lg:px-12 pb-7 lg:pl-4 lg:pr-12 lg:py-14">
 
             {/* Heading */}
             <h2
@@ -85,7 +85,7 @@ const WhyChooseUs: React.FC = () => {
             </p>
 
             {/* Feature list */}
-            <div className="mt-8 flex flex-col gap-5">
+            <div className="mt-8 flex flex-col gap-7 sm:gap-10">
               {features.map((f) => {
                 const Icon = f.icon;
                 return (

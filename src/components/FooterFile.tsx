@@ -191,7 +191,7 @@ const FooterFile: React.FC = () => {
         <div className="h-px w-full" style={{ backgroundColor: "var(--border-soft)" }} />
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row sm:gap-0">
+        <div className="flex flex-col items-center justify-between gap-4 pt-6 pb-1 sm:flex-row sm:gap-0">
           <p className="text-sm order-2 sm:order-1" style={{ color: "var(--text-footer)" }}>
             © {new Date().getFullYear()}{" "}
             <span className="font-semibold" style={{ color: "var(--text-secondary)" }}>ConvertHub</span>

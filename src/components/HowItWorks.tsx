@@ -30,7 +30,7 @@ const steps = [
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className="w-full px-6 pb-10 sm:pb-14 lg:pb-16">
+    <section className="w-full px-6 pb-0 sm:pb-14 lg:pb-16">
       <div className="mx-auto max-w-[1400px]">
 
         {/* ── Header ── */}

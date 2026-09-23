@@ -158,7 +158,7 @@ const TrustedStats: React.FC = () => {
           </div>
 
           {/* RIGHT — illustration */}
-          <div className="w-full lg:w-[46%] xl:w-[44%] flex items-center justify-center shrink-0">
+          <div className="w-full lg:w-[46%] flex items-center justify-center shrink-0">
             <img
               src={worldwideImg}
               alt="Trusted worldwide illustration"
