@@ -1,108 +1,130 @@
 import React from "react";
 import { Check, LockKeyhole, Zap, Smartphone } from "lucide-react";
+import whyChooseImg from "../assets/why-choose.png";
 
 const features = [
   {
     icon: Check,
-    iconWrapper: "bg-emerald-500/15",
-    iconColor: "text-emerald-400",
     title: "100% Free Tools",
-    description:
-      "Access all tools without any registration or payment. No hidden charges, ever.",
+    description: "No registration. No hidden charges. Ever.",
+    iconBg: "bg-emerald-500",
+    glowColor: "rgba(16,185,129,0.35)",
+    circleBg: "rgba(16,185,129,0.12)",
   },
   {
     icon: LockKeyhole,
-    iconWrapper: "bg-blue-500/15",
-    iconColor: "text-blue-400",
     title: "Secure & Private",
-    description:
-      "Your files are processed securely and deleted automatically. We respect your privacy.",
+    description: "Your files are processed securely and deleted automatically.",
+    iconBg: "bg-blue-500",
+    glowColor: "rgba(59,130,246,0.35)",
+    circleBg: "rgba(59,130,246,0.12)",
   },
   {
     icon: Zap,
-    iconWrapper: "bg-violet-500/15",
-    iconColor: "text-violet-400",
     title: "Lightning Fast",
-    description:
-      "Optimized for speed. Process your files in seconds, not minutes.",
+    description: "Get your work done in seconds, not minutes.",
+    iconBg: "bg-violet-500",
+    glowColor: "rgba(139,92,246,0.35)",
+    circleBg: "rgba(139,92,246,0.12)",
   },
   {
     icon: Smartphone,
-    iconWrapper: "bg-pink-500/15",
-    iconColor: "text-pink-400",
     title: "Works Everywhere",
-    description:
-      "Use on any device - desktop, mobile, or tablet. No installation needed.",
+    description: "On any device — desktop, mobile, or tablet.",
+    iconBg: "bg-rose-500",
+    glowColor: "rgba(244,63,94,0.35)",
+    circleBg: "rgba(244,63,94,0.12)",
   },
 ];
 
 const WhyChooseUs: React.FC = () => {
   return (
-    <section className="w-full py-10 sm:py-14 lg:py-16 px-4">
+    <section className="w-full py-10 sm:py-14 lg:py-16 px-6">
       <div
-        className="mx-auto max-w-7xl px-4 rounded-3xl border py-10 sm:py-12 lg:py-14"
+        className="mx-auto max-w-[1400px] rounded-3xl overflow-hidden relative"
         style={{
-          backgroundColor: 'var(--bg-surface-60)',
-          borderColor: 'var(--border)',
+          background: "linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #fdf4ff 60%, #e0f2fe 100%)",
         }}
       >
-        {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center space-y-6">
-          <h1
-            className="text-3xl md:text-5xl font-black tracking-tight"
-            style={{ color: 'var(--text-heading)' }}
-          >
-            Why Choose{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">
-              Converthub?
-            </span>
-          </h1>
-          <p
-            className="text-base sm:text-lg max-w-3xl mx-auto leading-relaxed"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Your all-in-one platform for productivity tools. Fast, secure, and completely free.
-          </p>
-        </div>
+        {/* Dark mode overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{ background: "var(--trusted-dark-overlay, transparent)" }}
+        />
+      
+        <div className="relative z-10 flex flex-col lg:flex-row items-center">
 
-        {/* Cards */}
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={feature.title}
-                className="group min-h-[200px] rounded-2xl border transition-all duration-300 hover:-translate-y-1 sm:min-h-[250px] p-4"
-                style={{
-                  backgroundColor: 'var(--bg-input)',
-                  borderColor: 'var(--border)',
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-hover)';
-                  (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--bg-base)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
-                  (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--bg-input)';
-                }}
+          {/* ── LEFT: Illustration ── */}
+          <div className="w-full lg:w-[46%] flex items-center justify-center shrink-0">
+            <img
+              src={whyChooseImg}
+              alt="Why choose ConvertHub"
+              className="w-full max-w-[500px] h-auto object-contain"
+              style={{ filter: "drop-shadow(0 20px 48px rgba(124,58,237,0.22))" }}
+            />
+          </div>
+
+          {/* ── RIGHT: Content ── */}
+          <div className="w-full lg:w-[54%] px-8 pb-10 lg:pl-4 lg:pr-12 lg:py-14">
+
+            {/* Heading */}
+            <h2
+              className="text-3xl sm:text-4xl xl:text-5xl font-black tracking-tight leading-tight"
+              style={{ color: "var(--text-heading)" }}
+            >
+              Why Choose{" "}
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(90deg, #7c3aed, #ec4899)" }}
               >
-                {/* Icon */}
-                <div className={`flex h-16 w-16 items-center justify-center rounded-xl ${feature.iconWrapper}`}>
-                  <Icon className={`h-6 w-6 ${feature.iconColor}`} strokeWidth={2} />
-                </div>
+                ConvertHub?
+              </span>
+            </h2>
+            <p className="mt-3 text-sm sm:text-base" style={{ color: "var(--text-secondary)" }}>
+              Powerful tools. Total privacy. Zero hassle.
+            </p>
 
-                {/* Content */}
-                <div className="mt-6">
-                  <h3 className="text-xl font-semibold" style={{ color: 'var(--text-heading)' }}>
-                    {feature.title}
-                  </h3>
-                  <p className="mt-4 text-sm leading-7 sm:text-base" style={{ color: 'var(--text-secondary)' }}>
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+            {/* Feature list */}
+            <div className="mt-8 flex flex-col gap-5">
+              {features.map((f) => {
+                const Icon = f.icon;
+                return (
+                  <div key={f.title} className="flex items-start gap-4">
+                    {/* Icon circle */}
+                    <div
+                      className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center"
+                      style={{
+                        backgroundColor: f.circleBg,
+                        boxShadow: `0 4px 16px ${f.glowColor}`,
+                      }}
+                    >
+                      <Icon
+                        className={`w-5 h-5 ${f.iconBg.replace("bg-", "text-")}`}
+                        strokeWidth={2.2}
+                      />
+                    </div>
+
+                    {/* Text */}
+                    <div>
+                      <h3
+                        className="text-base font-bold leading-tight"
+                        style={{ color: "var(--text-heading)" }}
+                      >
+                        {f.title}
+                      </h3>
+                      <p
+                        className="mt-1 text-sm leading-relaxed"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        {f.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

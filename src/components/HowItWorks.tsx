@@ -1,102 +1,160 @@
 import React from "react";
 import { MousePointerClick, Upload, Download } from "lucide-react";
+import convert1 from "../assets/convert-1.png";
+import convert2 from "../assets/convert-2.png";
 
 const steps = [
   {
     number: "1",
     icon: MousePointerClick,
     title: "Select Your Tool",
-    description:
-      "Choose from 100+ tools across different categories. No registration required.",
-    color: "from-violet-600 to-indigo-600",
+    description: "Choose from 100+ tools across different categories. No registration required.",
+    gradient: "from-violet-600 to-indigo-500",
+    shadowColor: "rgba(124,58,237,0.45)",
   },
   {
     number: "2",
     icon: Upload,
     title: "Upload & Process",
-    description:
-      "Upload your files and let our tools do the magic. Fast and secure processing.",
-    color: "from-blue-500 to-cyan-500",
+    description: "Upload your files and let our tools do the magic. Fast and secure processing.",
+    gradient: "from-blue-500 to-cyan-400",
+    shadowColor: "rgba(6,182,212,0.45)",
   },
   {
     number: "3",
     icon: Download,
     title: "Download Results",
-    description:
-      "Download your processed files instantly. Files are automatically deleted for privacy.",
-    color: "from-emerald-500 to-teal-500",
+    description: "Download your processed files instantly. Files are automatically deleted for privacy.",
+    gradient: "from-emerald-500 to-teal-400",
+    shadowColor: "rgba(16,185,129,0.45)",
   },
 ];
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className="w-full px-4 pb-10 sm:pb-14 lg:pb-16">
-      <div
-        className="mx-auto max-w-7xl rounded-3xl border px-4 py-10 sm:py-12 lg:py-14"
-        style={{
-          backgroundColor: 'var(--bg-surface-60)',
-          borderColor: 'var(--border)',
-        }}
-      >
-        {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center space-y-6">
-          <h1
+    <section className="w-full px-6 pb-10 sm:pb-14 lg:pb-16">
+      <div className="mx-auto max-w-[1400px]">
+
+        {/* ── Header ── */}
+        <div className="text-center mb-10">
+          <h2
             className="text-3xl md:text-5xl font-black tracking-tight"
-            style={{ color: 'var(--text-heading)' }}
+            style={{ color: "var(--text-heading)" }}
           >
             How{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">
-              Converthub?
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "linear-gradient(90deg, #7c3aed, #ec4899, #f59e0b)" }}
+            >
+              ConvertHub?
             </span>{" "}
             Works
-          </h1>
+          </h2>
           <p
-            className="text-base sm:text-lg max-w-3xl mx-auto leading-relaxed"
-            style={{ color: 'var(--text-secondary)' }}
+            className="mt-4 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto"
+            style={{ color: "var(--text-secondary)" }}
           >
             Simple, fast, and secure. Get your work done in just three easy steps.
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="relative mt-10 grid grid-cols-1 gap-10 sm:mt-12 lg:grid-cols-3 lg:gap-8">
-          {/* Connecting line - Desktop */}
-          <div
-            className="absolute left-[16.66%] right-[16.66%] top-10 hidden h-px lg:block"
-            style={{ backgroundColor: 'var(--border)' }}
-          />
+        {/* ── Row: left image + steps + right image ── */}
+        <div className="flex items-center">
 
-          {steps.map((step) => {
-            const Icon = step.icon;
-            return (
-              <div
-                key={step.number}
-                className="relative z-10 flex flex-col items-center text-center"
+          {/* Left image — large, overflows vertically */}
+          <div className="hidden lg:block shrink-0 w-[240px] xl:w-[300px] self-end">
+            <img
+              src={convert1}
+              alt="Select tool"
+              className="w-full h-auto object-contain"
+              style={{ filter: "drop-shadow(0 16px 32px rgba(124,58,237,0.22))" }}
+            />
+          </div>
+
+          {/* Steps center */}
+          <div className="flex-1 relative px-4 lg:px-8 py-6">
+
+            {/* Dashed connector line */}
+            <div
+              className="absolute top-[58px] hidden lg:block pointer-events-none"
+              style={{ left: "calc(16% + 36px)", right: "calc(16% + 36px)" }}
+            >
+              <svg
+                viewBox="0 0 600 40"
+                preserveAspectRatio="none"
+                className="w-full h-10"
+                fill="none"
               >
-                <div
-                  className={`flex h-18 w-18 items-center justify-center rounded-full bg-gradient-to-br ${step.color} shadow-lg`}
-                >
-                  <div className="flex h-full w-full flex-col items-center justify-center">
-                    <Icon className="mb-0.5 h-5 w-5 text-white/90" />
-                    <span className="text-xl font-bold text-white">{step.number}</span>
-                  </div>
-                </div>
+                <path
+                  d="M 0 20 C 120 2, 240 38, 300 20 C 360 2, 480 38, 600 20"
+                  stroke="url(#cGrad)"
+                  strokeWidth="1.5"
+                  strokeDasharray="7 5"
+                  opacity="0.55"
+                />
+                <defs>
+                  <linearGradient id="cGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%"   stopColor="#7c3aed" />
+                    <stop offset="50%"  stopColor="#06b6d4" />
+                    <stop offset="100%" stopColor="#10b981" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
 
-                <h3
-                  className="mt-6 text-lg font-semibold sm:text-xl"
-                  style={{ color: 'var(--text-heading)' }}
-                >
-                  {step.title}
-                </h3>
-                <p
-                  className="mt-3 max-w-sm text-sm leading-7 sm:text-base"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {step.description}
-                </p>
-              </div>
-            );
-          })}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 lg:gap-4">
+              {steps.map((step) => {
+                const Icon = step.icon;
+                return (
+                  <div
+                    key={step.number}
+                    className="relative z-10 flex flex-col items-center text-center"
+                  >
+                    {/* Circle */}
+                    <div className="relative">
+                      <div
+                        className={`w-[80px] h-[80px] rounded-full bg-gradient-to-br ${step.gradient} flex flex-col items-center justify-center`}
+                        style={{ boxShadow: `0 8px 24px ${step.shadowColor}` }}
+                      >
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      {/* Step number chip */}
+                      <span
+                        className={`absolute -top-1.5 -right-1.5 w-[22px] h-[22px] rounded-full bg-gradient-to-br ${step.gradient} flex items-center justify-center text-[11px] font-black text-white border-2`}
+                        style={{ borderColor: "var(--bg-base)" }}
+                      >
+                        {step.number}
+                      </span>
+                    </div>
+
+                    <h3
+                      className="mt-5 text-base sm:text-lg font-bold"
+                      style={{ color: "var(--text-heading)" }}
+                    >
+                      {step.title}
+                    </h3>
+                    <p
+                      className="mt-2 text-sm leading-relaxed max-w-[200px]"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      {step.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right image — large, overflows vertically */}
+          <div className="hidden lg:block shrink-0 w-[240px] xl:w-[300px] self-end">
+            <img
+              src={convert2}
+              alt="Download results"
+              className="w-full h-auto object-contain"
+              style={{ filter: "drop-shadow(0 16px 32px rgba(16,185,129,0.22))" }}
+            />
+          </div>
+
         </div>
       </div>
     </section>
