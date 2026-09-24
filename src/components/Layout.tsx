@@ -921,6 +921,9 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-grow w-full mx-auto px-4 pt-7 relative overflow-x-hidden">
         {children}
       </main>
+
+      {/* Back to Top */}
+      <BackToTop />
     </div>
   );
 }
