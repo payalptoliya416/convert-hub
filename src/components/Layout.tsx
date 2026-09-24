@@ -28,11 +28,211 @@ import {
   Search,
   Sun,
   Moon,
+  ArrowRightLeft,
+  Wrench,
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
+import BackToTop from "./BackToTop";
+
+// ── Category nav data ──────────────────────────────────────────────────────────
+const navCategories = [
+  {
+    label: "PDF Tools",
+    icon: FileText,
+    color: "text-rose-400",
+    columns: [
+      {
+        heading: "Organise PDF",
+        items: [
+          { name: "Merge PDF", path: "/merge-pdf", icon: Merge, color: "text-violet-400" },
+          { name: "Split PDF", path: "/split-pdf", icon: Scissors, color: "text-purple-400" },
+          { name: "Compress PDF", path: "/compress-pdf", icon: Minimize2, color: "text-cyan-400" },
+          { name: "Rotate PDF", path: "/rotate-pdf", icon: RotateCw, color: "text-cyan-500" },
+          { name: "Crop PDF", path: "/crop-pdf", icon: Crop, color: "text-orange-400" },
+        ],
+      },
+      {
+        heading: "Edit PDF",
+        items: [
+          { name: "Remove Pages", path: "/remove-pages", icon: FileX, color: "text-rose-500" },
+          { name: "Extract Pages", path: "/extract-pages", icon: FileOutput, color: "text-emerald-400" },
+          { name: "Protect PDF", path: "/protect-pdf", icon: Lock, color: "text-pink-500" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Convert PDF",
+    icon: ArrowRightLeft,
+    color: "text-violet-400",
+    columns: [
+      {
+        heading: "Convert to PDF",
+        items: [
+          { name: "JPG to PDF", path: "/jpg-to-pdf", icon: FileImage, color: "text-pink-400" },
+          { name: "Image to PDF", path: "/image-to-pdf", icon: FileImage, color: "text-rose-400" },
+          { name: "Word to PDF", path: "/word-to-pdf", icon: FileText, color: "text-blue-500" },
+          { name: "PowerPoint to PDF", path: "/ppt-to-pdf", icon: Presentation, color: "text-orange-500" },
+          { name: "Excel to PDF", path: "/excel-to-pdf", icon: Table, color: "text-emerald-500" },
+          { name: "HTML to PDF", path: "/html-to-pdf", icon: Code2, color: "text-violet-400" },
+        ],
+      },
+      {
+        heading: "Convert from PDF",
+        items: [
+          { name: "PDF to Word", path: "/pdf-to-word", icon: FileText, color: "text-blue-400" },
+          { name: "PDF to PowerPoint", path: "/pdf-to-ppt", icon: Presentation, color: "text-orange-400" },
+          { name: "PDF to Excel", path: "/pdf-to-excel", icon: Table, color: "text-emerald-400" },
+          { name: "PDF to Image", path: "/pdf-to-image", icon: Image, color: "text-purple-400" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Image Tools",
+    icon: ImageIcon,
+    color: "text-fuchsia-400",
+    columns: [
+      {
+        heading: "Image Utilities",
+        items: [
+          { name: "Text to Image", path: "/text-to-image", icon: Sparkles, color: "text-fuchsia-400" },
+          { name: "AI Background Remover", path: "/ai-background-remover", icon: ImageIcon, color: "text-pink-400" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Other Tools",
+    icon: Wrench,
+    color: "text-amber-400",
+    columns: [
+      {
+        heading: "Utilities",
+        items: [
+          { name: "QR Code Generator", path: "/qr-code-generator", icon: QrCode, color: "text-cyan-400" },
+          { name: "Password Generator", path: "/password-generator", icon: LockKeyhole, color: "text-amber-400" },
+          { name: "JSON Formatter", path: "/json-formatter", icon: Braces, color: "text-cyan-400" },
+          { name: "HTML Viewer", path: "/html-viewer", icon: FileCode2, color: "text-violet-400" },
+        ],
+      },
+    ],
+  },
+];
 
 interface LayoutProps {
   children: React.ReactNode;
+}
+
+// ── Category Dropdown component ────────────────────────────────────────────────
+function CategoryDropdown({
+  category,
+  // isActive,
+}: {
+  category: (typeof navCategories)[0];
+  isActive: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const location = useLocation();
+
+  const isCategoryActive = category.columns
+    .flatMap((c) => c.items)
+    .some((item) => location.pathname === item.path);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  // total columns decide dropdown width
+  const colCount = category.columns.length;
+  const dropdownWidth = colCount === 1 ? "w-52" : colCount === 2 ? "w-[440px]" : "w-[580px]";
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <button
+        className={`flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+          isCategoryActive ? "text-violet-400" : "hover:text-violet-400"
+        }`}
+        style={!isCategoryActive ? { color: "var(--text-secondary)" } : {}}
+        aria-expanded={open}
+      >
+        {category.label}
+        <ChevronDown
+          className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div
+          className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 ${dropdownWidth} rounded-2xl border shadow-2xl z-50 p-3`}
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            borderColor: "var(--border)",
+          }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {/* small arrow pointer */}
+          <div
+            className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 border-l border-t rounded-sm"
+            style={{
+              backgroundColor: "var(--bg-surface)",
+              borderColor: "var(--border)",
+            }}
+          />
+
+          <div className={`grid gap-4 ${colCount > 1 ? `grid-cols-${colCount}` : "grid-cols-1"}`}
+            style={{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }}
+          >
+            {category.columns.map((col) => (
+              <div key={col.heading}>
+                <p
+                  className="text-[10px] font-bold uppercase tracking-widest mb-2 px-2"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {col.heading}
+                </p>
+                <div className="flex flex-col gap-0.5">
+                  {col.items.map((item) => {
+                    const Icon = item.icon;
+                    const active = location.pathname === item.path;
+                    return (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setOpen(false)}
+                        className={`flex items-center gap-2.5 px-2 py-2 rounded-xl text-sm transition ${
+                          active
+                            ? "bg-violet-600/10 text-violet-400 font-semibold"
+                            : "hover:bg-[var(--bg-hover)]"
+                        }`}
+                        style={!active ? { color: "var(--text-secondary)" } : {}}
+                      >
+                        <Icon className={`w-4 h-4 shrink-0 ${item.color}`} />
+                        <span>{item.name}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 const dropdownTools = [
@@ -180,6 +380,7 @@ const dropdownTools = [
 export default function Layout({ children }: LayoutProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileCategoryOpen, setMobileCategoryOpen] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -253,7 +454,7 @@ export default function Layout({ children }: LayoutProps) {
               : "var(--nav-border)",
         }}
       >
-        <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-violet-600/20 group-hover:scale-105 transition duration-300">
@@ -267,10 +468,8 @@ export default function Layout({ children }: LayoutProps) {
             </span>
           </Link>
 
-          {/* Right side: Theme toggle + mobile menu */}
-          <div className="flex items-center gap-2">
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-6">
+ {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-5">
               <Link
                 to="/"
                 className={`text-sm font-semibold flex items-center gap-1.5 transition ${
@@ -287,9 +486,14 @@ export default function Layout({ children }: LayoutProps) {
                 <Home className="w-4 h-4" /> Dashboard
               </Link>
 
+              {/* Category mega-dropdowns */}
+              {navCategories.map((cat) => (
+                <CategoryDropdown key={cat.label} category={cat} isActive={false} />
+              ))}
+
               {/* Tools Dropdown */}
               <div ref={dropdownRef} className="relative">
-                <button
+                {/* <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className={`text-sm font-semibold flex items-center gap-1 transition cursor-pointer ${
                     location.pathname !== "/"
@@ -306,7 +510,7 @@ export default function Layout({ children }: LayoutProps) {
                   <ChevronDown
                     className={`w-4 h-4 transition duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
                   />
-                </button>
+                </button> */}
 
                 {dropdownOpen && (
                   <>
@@ -460,6 +664,9 @@ export default function Layout({ children }: LayoutProps) {
               </div>
             </nav>
 
+          {/* Right side: Theme toggle + mobile menu */}
+          <div className="flex items-center gap-2">
+
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
@@ -468,10 +675,8 @@ export default function Layout({ children }: LayoutProps) {
                   ? "Switch to light mode"
                   : "Switch to dark mode"
               }
-              className="p-2 rounded-lg border transition cursor-pointer"
+              className="p-2 rounded-lg transition cursor-pointer"
               style={{
-                backgroundColor: "var(--bg-surface)",
-                borderColor: "var(--border)",
                 color: "var(--text-secondary)",
               }}
               title={
@@ -481,16 +686,16 @@ export default function Layout({ children }: LayoutProps) {
               }
             >
               {theme === "dark" ? (
-                <Sun className="w-4 h-4 text-amber-400" />
+                <Sun className="w-6 h-6 text-amber-400" />
               ) : (
-                <Moon className="w-4 h-4 text-indigo-500" />
+                <Moon className="w-6 h-6 text-indigo-500" />
               )}
             </button>
 
             {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 border rounded-lg transition cursor-pointer"
+              className="lg:hidden p-1.5 border rounded-lg transition cursor-pointer"
               style={{
                 backgroundColor: "var(--bg-surface)",
                 borderColor: "var(--border)",
@@ -509,7 +714,7 @@ export default function Layout({ children }: LayoutProps) {
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div
-            className="md:hidden border-t shadow-2xl flex flex-col"
+            className="lg:hidden border-t shadow-2xl flex flex-col"
             style={{
               maxHeight: "calc(100dvh - 64px)",
               backgroundColor: "var(--bg-base)",
@@ -517,11 +722,11 @@ export default function Layout({ children }: LayoutProps) {
             }}
           >
             {/* Dashboard link */}
-            <div className="px-4 pt-3 pb-2 shrink-0">
+            <div className="px-4 pt-3 pb-1 shrink-0">
               <Link
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-2.5 px-3 rounded-xl text-sm font-semibold transition"
+                className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition"
                 style={{ color: "var(--text-secondary)" }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = "var(--bg-surface)")
@@ -530,13 +735,93 @@ export default function Layout({ children }: LayoutProps) {
                   (e.currentTarget.style.backgroundColor = "")
                 }
               >
-                Dashboard
+                <Home className="w-4 h-4" /> Dashboard
               </Link>
             </div>
 
-            {/* Search bar */}
-            <div
-              className="px-4 pb-3 shrink-0 border-b"
+            {/* Mobile Category Accordions */}
+            <div className="px-4 pb-2 shrink-0 flex flex-col gap-1">
+              {navCategories.map((cat) => {
+                const CatIcon = cat.icon;
+                const isExpanded = mobileCategoryOpen === cat.label;
+                return (
+                  <div key={cat.label}>
+                    <button
+                      onClick={() =>
+                        setMobileCategoryOpen(isExpanded ? null : cat.label)
+                      }
+                      className="w-full flex items-center justify-between py-2.5 px-3 rounded-xl text-sm font-semibold transition cursor-pointer"
+                      style={{ color: "var(--text-secondary)" }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.backgroundColor =
+                          "var(--bg-surface)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.backgroundColor = "")
+                      }
+                    >
+                      <span className="flex items-center gap-2">
+                        <CatIcon className={`w-4 h-4 ${cat.color}`} />
+                        {cat.label}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                      />
+                    </button>
+
+                    {isExpanded && (
+                      <div className="mt-1 ml-3 flex flex-col gap-0.5 border-l-2 pl-3" style={{ borderColor: "var(--border)" }}>
+                        {cat.columns.map((col) => (
+                          <div key={col.heading} className="mb-2">
+                            <p
+                              className="text-[10px] font-bold uppercase tracking-widest mb-1 px-2"
+                              style={{ color: "var(--text-muted)" }}
+                            >
+                              {col.heading}
+                            </p>
+                            {col.items.map((item) => {
+                              const Icon = item.icon;
+                              const active = location.pathname === item.path;
+                              return (
+                                <Link
+                                  key={item.path}
+                                  to={item.path}
+                                  onClick={() => {
+                                    setMobileMenuOpen(false);
+                                    setMobileCategoryOpen(null);
+                                  }}
+                                  className={`flex items-center gap-2.5 py-2 px-2 rounded-xl text-sm transition ${
+                                    active
+                                      ? "bg-violet-600/10 text-violet-400 font-semibold"
+                                      : ""
+                                  }`}
+                                  style={!active ? { color: "var(--text-secondary)" } : {}}
+                                  onMouseEnter={(e) => {
+                                    if (!active)
+                                      (e.currentTarget as HTMLElement).style.backgroundColor = "var(--bg-surface)";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    if (!active)
+                                      (e.currentTarget as HTMLElement).style.backgroundColor = "";
+                                  }}
+                                >
+                                  <Icon className={`w-4 h-4 shrink-0 ${item.color}`} />
+                                  {item.name}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Search bar — "All Tools" section */}
+            {/* <div
+              className="px-4 pb-3 pt-2 shrink-0 border-t"
               style={{ borderColor: "var(--border)" }}
             >
               <div className="relative">
@@ -566,10 +851,10 @@ export default function Layout({ children }: LayoutProps) {
                   </button>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Scrollable tool list */}
-            <div className="overflow-y-auto flex-1 px-4 py-3">
+            {/* <div className="overflow-y-auto flex-1 px-4 py-3">
               {(() => {
                 const filtered = dropdownTools.filter((t) =>
                   t.name.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -627,13 +912,13 @@ export default function Layout({ children }: LayoutProps) {
                   </div>
                 );
               })()}
-            </div>
+            </div> */}
           </div>
         )}
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow max-w-[1400px] w-full mx-auto px-6 py-7 relative overflow-x-hidden">
+      <main className="flex-grow w-full mx-auto px-4 pt-7 relative overflow-x-hidden">
         {children}
       </main>
     </div>

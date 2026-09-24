@@ -363,7 +363,7 @@ export default function PptToPdf() {
   const triggerFileSelect = () => fileInputRef.current?.click();
 
   return (
-    <div className="mx-auto space-y-8">
+    <div className="mx-auto max-w-5xl space-y-8">
       {/* Header */}
       <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 rounded-xl border text-[#8B5CF6]"

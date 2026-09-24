@@ -38,7 +38,7 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ title, tools }) => (
       style={{ color: "var(--text-heading)" }}>
       {title}
     </h3>
-    <ul className="space-y-2.5">
+    <ul className="space-y-5">
       {tools.map((tool) => {
         const Icon = tool.icon;
         return (
@@ -138,11 +138,23 @@ const FooterFile: React.FC = () => {
 
   return (
     <footer
-      className="relative overflow-hidden border-t"
-      style={{ backgroundColor: "var(--bg-base)", borderColor: "var(--border)" }}
+      className="relative overflow-hidden"
+      style={{ borderColor: "var(--border)" }}
     >
+      {/* ── Background gradient — dark: deep violet-slate, light: soft lavender-white ── */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{ background: "var(--footer-bg)" }}
+      />
+
+      {/* Subtle top glow blob */}
+      <div
+        className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-48 rounded-full blur-3xl opacity-20 pointer-events-none z-0"
+        style={{ background: "var(--footer-glow)" }}
+      />
+
       {/* Top gradient line */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent z-10" />
 
       {/* Content — sits above the image via z-10 */}
       <div className="relative z-10 mx-auto max-w-[1400px] px-6">
@@ -161,7 +173,7 @@ const FooterFile: React.FC = () => {
               </span>
             </Link>
 
-            <p className="text-sm leading-relaxed max-w-[260px]" style={{ color: "var(--text-footer)" }}>
+            <p className="text-sm leading-[24px] max-w-[260px]" style={{ color: "var(--text-footer)" }}>
               Fast, secure, and private online tools for converting, editing, and managing
               your files directly in your browser.
             </p>
@@ -191,7 +203,7 @@ const FooterFile: React.FC = () => {
         <div className="h-px w-full" style={{ backgroundColor: "var(--border-soft)" }} />
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 pt-6 pb-1 sm:flex-row sm:gap-0">
+        <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row sm:gap-0">
           <p className="text-sm order-2 sm:order-1" style={{ color: "var(--text-footer)" }}>
             © {new Date().getFullYear()}{" "}
             <span className="font-semibold" style={{ color: "var(--text-secondary)" }}>ConvertHub</span>

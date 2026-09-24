@@ -59,6 +59,13 @@
   --search-highlight-bg:   rgba(139,92,246,0.30);  /* violet-500/30 */
   --search-highlight-text: #ddd6fe;                /* violet-200 */
   --opacity-custm : 80%;
+
+  /* Footer */
+  --footer-bg:   linear-gradient(160deg, #0a0a1f 0%, #070d1a 40%, #0d0520 70%, #050b18 100%);
+  --footer-glow: radial-gradient(ellipse, #7c3aed 0%, #6366f1 60%, transparent 100%);
+
+  /* HowItWorks */
+  --howitworks-bg: linear-gradient(155deg, #0b0b20 0%, #0a1018 35%, #0c0820 65%, #09101c 100%);
 }
 
 /* ---------- LIGHT THEME ---------- */
@@ -99,6 +106,13 @@
   --search-highlight-bg:   rgba(139,92,246,0.15);  /* violet-500/15 */
   --search-highlight-text: #6d28d9;                /* violet-700 */
   --opacity-custm : 100%;
+
+  /* Footer */
+  --footer-bg:   linear-gradient(160deg, #e9e4f8 0%, #f0ecfd 35%, #eaf1fb 65%, #edf2fb 100%);
+  --footer-glow: radial-gradient(ellipse, #c4b5fd 0%, #a5b4fc 60%, transparent 100%);
+
+  /* HowItWorks */
+  --howitworks-bg: linear-gradient(155deg, #ede9f9 0%, #f3f0fc 35%, #e8eefb 65%, #eff3fb 100%);
 }
 
 /* ============================================================

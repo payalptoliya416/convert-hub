@@ -76,8 +76,7 @@ const QRCodeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] py-7 text-[var(--text-heading)]">
-      <div className="mx-auto">
+    <div className="mx-auto max-w-5xl space-y-8">
         {/* Header */}
         <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
           <div className="p-3 rounded-xl border text-[#8B5CF6]"
@@ -290,7 +289,6 @@ const QRCodeGenerator: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

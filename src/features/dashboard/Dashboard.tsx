@@ -131,7 +131,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="space-y-8">
+      <div className="space-y-8 max-w-[1400px] mx-auto ">
         {/* ── Hero Banner — full-bleed, bleeds into navbar ── */}
         <section className="relative -mx-6 -mt-7">
           {/* Full-width gradient background — bleeds behind navbar via negative margin */}
@@ -187,7 +187,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="relative flex flex-col lg:flex-row items-center px-6 pt-8 pb-10 max-w-[1400px] mx-auto lg:pt-10 lg:pb-14">
+          <div className="relative flex flex-col lg:flex-row items-center px-4 pt-8 pb-10 max-w-[1400px] mx-auto lg:pt-10 lg:pb-14">
             {/* ─────────────────────────
         LEFT CONTENT
     ───────────────────────── */}
@@ -429,7 +429,7 @@ export default function Dashboard() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="px-3 md:px-5 lg:px-10 py-1.5 md:py-2 rounded-full text-sm md:text-base lg:text-lg font-semibold transition cursor-pointer border"
+                className="px-3 md:px-5 lg:px-10 py-1.5 md:py-2 rounded-full text-sm font-semibold transition cursor-pointer border"
                 style={
                   activeCategory === cat
                     ? {
@@ -456,7 +456,7 @@ export default function Dashboard() {
         </div>
 
         {/* Tool Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {gridTools.map((tool) => {
             const Icon = tool.icon;
             return (
@@ -505,12 +505,12 @@ export default function Dashboard() {
                 {/* Top row: iOS-style icon + arrow circle */}
                 <div className="flex items-start justify-between">
                   <div
-                    className={`w-12 md:w-14 h-12 md:h-14 rounded-lg md:rounded-2xl flex items-center justify-center text-white shadow-lg`}
+                    className={`w-12 h-12 rounded-lg md:rounded-xl flex items-center justify-center text-white shadow-lg`}
                     //  boxShadow: `0 6px 20px ${tool.cardGlow}`,
                     style={{backgroundColor: "rgba(139, 92, 246, 0.10)",
                    color: "#8B5CF6", }}
                   >
-                    <Icon className="w-5 md:w-7 h-5 md:h-7" />
+                    <Icon className="w-5 h-5" />
                   </div>
                 </div>
 
@@ -531,9 +531,9 @@ export default function Dashboard() {
                 </div>
 
                 {/* Open Tool */}
-                <div className="relative z-10 flex items-center gap-1 mt-5 text-sm font-semibold text-violet-500 group-hover:gap-2 transition-all duration-200">
+                {/* <div className="relative z-10 flex items-center gap-1 mt-5 text-sm font-semibold text-violet-500 group-hover:gap-2 transition-all duration-200">
                   Open Tool <ArrowRight className="w-3.5 h-3.5" />
-                </div>
+                </div> */}
               </Link>
             );
           })}

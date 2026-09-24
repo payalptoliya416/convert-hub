@@ -185,8 +185,8 @@ export default function PdfToPpt() {
     fileInputRef.current?.click();
   };
 
- return (
-  <div className="mx-auto space-y-6">
+  return (
+  <div className="mx-auto max-w-5xl space-y-6">
     {/* Header */}
     <div
       className="flex items-center gap-4 border-b pb-5"

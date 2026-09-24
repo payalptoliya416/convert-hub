@@ -87,7 +87,7 @@ const TrustedStats: React.FC = () => {
           style={{ background: "radial-gradient(circle, #fbcfe8, transparent)" }} /> */}
 
         {/* ── Content ── */}
-        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 px-4 py-12 sm:py-14 lg:py-16 lg:px-12">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 px-4 py-12 sm:py-14 lg:py-16">
 
           {/* LEFT — text + stats */}
           <div className="flex-1 w-full">

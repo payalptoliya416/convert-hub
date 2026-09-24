@@ -30,7 +30,25 @@ const steps = [
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className="w-full px-6 pb-0 sm:pb-14 lg:pb-16">
+    <section className="relative w-full overflow-hidden">
+      {/* Full-width gradient background */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{ background: "var(--howitworks-bg)" }}
+      />
+
+      {/* Subtle decorative blobs */}
+      <div
+        className="absolute top-1/4 left-10 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none z-0"
+        style={{ background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)" }}
+      />
+      <div
+        className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full blur-3xl opacity-20 pointer-events-none z-0"
+        style={{ background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)" }}
+      />
+
+      {/* Content container */}
+      <div className="relative z-10 w-full px-6 py-14 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-[1400px]">
 
         {/* ── Header ── */}
@@ -133,6 +151,7 @@ const HowItWorks: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
