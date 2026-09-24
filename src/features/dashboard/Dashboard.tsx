@@ -133,60 +133,7 @@ export default function Dashboard() {
     <>
       <div className="space-y-8 max-w-[1400px] mx-auto ">
         {/* ── Hero Banner — full-bleed, bleeds into navbar ── */}
-        <section className="relative -mx-6 -mt-7">
-          {/* Full-width gradient background — bleeds behind navbar via negative margin */}
-          <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-            {/* Base lavender/white gradient — light mode */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(160deg, #ede9fe 0%, #f5f3ff 25%, #fdf4ff 50%, #fce7f3 75%, #eff6ff 100%)",
-              }}
-            />
-
-            {/* Dark mode overlay — darkens the light gradient in dark theme */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: "var(--hero-dark-overlay, transparent)",
-              }}
-            />
-
-            {/* Blob — top-left purple */}
-            <div
-              className="absolute -top-20 -left-20 w-[480px] h-[480px] rounded-full blur-[80px] opacity-60"
-              style={{
-                background:
-                  "radial-gradient(circle, #c4b5fd 0%, #a78bfa 40%, transparent 70%)",
-              }}
-            />
-            {/* Blob — top-right pink/rose */}
-            <div
-              className="absolute -top-10 right-[15%] w-[360px] h-[360px] rounded-full blur-[70px] opacity-50"
-              style={{
-                background:
-                  "radial-gradient(circle, #fbcfe8 0%, #f9a8d4 45%, transparent 70%)",
-              }}
-            />
-            {/* Blob — bottom-left teal/green (image 2 style) */}
-            <div
-              className="absolute bottom-0 -left-10 w-[300px] h-[300px] rounded-full blur-[70px] opacity-40"
-              style={{
-                background:
-                  "radial-gradient(circle, #99f6e4 0%, #5eead4 50%, transparent 70%)",
-              }}
-            />
-            {/* Blob — bottom-right yellow/amber */}
-            <div
-              className="absolute bottom-[-20px] right-[5%] w-[260px] h-[260px] rounded-full blur-[60px] opacity-35"
-              style={{
-                background:
-                  "radial-gradient(circle, #fde68a 0%, #fbbf24 50%, transparent 70%)",
-              }}
-            />
-          </div>
-
+        <section className="relative -mt-7">
           <div className="relative flex flex-col lg:flex-row items-center px-4 pt-8 pb-10 max-w-[1400px] mx-auto lg:pt-10 lg:pb-14">
             {/* ─────────────────────────
         LEFT CONTENT

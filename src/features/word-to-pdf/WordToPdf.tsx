@@ -254,12 +254,12 @@ export default function WordToPdf() {
             <button
               onClick={convertWordToPdf}
               disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition shadow-lg ${
                 !file 
                   ? 'cursor-not-allowed'
                   : loading
                     ? 'bg-violet-700 text-white border border-violet-600 cursor-not-allowed'
-                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20'
+                    : 'bg-violet-600 hover:bg-violet-500 text-white border border-violet-500 shadow-violet-600/20 cursor-pointer'
               }`}
               style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)', borderColor: 'var(--border)' } : undefined}
             >

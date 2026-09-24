@@ -153,9 +153,6 @@ const FooterFile: React.FC = () => {
         style={{ background: "var(--footer-glow)" }}
       />
 
-      {/* Top gradient line */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent z-10" />
-
       {/* Content — sits above the image via z-10 */}
       <div className="relative z-10 mx-auto max-w-[1400px] px-6">
 

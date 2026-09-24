@@ -105,7 +105,7 @@ export default function JpgToPdf() {
             <button
               onClick={convertToPdf}
               disabled={!file || loading}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-lg ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-white' : 'bg-violet-600 hover:bg-violet-500 text-white'}`}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition shadow-lg ${!file ? 'cursor-not-allowed' : loading ? 'bg-violet-700 text-white' : 'bg-violet-600 hover:bg-violet-500 text-white cursor-pointer'}`}
               style={!file ? { backgroundColor: 'var(--bg-hover)', color: 'var(--text-muted)' } : undefined}
             >
               {loading ? <><RefreshCw className="w-5 h-5 animate-spin" /> Converting...</> : <><Download className="w-5 h-5" /> Convert</>}
