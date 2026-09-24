@@ -316,24 +316,22 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
   return (
     <>
+    <div className=" max-w-5xl mx-auto">
     <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
-  {/* Icon */}
-  <div className="p-3 rounded-xl border text-[#8B5CF6]"
-        style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
-    <Code2 className="w-8 h-8" />
-  </div>
+      <div className="p-3 rounded-xl border text-[#8B5CF6]"
+            style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
+        <Code2 className="w-8 h-8" />
+      </div>
+      <div>
+        <h1 className="text-3xl font-bold text-[var(--text-heading)]">
+          HTML Viewer
+        </h1>
 
-  {/* Title & Description */}
-  <div>
-    <h1 className="text-3xl font-bold text-[var(--text-heading)]">
-      HTML Viewer
-    </h1>
-
-    <p className="text-[var(--text-secondary)] text-sm mt-1">
-      View and preview HTML files directly in your browser with live rendering.
-    </p>
-  </div>
-</div>
+        <p className="text-[var(--text-secondary)] text-sm mt-1">
+          View and preview HTML files directly in your browser with live rendering.
+        </p>
+      </div>
+    </div>
     <div
       className={`flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] shadow-xl shadow-black/20 mt-7 ${
         isFullscreen
@@ -702,7 +700,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
         </div>
       )}
     </div>
-    
+    </div>
     </>
   );
 }
