@@ -148,7 +148,7 @@ export default function ExtractPages() {
             </button>
 
             {outBlob && (
-              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download Extracted PDF</button>
+              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold cursor-pointer">Download Extracted PDF</button>
             )}
           </div>
         </div>

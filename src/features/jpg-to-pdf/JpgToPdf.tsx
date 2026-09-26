@@ -112,7 +112,7 @@ export default function JpgToPdf() {
             </button>
 
             {success && pdfBlob && (
-              <button onClick={downloadPdf} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download PDF</button>
+              <button onClick={downloadPdf} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold cursor-pointer">Download PDF</button>
             )}
           </div>
         </div>

@@ -153,7 +153,7 @@ export default function RemovePages() {
             </button>
 
             {outBlob && (
-              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold">Download Result</button>
+              <button onClick={download} className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold cursor-pointer">Download Result</button>
             )}
           </div>
         </div>
