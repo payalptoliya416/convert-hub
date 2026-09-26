@@ -721,6 +721,9 @@ export default function Layout({ children }: LayoutProps) {
               borderColor: "var(--border)",
             }}
           >
+            {/* Scrollable inner area */}
+            <div className="overflow-y-auto flex-1 custom-scrollbar">
+
             {/* Dashboard link */}
             <div className="px-4 pt-3 pb-1 shrink-0">
               <Link
@@ -740,7 +743,7 @@ export default function Layout({ children }: LayoutProps) {
             </div>
 
             {/* Mobile Category Accordions */}
-            <div className="px-4 pb-2 shrink-0 flex flex-col gap-1">
+            <div className="px-4 pb-4 flex flex-col gap-1">
               {navCategories.map((cat) => {
                 const CatIcon = cat.icon;
                 const isExpanded = mobileCategoryOpen === cat.label;
@@ -913,6 +916,7 @@ export default function Layout({ children }: LayoutProps) {
                 );
               })()}
             </div> */}
+            </div>{/* end scrollable inner */}
           </div>
         )}
       </header>
