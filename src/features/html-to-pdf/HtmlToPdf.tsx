@@ -308,7 +308,7 @@ export default function HtmlToPdf() {
 
   // ── RENDER ──
   return (
-    <div className="mx-auto max-w-5xl space-y-6">
+    <div className="mx-auto max-w-5xl space-y-6 mb-7">
       {showUrlModal && <UrlModal onAdd={loadUrl} onClose={() => setShowUrlModal(false)} />}
 
       {/* Header */}

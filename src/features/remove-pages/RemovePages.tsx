@@ -114,7 +114,7 @@ export default function RemovePages() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8">
+    <div className="mx-auto max-w-5xl space-y-8 mb-7">
       <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 rounded-xl border text-[#8B5CF6]"
         style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
@@ -186,7 +186,7 @@ export default function RemovePages() {
                     <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{totalPages} pages • {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                   </div>
                 </div>
-                <button onClick={() => { setFile(null); setTotalPages(0); setRemoveInput(''); setOutBlob(null); setSuccess(false); setError(null); }} className="text-xs font-semibold text-red-400 hover:text-red-300">Remove</button>
+                <button onClick={() => { setFile(null); setTotalPages(0); setRemoveInput(''); setOutBlob(null); setSuccess(false); setError(null); }} className="text-xs font-semibold text-red-400 hover:text-red-300 cursor-pointer">Remove</button>
               </div>
 
               {error && (

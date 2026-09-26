@@ -179,7 +179,7 @@ const PasswordGenerator: React.FC = () => {
   const strength = getStrength();
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8">
+    <div className="mx-auto max-w-5xl space-y-8 mb-7">
         {/* Header */}
         <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
           <div className="p-3 rounded-xl border text-[#8B5CF6]"

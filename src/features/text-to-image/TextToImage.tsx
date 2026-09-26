@@ -198,7 +198,7 @@ export default function TextToImage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
+    <div className="mx-auto w-full max-w-3xl mb-7">
       {/* Header */}
       <div
         className="flex items-start sm:items-center gap-4 border-b pb-6"

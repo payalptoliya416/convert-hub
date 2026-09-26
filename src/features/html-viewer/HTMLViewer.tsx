@@ -316,7 +316,7 @@ export default function HtmlViewer({ className = "" }: HtmlViewerProps) {
 
   return (
     <>
-    <div className=" max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto mb-7">
     <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
       <div className="p-3 rounded-xl border text-[#8B5CF6]"
             style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>

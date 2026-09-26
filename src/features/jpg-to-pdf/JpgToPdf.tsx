@@ -84,7 +84,7 @@ export default function JpgToPdf() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8">
+    <div className="mx-auto max-w-5xl space-y-8 mb-7">
       <div className="flex items-start sm:items-center gap-4 border-b pb-6" style={{ borderColor: 'var(--border)' }}>
         <div className="p-3 rounded-xl border text-[#8B5CF6]"
         style={{ backgroundColor: "rgba(139, 92, 246, 0.10)", borderColor: "var(--border)" }}>
@@ -155,7 +155,7 @@ export default function JpgToPdf() {
                 </div>
               </div>
               <div>
-                <button onClick={() => { setFile(null); setPreviewUrl(null); setPdfBlob(null); setSuccess(false); }} className="text-xs font-semibold text-red-400">Remove</button>
+                <button onClick={() => { setFile(null); setPreviewUrl(null); setPdfBlob(null); setSuccess(false); }} className="text-xs font-semibold text-red-400 cursor-pointer">Remove</button>
               </div>
             </div>
           )}
