@@ -5,16 +5,18 @@
     <link rel="icon" type="image/png+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>convert-hub</title>
+    <!-- MUST be before any CSS: sets data-theme before browser paints anything -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('ch-theme');
+          var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
     <link href="/src/index.css" rel="stylesheet">
   </head>
-  <script>
-    // Apply saved theme before React loads to prevent flash
-    (function () {
-      var saved = localStorage.getItem('ch-theme');
-      var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

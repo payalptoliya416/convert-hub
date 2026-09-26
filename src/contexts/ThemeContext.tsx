@@ -14,19 +14,25 @@ const ThemeContext = createContext<ThemeContextValue>({
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    // Read saved preference or default to dark
     const saved = localStorage.getItem('ch-theme');
-    if (saved === 'light' || saved === 'dark') return saved;
-    return 'dark';
+    const resolved: Theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+    // Set synchronously here so first React render already has correct data-theme
+    // (inline script in index.html also does this, but this is a second safety net)
+    document.documentElement.setAttribute('data-theme', resolved);
+    return resolved;
   });
 
-  // Apply theme to <html> and persist
+  // Keep in sync when user toggles
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('ch-theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  const toggleTheme = () => {
+    // Enable transitions only during manual toggle, not on page load
+    document.documentElement.classList.add('theme-transitions-enabled');
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

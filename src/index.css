@@ -171,6 +171,10 @@
 html {
   background-color: var(--bg-base);
   color: var(--text-primary);
+}
+
+/* Transition only for toggle — NOT on page load/refresh */
+html.theme-transitions-enabled {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
