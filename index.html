@@ -7,6 +7,14 @@
     <title>convert-hub</title>
     <link href="/src/index.css" rel="stylesheet">
   </head>
+  <script>
+    // Apply saved theme before React loads to prevent flash
+    (function () {
+      var saved = localStorage.getItem('ch-theme');
+      var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
